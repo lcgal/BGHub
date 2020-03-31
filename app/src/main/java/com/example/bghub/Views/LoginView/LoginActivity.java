@@ -7,13 +7,19 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
 
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
+
+    @Inject
+    LoginContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+
+                        mPresenter.processUserLogin(Profile.getCurrentProfile(),loginResult.getAccessToken());
 
                     }
 
