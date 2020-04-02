@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
                     @Override
                     public void onError(FacebookException exception) {
+
+                        goToMainActivity();
                         // App code
                     }
                 });
