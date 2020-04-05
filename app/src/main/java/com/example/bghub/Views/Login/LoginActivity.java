@@ -1,4 +1,4 @@
-package com.example.bghub.Views.LoginView;
+package com.example.bghub.Views.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import com.example.bghub.Views.Main.MainActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -28,6 +27,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Inject
     LoginContract.Presenter mPresenter;
 
+    CallbackManager mCallBackManager;
+    LoginButton mLoginButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +45,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         //Facebook Login
         List< String > facebookPermissions = Arrays.asList("user_photos", "email","public_profile", "AccessToken");
-        LoginButton loginButton = findViewById(R.id.login_button);
-        loginButton.setPermissions(facebookPermissions);
+        mLoginButton = findViewById(R.id.login_button);
+        mLoginButton.setPermissions(facebookPermissions);
 
         //FacebookSdk.sdkInitialize(getApplicationContext());
-        LoginManager.getInstance().logOut();
-        CallbackManager callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager,
+        //LoginManager.getInstance().logOut();
+        mCallBackManager = CallbackManager.Factory.create();
+        mLoginButton.registerCallback(mCallBackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
@@ -71,6 +74,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                         // App code
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mCallBackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void goToMainActivity(){

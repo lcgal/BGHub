@@ -1,4 +1,4 @@
-package com.example.bghub.Views.LoginView;
+package com.example.bghub.Views.Login;
 
 import com.facebook.AccessToken;
 import com.facebook.Profile;

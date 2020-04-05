@@ -1,7 +1,6 @@
-package com.example.bghub.Views.LoginView;
+package com.example.bghub.Views.Login;
 
 import com.example.bghub.Repositories.Data.DataContract;
-import com.example.bghub.Repositories.Data.DataRepository;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
 
