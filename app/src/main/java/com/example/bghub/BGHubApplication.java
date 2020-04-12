@@ -1,3 +1,5 @@
+package com.example.bghub;
+
 import android.app.Application;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;

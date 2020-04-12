@@ -1,18 +1,20 @@
 package com.example.bghub.Views.Login;
 
-import com.facebook.AccessToken;
-import com.facebook.Profile;
+        import com.facebook.AccessToken;
+        import com.facebook.Profile;
 
 public interface LoginContract {
     interface View {
+
+        public void goToMainActivity();
 
 
     }
 
     interface Presenter {
 
-        //Saves the login information on DataRepository
-        public void processUserLogin (Profile loginProfile, AccessToken loginToken);
+        //request facebook informations about the token
+        public void loadUserProfile(AccessToken newAccessToken);
 
 
     }

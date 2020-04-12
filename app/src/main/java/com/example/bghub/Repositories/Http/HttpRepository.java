@@ -4,6 +4,7 @@ import android.net.wifi.hotspot2.pps.Credential;
 
 import androidx.annotation.Nullable;
 
+import com.example.bghub.Models.Profile;
 import com.example.bghub.Models.User;
 
 import java.util.concurrent.TimeUnit;
@@ -47,8 +48,8 @@ public class HttpRepository implements HttpContract {
     }
 
     @Override
-    public Call<User> FbLogin(Credential credential){
-        return mRetrofit.FbLogin(credential);
+    public Call<User> FbLogin(Profile profile){
+        return mRetrofit.FbLogin(profile);
     }
 }
 
