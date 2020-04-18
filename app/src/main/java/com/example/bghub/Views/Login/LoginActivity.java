@@ -52,6 +52,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         //Facebook Login
         setupFacebookLoginCallBack();
+
+        AndroidInjection.inject(this);
     }
 
     @Override
