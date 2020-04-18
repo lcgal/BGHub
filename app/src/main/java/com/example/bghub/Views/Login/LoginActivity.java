@@ -17,18 +17,15 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-
 import android.content.Intent;
 import android.os.Bundle;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
@@ -44,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        AndroidInjection.inject(this);
+
 
         if (Profile.getCurrentProfile() != null){
 
@@ -53,7 +52,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         //Facebook Login
         setupFacebookLoginCallBack();
-
     }
 
     @Override

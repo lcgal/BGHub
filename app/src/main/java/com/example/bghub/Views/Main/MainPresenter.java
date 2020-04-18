@@ -9,12 +9,12 @@ import javax.inject.Inject;
 public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View mView;
-    private DataContract mDataRepository;
+    private DataContract.Repository mDataRepository;
 
     @Inject
     public MainPresenter(
             MainContract.View view,
-            DataContract dataRepository){
+            DataContract.Repository dataRepository){
 
         mView = view;
         mDataRepository = dataRepository;

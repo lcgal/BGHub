@@ -6,6 +6,7 @@ import com.example.bghub.Models.Credentials;
 import com.example.bghub.Models.Profile;
 import com.example.bghub.Models.User;
 import com.example.bghub.Repositories.Data.DataContract;
+import com.example.bghub.Repositories.Http.HttpContract;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -18,15 +19,19 @@ import javax.inject.Inject;
 public class LoginPresenter implements LoginContract.Presenter {
 
     private LoginContract.View mView;
-    private DataContract mDataRepository;
+    private DataContract.Repository mDataRepository;
+    private HttpContract mHttpRepository;
 
     @Inject
     public LoginPresenter (
             LoginContract.View view,
-            DataContract dataRepository){
+            DataContract.Repository dataRepository,
+            HttpContract httpRepository){
 
         mView = view;
         mDataRepository = dataRepository;
+        mHttpRepository = httpRepository;
+
     }
 
 
@@ -56,7 +61,10 @@ public class LoginPresenter implements LoginContract.Presenter {
 
                 profile.setUser(user);
                 profile.setCredentials(credentials);
-                
+
+                mHttpRepository.FbLogin(profile);
+
+
 
 
                 mView.goToMainActivity();

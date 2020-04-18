@@ -11,6 +11,6 @@ import retrofit2.http.POST;
 
 public interface HttpContract {
 
-    @POST("FbLogin")
+    @POST("/Credentials/FbLogin")
     Call<User> FbLogin(@Body Profile profile);
 }

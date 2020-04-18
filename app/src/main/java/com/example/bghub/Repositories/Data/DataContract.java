@@ -4,13 +4,15 @@ import com.facebook.AccessToken;
 import com.facebook.Profile;
 
 public interface DataContract {
+    interface Repository {
+        public AccessToken getLoginToken();
 
-    public AccessToken getLoginToken();
+        public void saveLoginToken(AccessToken loginToken);
 
-    public void saveLoginToken(AccessToken loginToken);
+        public Profile getCurrentProfile();
 
-    public Profile getCurrentProfile();
+        public void saveCurrentProfile(Profile loginProfile);
 
-    public void saveCurrentProfile(Profile loginProfile);
+    }
 
 }

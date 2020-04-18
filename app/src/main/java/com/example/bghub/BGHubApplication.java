@@ -1,11 +1,13 @@
 package com.example.bghub;
 
-import android.app.Application;
-
+import com.example.bghub.di.DaggerAppComponent;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
-public class BGHubApplication extends Application {
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
+
+public class BGHubApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
@@ -13,4 +15,10 @@ public class BGHubApplication extends Application {
 
         FlowManager.init(new FlowConfig.Builder(this).build());
     }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().application(this).build();
+    }
+
 }

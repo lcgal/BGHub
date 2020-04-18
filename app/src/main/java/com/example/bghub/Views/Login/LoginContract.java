@@ -4,14 +4,14 @@ package com.example.bghub.Views.Login;
         import com.facebook.Profile;
 
 public interface LoginContract {
-    interface View {
+    interface View<Presenter> {
 
         public void goToMainActivity();
 
 
     }
 
-    interface Presenter {
+    interface Presenter<View>  {
 
         //request facebook informations about the token
         public void loadUserProfile(AccessToken newAccessToken);

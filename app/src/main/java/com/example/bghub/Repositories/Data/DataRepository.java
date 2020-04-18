@@ -3,13 +3,18 @@ package com.example.bghub.Repositories.Data;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
 
-public class DataRepository implements DataContract {
+import javax.inject.Inject;
+
+public class DataRepository implements DataContract.Repository {
 
     public AccessToken loginToken;
 
     public Profile loginProfile;
 
-
+    @Inject
+    public DataRepository() {
+    }
+    
     @Override
     public AccessToken getLoginToken() {
         return loginToken;
