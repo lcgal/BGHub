@@ -1,9 +1,8 @@
 package com.example.bghub.Repositories.Http;
 
-import android.net.wifi.hotspot2.pps.Credential;
-
 import androidx.annotation.Nullable;
 
+import com.example.bghub.Models.Credentials;
 import com.example.bghub.Models.Profile;
 import com.example.bghub.Models.User;
 
@@ -11,9 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -44,12 +43,16 @@ public class HttpRepository implements HttpContract {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(HttpContract.class);
-
     }
 
     @Override
-    public Call<User> FbLogin(Profile profile){
+    public Observable<User> FbLogin(Profile profile){
         return mRetrofit.FbLogin(profile);
+    }
+
+    @Override
+    public Observable<Credentials> test(){
+        return mRetrofit.test();
     }
 }
 

@@ -14,7 +14,7 @@ public interface LoginContract {
     interface Presenter<View>  {
 
         //request facebook informations about the token
-        public void loadUserProfile(AccessToken newAccessToken);
+        void loadUserProfile(AccessToken newAccessToken);
 
 
     }

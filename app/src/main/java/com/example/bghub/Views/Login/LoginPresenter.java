@@ -10,17 +10,29 @@ import com.example.bghub.Repositories.Http.HttpContract;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
     private LoginContract.View mView;
     private DataContract.Repository mDataRepository;
     private HttpContract mHttpRepository;
+
+    private CompositeDisposable mSubscriptions;
+    private User loginUser;
 
     @Inject
     public LoginPresenter (
@@ -62,12 +74,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 profile.setUser(user);
                 profile.setCredentials(credentials);
 
-                mHttpRepository.FbLogin(profile);
-
-
-
-
-                mView.goToMainActivity();
+                processLogin(profile);
             }
         });
 
@@ -75,6 +82,39 @@ public class LoginPresenter implements LoginContract.Presenter {
         parameters.putString("fields","email,first_name,last_name,id");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+
+    private void innitializeSubscription(){
+
+        mSubscriptions = new CompositeDisposable();
+
+    }
+
+    private void processLogin(Profile profile){
+        mHttpRepository.FbLogin(profile)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .subscribeWith(new DisposableObserver<User>() {
+                    @Override
+                    public void onNext(User result) {
+                        loginUser = result;
+
+                        mView.goToMainActivity();
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        String test = e.getMessage();
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        String test = "";
+
+                    }
+                });
     }
 
 }
