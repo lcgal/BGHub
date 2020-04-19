@@ -2,6 +2,7 @@ package com.example.bghub.Views.Login;
 
 import android.os.Bundle;
 
+import com.example.bghub.Models.ApiResponse.ProfileResponse;
 import com.example.bghub.Models.Credentials;
 import com.example.bghub.Models.Profile;
 import com.example.bghub.Models.User;
@@ -94,10 +95,10 @@ public class LoginPresenter implements LoginContract.Presenter {
         mHttpRepository.FbLogin(profile)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())
-                .subscribeWith(new DisposableObserver<User>() {
+                .subscribeWith(new DisposableObserver<ProfileResponse>() {
                     @Override
-                    public void onNext(User result) {
-                        loginUser = result;
+                    public void onNext(ProfileResponse result) {
+                        loginUser = result.getReturnData().getUser();
 
                         mView.goToMainActivity();
 
