@@ -11,6 +11,7 @@ public interface MainContract {
 
     interface Presenter {
 
+        void logout();
 
 
     }

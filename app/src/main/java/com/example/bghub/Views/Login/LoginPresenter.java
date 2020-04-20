@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
 import com.example.bghub.Models.Credentials;
 import com.example.bghub.Models.Profile;
+import com.example.bghub.Models.Session;
 import com.example.bghub.Models.User;
 import com.example.bghub.Repositories.Data.DataContract;
 import com.example.bghub.Repositories.Http.HttpContract;
@@ -26,6 +27,10 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.example.bghub.Commons.AppConstants.Logged_in;
+import static com.example.bghub.Commons.AppConstants.Logged_out;
+import static com.example.bghub.Commons.AppConstants.Processing_Login;
+
 public class LoginPresenter implements LoginContract.Presenter {
 
     private LoginContract.View mView;
@@ -33,56 +38,70 @@ public class LoginPresenter implements LoginContract.Presenter {
     private HttpContract mHttpRepository;
 
     private CompositeDisposable mSubscriptions;
-    private User loginUser;
 
     @Inject
     public LoginPresenter (
             LoginContract.View view,
             DataContract.Repository dataRepository,
             HttpContract httpRepository){
-
         mView = view;
         mDataRepository = dataRepository;
         mHttpRepository = httpRepository;
+    };
+
+    @Override
+    public void start(){
+
+        if (mDataRepository.getSession() == null){
+            mDataRepository.saveSession(new Session());
+            mDataRepository.changeSessionStatus(Logged_out);
+        }
+
+        if (com.facebook.Profile.getCurrentProfile() != null){
+            mDataRepository.changeSessionStatus(Logged_in);
+            mView.goToMainActivity();
+        }
 
     }
 
-
-
     @Override
     public void loadUserProfile(AccessToken newAccessToken){
-        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                User user = new User();
-                Credentials credentials = new Credentials();
-                Profile profile = new Profile();
-                try {
-                    user.setFirstName(object.getString("first_name"));
-                    user.setLastName(object.getString("last_name"));
-                    user.setEmail(object.getString("email"));
+        if (mDataRepository.getSession().getStatus() != Processing_Login) {
+            mDataRepository.changeSessionStatus(Processing_Login);
 
-                    String id = object.getString("id");
-                    credentials.setFbId(id);
-                    profile.setUserId(id);
-                    String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-                    user.setImage_Url(image_url);
+            GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    User user = new User();
+                    Credentials credentials = new Credentials();
+                    Profile profile = new Profile();
+                    try {
+                        user.setFirstName(object.getString("first_name"));
+                        user.setLastName(object.getString("last_name"));
+                        user.setEmail(object.getString("email"));
 
-                }catch (JSONException e){
-                    e.printStackTrace();
+                        String id = object.getString("id");
+                        credentials.setFbId(id);
+                        profile.setUserId(id);
+                        String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
+                        user.setPhotoUrl(image_url);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    profile.setUser(user);
+                    profile.setCredentials(credentials);
+
+                    processLogin(profile);
                 }
+            });
 
-                profile.setUser(user);
-                profile.setCredentials(credentials);
-
-                processLogin(profile);
-            }
-        });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields","email,first_name,last_name,id");
-        request.setParameters(parameters);
-        request.executeAsync();
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "email,first_name,last_name,id");
+            request.setParameters(parameters);
+            request.executeAsync();
+        }
     }
 
     private void innitializeSubscription(){
@@ -98,7 +117,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                 .subscribeWith(new DisposableObserver<ProfileResponse>() {
                     @Override
                     public void onNext(ProfileResponse result) {
-                        loginUser = result.getReturnData().getUser();
+                        mDataRepository.changeSessionStatus(Logged_in);
+                        mDataRepository.getSession().setProfile(result.getReturnData());
 
                         mView.goToMainActivity();
 
@@ -106,13 +126,10 @@ public class LoginPresenter implements LoginContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        String test = e.getMessage();
-
                     }
 
                     @Override
                     public void onComplete() {
-                        String test = "";
 
                     }
                 });

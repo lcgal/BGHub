@@ -43,12 +43,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         AndroidInjection.inject(this);
 
-
-        if (Profile.getCurrentProfile() != null){
-
-            goToMainActivity();
-
-        }
+        mPresenter.start();
 
         //Facebook Login
         setupFacebookLoginCallBack();
@@ -76,8 +71,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
             } else{
                 mPresenter.loadUserProfile(currentAccessToken);
-
-                //mPresenter.processUserLogin(Profile.getCurrentProfile(),loginResult.getAccessToken());
             }
 
         }

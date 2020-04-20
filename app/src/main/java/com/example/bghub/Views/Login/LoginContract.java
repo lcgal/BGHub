@@ -6,7 +6,7 @@ package com.example.bghub.Views.Login;
 public interface LoginContract {
     interface View<Presenter> {
 
-        public void goToMainActivity();
+        void goToMainActivity();
 
 
     }
@@ -15,6 +15,8 @@ public interface LoginContract {
 
         //request facebook informations about the token
         void loadUserProfile(AccessToken newAccessToken);
+
+        void start();
 
 
     }

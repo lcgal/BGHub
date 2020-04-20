@@ -11,90 +11,90 @@ import java.io.Serializable;
 public class User extends BaseModel implements Serializable {
     @Column
     @PrimaryKey
-    private String UserId;
+    private String userId;
 
     @Column
-    private String FirstName;
+    private String firstName;
 
     @Column
-    private String LastName;
+    private String lastName;
 
     @Column
-    private String Email;
+    private String email;
 
     @Column
-    private Long Latitude;
+    private Long latitude;
 
     @Column
-    private Long Longitude;
+    private Long longitude;
 
     @Column
-    private String Description;
+    private String description;
 
     @Column
-    private String Image_Url;
+    private String photoUrl;
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        userId = userId;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        lastName = lastName;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public Long getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(Long latitude) {
-        Latitude = latitude;
+        latitude = latitude;
     }
 
     public Long getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(Long longitude) {
-        Longitude = longitude;
+        longitude = longitude;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        description = description;
     }
 
-    public String getImage_Url() {
-        return Image_Url;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setImage_Url(String image_Url) {
-        Image_Url = image_Url;
+    public void setPhotoUrl(String image_Url) {
+        photoUrl = image_Url;
     }
 }

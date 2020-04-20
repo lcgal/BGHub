@@ -6,6 +6,8 @@ import com.facebook.Profile;
 
 import javax.inject.Inject;
 
+import static com.example.bghub.Commons.AppConstants.Logged_out;
+
 public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View mView;
@@ -18,6 +20,11 @@ public class MainPresenter implements MainContract.Presenter {
 
         mView = view;
         mDataRepository = dataRepository;
+    }
+
+    @Override
+    public void logout(){
+        mDataRepository.changeSessionStatus(Logged_out);
     }
 
 }

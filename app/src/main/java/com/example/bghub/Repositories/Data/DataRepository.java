@@ -1,5 +1,6 @@
 package com.example.bghub.Repositories.Data;
 
+import com.example.bghub.Models.Session;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
 
@@ -9,7 +10,7 @@ public class DataRepository implements DataContract.Repository {
 
     public AccessToken loginToken;
 
-    public Profile loginProfile;
+    public static Session session;
 
     @Inject
     public DataRepository() {
@@ -26,13 +27,18 @@ public class DataRepository implements DataContract.Repository {
     }
 
     @Override
-    public Profile getCurrentProfile() {
-        return loginProfile;
+    public Session getSession() {
+        return session;
     }
 
     @Override
-    public void saveCurrentProfile(Profile loginProfile) {
-        this.loginProfile = loginProfile;
+    public void saveSession(Session session) {
+        this.session = session;
+    }
+
+    @Override
+    public void changeSessionStatus (int status){
+        session.setStatus(status);
     }
 
 }
