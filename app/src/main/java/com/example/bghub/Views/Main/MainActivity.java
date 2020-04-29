@@ -2,10 +2,13 @@ package com.example.bghub.Views.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.bghub.R;
 import com.example.bghub.Views.Login.LoginActivity;
@@ -33,15 +36,26 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         setUpButtons();
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                logout();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setUpButtons(){
-        mLogoutButton = findViewById(R.id.logout_button);
-        mLogoutButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                logout();
-            }
-        });
     }
 
     private void logout(){
@@ -52,5 +66,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         startActivity(intent);
         finish();
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }
