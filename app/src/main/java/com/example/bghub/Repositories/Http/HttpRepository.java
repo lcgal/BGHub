@@ -2,6 +2,7 @@ package com.example.bghub.Repositories.Http;
 
 import androidx.annotation.Nullable;
 
+import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
 import com.example.bghub.Models.Credentials;
 import com.example.bghub.Models.Profile;
@@ -17,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 
 public class HttpRepository implements HttpContract {
     private HttpContract mRetrofit;
@@ -54,6 +56,11 @@ public class HttpRepository implements HttpContract {
     @Override
     public Observable<Credentials> test(){
         return mRetrofit.test();
+    }
+
+    @Override
+    public Observable<GameListResponse>  getGamesList(String version){
+        return mRetrofit.getGamesList(version);
     }
 }
 

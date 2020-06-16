@@ -23,6 +23,15 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void start(){
+
+        if (mDataRepository.getGamesList() == null){
+            mDataRepository.setGamesList();
+        }
+
+    }
+
+    @Override
     public void logout(){
         mDataRepository.changeSessionStatus(Logged_out);
     }

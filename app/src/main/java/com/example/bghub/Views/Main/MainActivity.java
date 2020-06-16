@@ -22,6 +22,8 @@ import com.facebook.login.LoginResult;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     Button mLogoutButton;
@@ -33,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        AndroidInjection.inject(this);
+
+        mPresenter.start();
 
         setUpButtons();
 
@@ -59,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void logout(){
+
+        mPresenter.logout();
 
         LoginManager.getInstance().logOut();
 

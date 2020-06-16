@@ -17,6 +17,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     CallbackManager mCallBackManager;
     LoginButton mLoginButton;
+    ProgressDialog mProgressDialog = null;
 
 
     @Override
@@ -49,6 +51,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         setupFacebookLoginCallBack();
 
         AndroidInjection.inject(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.dispose();
+        mProgressDialog = null;
+        super.onDestroy();
     }
 
     @Override

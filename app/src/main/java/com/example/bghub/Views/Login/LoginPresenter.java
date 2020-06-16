@@ -1,9 +1,12 @@
 package com.example.bghub.Views.Login;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
 import com.example.bghub.Models.Credentials;
+import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Profile;
 import com.example.bghub.Models.Session;
 import com.example.bghub.Models.User;
@@ -18,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,6 +42,8 @@ public class LoginPresenter implements LoginContract.Presenter {
     private HttpContract mHttpRepository;
 
     private CompositeDisposable mSubscriptions;
+
+    private Profile mProfile;
 
     @Inject
     public LoginPresenter (
@@ -65,6 +71,15 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
+    public void dispose() {
+        if (mSubscriptions != null && !mSubscriptions.isDisposed()) {
+            mSubscriptions.dispose();
+        }
+    }
+
+
+
+    @Override
     public void loadUserProfile(AccessToken newAccessToken){
         if (mDataRepository.getSession().getStatus() != Processing_Login) {
             mDataRepository.changeSessionStatus(Processing_Login);
@@ -74,7 +89,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 public void onCompleted(JSONObject object, GraphResponse response) {
                     User user = new User();
                     Credentials credentials = new Credentials();
-                    Profile profile = new Profile();
+                    mProfile = new Profile();
                     try {
                         user.setFirstName(object.getString("first_name"));
                         user.setLastName(object.getString("last_name"));
@@ -82,7 +97,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
                         String id = object.getString("id");
                         credentials.setFbId(id);
-                        profile.setUserId(id);
+                        mProfile.setUserId(id);
                         String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
                         user.setPhotoUrl(image_url);
 
@@ -90,10 +105,10 @@ public class LoginPresenter implements LoginContract.Presenter {
                         e.printStackTrace();
                     }
 
-                    profile.setUser(user);
-                    profile.setCredentials(credentials);
+                    mProfile.setUser(user);
+                    mProfile.setCredentials(credentials);
 
-                    processLogin(profile);
+                    downloadGameList();
                 }
             });
 
@@ -102,6 +117,34 @@ public class LoginPresenter implements LoginContract.Presenter {
             request.setParameters(parameters);
             request.executeAsync();
         }
+    }
+
+    private void downloadGameList(){
+        String version = mDataRepository.getGamesListVersion();
+        mHttpRepository.getGamesList(version)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .subscribeWith(new DisposableObserver<GameListResponse>() {
+                    @Override
+                    public void onNext(GameListResponse result) {
+                        if (result.isUpdate()) {
+                            List<Game> games = result.getData();
+                            mDataRepository.saveGamesList(games, result.getVersion());
+                        }
+                        processLogin(mProfile);
+                    }
+
+
+                    @Override
+                    public void onError(Throwable e) {
+                        String test = e.getMessage();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
     }
 
     private void innitializeSubscription(){

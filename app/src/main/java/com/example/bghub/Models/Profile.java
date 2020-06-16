@@ -8,10 +8,8 @@ public class Profile {
     @PrimaryKey
     private String userId;
 
-    @Column
     private Credentials credentials;
 
-    @Column
     private User user;
 
     public String getUserId() {
