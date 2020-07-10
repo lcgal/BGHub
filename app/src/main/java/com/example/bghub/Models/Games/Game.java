@@ -23,6 +23,15 @@ public class Game extends BaseModel {
     @Column
     String name;
 
+    @Column
+    String minPlayers;
+
+    @Column
+    String maxPlayers;
+
+    @Column
+    String thumbnail;
+
     List<Mechanic> mechanics;
 
     @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "mechanics")
@@ -64,6 +73,30 @@ public class Game extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMinPlayers() {
+        return minPlayers;
+    }
+
+    public void setMinPlayers(String minPlayers) {
+        this.minPlayers = minPlayers;
+    }
+
+    public String getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(String maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
 }

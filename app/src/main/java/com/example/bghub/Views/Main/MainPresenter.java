@@ -1,8 +1,12 @@
 package com.example.bghub.Views.Main;
 
+import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Repositories.Data.DataContract;
+import com.example.bghub.Views.Fragments.OfferGame.OfferGameFragment;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,6 +33,16 @@ public class MainPresenter implements MainContract.Presenter {
             mDataRepository.setGamesList();
         }
 
+    }
+
+    @Override
+    public List<Game> getGames() {
+        return mDataRepository.getGamesList();
+    }
+
+    @Override
+    public OfferGameFragment provideOfferGameFragment() {
+        return OfferGameFragment.newInstance(mDataRepository);
     }
 
     @Override

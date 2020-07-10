@@ -1,5 +1,6 @@
 package com.example.bghub.Views.Main;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,10 +8,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.bghub.R;
+import com.example.bghub.Utils.OnSingleClickListener;
+import com.example.bghub.Views.Fragments.OfferGame.OfferGameFragment;
 import com.example.bghub.Views.Login.LoginActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,6 +34,8 @@ import dagger.android.AndroidInjection;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     Button mLogoutButton;
+
+    Button mOfferGameButton;
 
     @Inject
     MainContract.Presenter mPresenter;
@@ -62,6 +71,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void setUpButtons(){
+
+        mOfferGameButton = findViewById(R.id.offer_game_button);
+        mOfferGameButton.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View view) {
+                openOfferGameFragment();
+            }
+        });
+
     }
 
     private void logout(){
@@ -74,6 +92,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         startActivity(intent);
         finish();
 
+    }
+
+    private void openOfferGameFragment(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        OfferGameFragment fragment = mPresenter.provideOfferGameFragment();
+        //OfferGameFragment fragment = new OfferGameFragment();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 
