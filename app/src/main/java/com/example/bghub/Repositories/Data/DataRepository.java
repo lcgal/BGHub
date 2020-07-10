@@ -66,10 +66,14 @@ public class DataRepository implements DataContract.Repository {
     {
         DataRepository.gamesList = gamesList;
 
-        updateDBVersion(version);
-
-        insertGamesToDB(gamesList);
-
+        try {
+            if(insertGamesToDB(gamesList)){
+                updateDBVersion(version);
+            }
+        } catch (RuntimeException e){
+            String teste = e.getMessage();
+            return;
+        }
     }
 
     @Override
@@ -89,8 +93,9 @@ public class DataRepository implements DataContract.Repository {
         }
     }
 
-    private void insertGamesToDB(List<Game> gamesList){
+    private boolean insertGamesToDB(List<Game> gamesList){
         Delete.table(Game.class);
+
         FastStoreModelTransaction fastModel = FastStoreModelTransaction
                 .saveBuilder(FlowManager.getModelAdapter(Game.class))
                 .addAll(gamesList)
@@ -98,7 +103,10 @@ public class DataRepository implements DataContract.Repository {
 
         DatabaseDefinition database = FlowManager.getDatabase(AppDatabase.class);
         Transaction transaction = database.beginTransactionAsync(fastModel).build();
+        //TODO catch errors on the transaction execution. Try catching the method does not seem to work.
         transaction.execute();
+
+        return true;
 
     }
 

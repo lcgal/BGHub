@@ -40,7 +40,7 @@ public class HttpRepository implements HttpContract {
                 .build();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.24/PhoneApi/")
+                .baseUrl("http://192.168.0.187/PhoneApi/")
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

@@ -128,6 +128,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     @Override
                     public void onNext(GameListResponse result) {
                         if (result.isUpdate()) {
+                            //TODO send this to the background and go on with the login.
                             List<Game> games = result.getData();
                             mDataRepository.saveGamesList(games, result.getVersion());
                         }

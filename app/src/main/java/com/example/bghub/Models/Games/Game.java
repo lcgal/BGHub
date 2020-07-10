@@ -45,7 +45,7 @@ public class Game extends BaseModel {
         return mechanics;
     }
 
-    private List<Family> families;
+    List<Family> families;
 
     @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "mechanics")
     public List<Family> getMyFamilies() {
