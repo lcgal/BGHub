@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +35,20 @@ class OfferGameFragment : Fragment() {
         games_recycler_view.adapter = adapter
         games_recycler_view.layoutManager =  LinearLayoutManager(activity)
 
+        game_name_search.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+
+        })
+
     }
+
 
     fun setDataRepository(dataRepository : DataContract.Repository) {
         mDataRepository = dataRepository;

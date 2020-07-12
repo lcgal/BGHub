@@ -17,8 +17,6 @@ class GameListHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var mThumbnailView: ImageView? = null
     private var mNameView: TextView? = null
 
-
-
     init {
         mThumbnailView = itemView.findViewById(R.id.thumbnail)
         mNameView = itemView.findViewById(R.id.name)
@@ -27,6 +25,8 @@ class GameListHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(game: Game) {
         mThumbnailView?.loadThumbnailInList(game.thumbnail)
         mNameView?.text = game.name
+
+        itemView.setOnClickListener {}
     }
 
     fun ImageView.loadThumbnailInList(imageUrl: String?, @DrawableRes errorResId: Int = R.drawable.thumbnail_image_empty) {
@@ -37,6 +37,11 @@ class GameListHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 .fit()
                 .centerCrop()
                 .into(this)
+    }
+
+    interface OnGameRowListener {
+        fun OnGameRowClick (game: Game) {
+        }
     }
 }
 

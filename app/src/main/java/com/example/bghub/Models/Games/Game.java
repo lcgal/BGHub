@@ -11,6 +11,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.List;
+import java.util.Locale;
 
 @Table(database = AppDatabase.class)
 public class Game extends BaseModel {
@@ -98,5 +99,7 @@ public class Game extends BaseModel {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+    public String toLowerCase(Locale locale) {return this.name.toLowerCase(locale);}
 
 }

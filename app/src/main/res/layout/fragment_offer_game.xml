@@ -1,21 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/containerView"
+
+<LinearLayout android:id="@+id/containerView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/padding_standard"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/emptyMessage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        <SearchView
+            android:id="@+id/game_name_search"
+            android:queryHint="@string/label_search_game_name"
+            app:searchIcon="@null"
+            app:iconifiedByDefault="false"
+            android:iconifiedByDefault="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/padding_half"
+            android:layout_marginHorizontal="@dimen/padding_standard"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/games_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/padding_standard"
-        android:paddingTop="@dimen/padding_standard" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--        <SearchView-->
+<!--            android:id="@+id/game_mechanic_search"-->
+<!--            android:queryHint="@string/label_search_game_mechanic"-->
+<!--            app:searchIcon="@null"-->
+<!--            app:iconifiedByDefault="false"-->
+<!--            android:iconifiedByDefault="false"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginVertical="@dimen/padding_half"-->
+<!--            android:layout_marginHorizontal="@dimen/padding_standard"/>-->
+
+<!--        <SearchView-->
+<!--            android:id="@+id/player_number_search"-->
+<!--            android:queryHint="@string/label_search_number_players"-->
+<!--            app:searchIcon="@null"-->
+<!--            app:iconifiedByDefault="false"-->
+<!--            android:iconifiedByDefault="false"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginVertical="@dimen/padding_half"-->
+<!--            android:layout_marginHorizontal="@dimen/padding_standard"/>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/games_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:layout_marginHorizontal="@dimen/padding_standard"
+            android:paddingTop="@dimen/padding_standard"
+            android:paddingBottom="@dimen/padding_standard" />
+
+
+</LinearLayout>
