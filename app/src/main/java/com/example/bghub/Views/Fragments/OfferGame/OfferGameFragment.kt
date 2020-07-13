@@ -9,14 +9,16 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
+import com.example.bghub.ui.Holder.GameListHolder
 import com.example.bghub.ui.adapter.GameListAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.fragment_offer_game.*
 import javax.inject.Inject
 
-class OfferGameFragment : Fragment() {
+class OfferGameFragment : Fragment() , GameListHolder.OnGameRowListener {
 
     lateinit var mDataRepository: DataContract.Repository
 
@@ -31,7 +33,7 @@ class OfferGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = GameListAdapter( mDataRepository.gamesList)
+        adapter = GameListAdapter( mDataRepository.gamesList, this)
         games_recycler_view.adapter = adapter
         games_recycler_view.layoutManager =  LinearLayoutManager(activity)
 
@@ -52,6 +54,10 @@ class OfferGameFragment : Fragment() {
 
     fun setDataRepository(dataRepository : DataContract.Repository) {
         mDataRepository = dataRepository;
+
+    }
+
+    override fun OnGameRowClick (gameId: Long) {
 
     }
 

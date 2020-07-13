@@ -7,21 +7,24 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bghub.Models.Games.Game
 import com.example.bghub.ui.Holder.GameListHolder
+import com.example.bghub.ui.Holder.GameListHolder.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class GameListAdapter(private val list: List<Game>)
+class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRowListener)
     : RecyclerView.Adapter<GameListHolder>(), Filterable {
 
     lateinit var filteredList : List<Game>
+    lateinit var mOnGameRowListener: OnGameRowListener
 
     init {
         filteredList = list
+        mOnGameRowListener = onGameRowListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameListHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return GameListHolder(inflater, parent)
+        return GameListHolder(inflater, parent, mOnGameRowListener)
 }
 
     override fun onBindViewHolder(holder: GameListHolder, position: Int) {
