@@ -12,13 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
-import com.example.bghub.ui.Holder.GameListHolder
 import com.example.bghub.ui.adapter.GameListAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.fragment_offer_game.*
 import javax.inject.Inject
 
-class OfferGameFragment : Fragment() , GameListHolder.OnGameRowListener {
+class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
     lateinit var mDataRepository: DataContract.Repository
 
@@ -57,7 +56,8 @@ class OfferGameFragment : Fragment() , GameListHolder.OnGameRowListener {
 
     }
 
-    override fun OnGameRowClick (gameId: Long) {
+    override fun OnGameRowClick (game: Game) {
+        var gameone = game
 
     }
 
