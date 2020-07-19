@@ -13,10 +13,10 @@ public class Mechanic extends BaseModel {
     String Id ;
 
     @Column
-    float gameId;
+    long GameId;
 
     @Column
-    String mechanic;
+    String Mechanic;
 
     public String getId() {
         return Id;
@@ -26,19 +26,19 @@ public class Mechanic extends BaseModel {
         Id = id;
     }
 
-    public float getGameId() {
-        return gameId;
+    public long getGameId() {
+        return GameId;
     }
 
-    public void setGameId(float gameId) {
-        this.gameId = gameId;
+    public void setGameId(long gameId) {
+        this.GameId = gameId;
     }
 
     public String getMechanic() {
-        return mechanic;
+        return Mechanic;
     }
 
     public void setMechanic(String mechanic) {
-        this.mechanic = mechanic;
+        this.Mechanic = mechanic;
     }
 }

@@ -13,10 +13,10 @@ public class Family extends BaseModel {
     String Id ;
 
     @Column
-    float gameId;
+    long GameId;
 
     @Column
-    String family;
+    String Family;
 
     public String getId() {
         return Id;
@@ -26,19 +26,19 @@ public class Family extends BaseModel {
         Id = id;
     }
 
-    public float getGameId() {
-        return gameId;
+    public long getGameId() {
+        return GameId;
     }
 
-    public void setGameId(float gameId) {
-        this.gameId = gameId;
+    public void setGameId(long gameId) {
+        this.GameId = gameId;
     }
 
     public String getFamily() {
-        return family;
+        return Family;
     }
 
     public void setFamily(String family) {
-        this.family = family;
+        this.Family = family;
     }
 }

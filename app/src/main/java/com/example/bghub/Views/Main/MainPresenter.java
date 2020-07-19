@@ -2,6 +2,8 @@ package com.example.bghub.Views.Main;
 
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Repositories.Data.DataContract;
+import com.example.bghub.Repositories.Http.HttpContract;
+import com.example.bghub.Repositories.Http.HttpRepository;
 import com.example.bghub.Views.Fragments.OfferGame.OfferGameFragment;
 import com.facebook.AccessToken;
 import com.facebook.Profile;
@@ -16,14 +18,17 @@ public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View mView;
     private DataContract.Repository mDataRepository;
+    private HttpContract mHttpRepository;
 
     @Inject
     public MainPresenter(
             MainContract.View view,
-            DataContract.Repository dataRepository){
+            DataContract.Repository dataRepository,
+            HttpContract httpRepository){
 
         mView = view;
         mDataRepository = dataRepository;
+        mHttpRepository = httpRepository;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public OfferGameFragment provideOfferGameFragment() {
-        return OfferGameFragment.newInstance(mDataRepository);
+        return OfferGameFragment.newInstance(mDataRepository, mHttpRepository);
     }
 
     @Override

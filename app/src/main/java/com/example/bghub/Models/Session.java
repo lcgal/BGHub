@@ -1,27 +1,25 @@
 package com.example.bghub.Models;
 
-import com.raizlabs.android.dbflow.annotation.Table;
-
 public class Session {
 
-    private int status;
+    private int Status;
 
-    private Profile profile;
+    private Profile Profile;
 
     public int getStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        this.Status = status;
     }
 
     public Profile getProfile() {
-        return profile;
+        return Profile;
     }
 
     public void setProfile(Profile profile) {
-        this.profile = profile;
+        this.Profile = profile;
     }
 
 

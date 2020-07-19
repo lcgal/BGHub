@@ -1,8 +1,6 @@
 package com.example.bghub.Models.Games;
 
 import com.example.bghub.Models.AppDatabase;
-import com.example.bghub.Models.Credentials;
-import com.example.bghub.Models.User;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -19,87 +17,86 @@ public class Game extends BaseModel {
 
     @Column
     @PrimaryKey
-    float id;
+    long Id;
 
     @Column
-    String name;
+    String Name;
 
     @Column
-    String minPlayers;
+    String MinPlayers;
 
     @Column
-    String maxPlayers;
+    String MaxPlayers;
 
     @Column
-    String thumbnail;
+    String Thumbnail;
 
-    List<Mechanic> mechanics;
+    List<Mechanic> Mechanics;
 
-    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "mechanics")
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "Mechanics")
     public List<Mechanic> getMyMechanics() {
-        if (mechanics == null || mechanics.isEmpty()) {
-            mechanics = SQLite.select()
+        if (Mechanics == null || Mechanics.isEmpty()) {
+            Mechanics = SQLite.select()
                     .from(Mechanic.class)
-                    .where(Mechanic_Table.gameId.eq(getId()))
+                    .where(Mechanic_Table.GameId.eq(getId()))
                     .queryList();
         }
-        return mechanics;
+        return Mechanics;
     }
 
-    List<Family> families;
+    List<Family> Families;
 
-    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "mechanics")
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "Families")
     public List<Family> getMyFamilies() {
-        if (families == null || families.isEmpty()) {
-            families = SQLite.select()
+        if (Families == null || Families.isEmpty()) {
+            Families = SQLite.select()
                     .from(Family.class)
-                    .where(Family_Table.gameId.eq(getId()))
+                    .where(Family_Table.GameId.eq(getId()))
                     .queryList();
         }
-        return families;
+        return Families;
     }
 
 
-    public float getId() {
-        return id;
+    public long getId() {
+        return Id;
     }
 
-    public void setId(float id) {
-        this.id = id;
+    public void setId(long id) {
+        this.Id = id;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
     public String getMinPlayers() {
-        return minPlayers;
+        return MinPlayers;
     }
 
     public void setMinPlayers(String minPlayers) {
-        this.minPlayers = minPlayers;
+        this.MinPlayers = minPlayers;
     }
 
     public String getMaxPlayers() {
-        return maxPlayers;
+        return MaxPlayers;
     }
 
     public void setMaxPlayers(String maxPlayers) {
-        this.maxPlayers = maxPlayers;
+        this.MaxPlayers = maxPlayers;
     }
 
     public String getThumbnail() {
-        return thumbnail;
+        return Thumbnail;
     }
 
     public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+        this.Thumbnail = thumbnail;
     }
 
-    public String toLowerCase(Locale locale) {return this.name.toLowerCase(locale);}
-
+    public String toLowerCase(Locale locale) {return this.Name.toLowerCase(locale);}
 }

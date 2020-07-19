@@ -6,33 +6,33 @@ import java.util.List;
 
 public class GameListResponse {
 
-    private boolean update;
+    private boolean Update;
 
-    private String version;
+    private String Version;
 
-    private List<Game> data;
+    private List<Game> Data;
 
     public List<Game> getData() {
-        return data;
+        return Data;
     }
 
     public void setData(List<Game> result) {
-        this.data = result;
+        this.Data = result;
     }
 
     public boolean isUpdate() {
-        return update;
+        return Update;
     }
 
     public void setUpdate(boolean update) {
-        this.update = update;
+        this.Update = update;
     }
 
     public String getVersion() {
-        return version;
+        return Version;
     }
 
     public void setVersion(String version) {
-        this.version = version;
+        this.Version = version;
     }
 }

@@ -13,7 +13,7 @@ public class Versions extends BaseModel {
     String Key ;
 
     @Column
-    String value;
+    String Value;
 
     public String getKey() {
         return Key;
@@ -24,11 +24,11 @@ public class Versions extends BaseModel {
     }
 
     public String getValue() {
-        return value;
+        return Value;
     }
 
     public void setValue(String value) {
-        this.value = value;
+        this.Value = value;
     }
 
 }

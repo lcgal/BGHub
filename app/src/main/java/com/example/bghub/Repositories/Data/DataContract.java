@@ -1,5 +1,8 @@
 package com.example.bghub.Repositories.Data;
 
+import android.content.Context;
+import android.location.Location;
+
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Session;
 import com.facebook.AccessToken;
@@ -26,6 +29,10 @@ public interface DataContract {
         String getGamesListVersion();
 
         void setGamesList();
+
+        public void updateLocation(Context context);
+
+        public Location getLocation();
 
     }
 

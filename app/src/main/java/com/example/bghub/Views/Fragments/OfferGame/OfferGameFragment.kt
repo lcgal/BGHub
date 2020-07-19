@@ -9,9 +9,13 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bghub.Models.GameRooms.GameOffer
 import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
+import com.example.bghub.Repositories.Data.DataRepository
+import com.example.bghub.Repositories.Http.HttpContract
+import com.example.bghub.Repositories.Http.HttpRepository
 import com.example.bghub.ui.adapter.GameListAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.fragment_offer_game.*
@@ -20,6 +24,8 @@ import javax.inject.Inject
 class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
     lateinit var mDataRepository: DataContract.Repository
+
+    lateinit var mHttpRepository: HttpContract
 
     lateinit var adapter: GameListAdapter
 
@@ -45,27 +51,38 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
                 adapter.filter.filter(newText)
                 return false
             }
-
         })
 
     }
-
 
     fun setDataRepository(dataRepository : DataContract.Repository) {
         mDataRepository = dataRepository;
 
     }
 
+    fun setHttpRepository(httpRepository : HttpContract) {
+        mHttpRepository = httpRepository;
+
+    }
+
     override fun OnGameRowClick (game: Game) {
-        var gameone = game
+        var location = mDataRepository.getLocation()
+        var gameOffer = GameOffer(game.id,
+                location.latitude,
+                location.longitude,
+                mDataRepository.session.profile.userId)
+        mHttpRepository.postGameOffer(gameOffer)
+        //TODO subscribe to get the result.
+
 
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(dataRepository : DataContract.Repository): OfferGameFragment {
+        fun newInstance(dataRepository : DataContract.Repository, httpRepository: HttpContract): OfferGameFragment {
             val fragment = OfferGameFragment()
             fragment.setDataRepository(dataRepository)
+            fragment.setHttpRepository(httpRepository)
             return fragment
         }
     }

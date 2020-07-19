@@ -6,34 +6,34 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 public class Profile {
     @Column
     @PrimaryKey
-    private String userId;
+    private String UserId;
+    
+    private Credentials Credentials;
 
-    private Credentials credentials;
-
-    private User user;
+    private User User;
 
     public String getUserId() {
-        return userId;
+        return UserId;
     }
 
     public void setUserId(String userId) {
-        userId = userId;
+        UserId = userId;
     }
 
     public Credentials getCredentials() {
-        return credentials;
+        return Credentials;
     }
 
     public void setCredentials(Credentials credentials) {
-        this.credentials = credentials;
+        this.Credentials = credentials;
     }
 
     public User getUser() {
-        return user;
+        return User;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.User = user;
     }
 
 }
