@@ -1,5 +1,6 @@
-package com.example.bghub.Models;
+package com.example.bghub.Models.Session;
 
+import com.example.bghub.Models.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;

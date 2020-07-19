@@ -93,8 +93,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mLoginButton.setPermissions(facebookPermissions);
         mLoginButton.setLoginBehavior( LoginBehavior.WEB_ONLY );
 
-        //FacebookSdk.sdkInitialize(getApplicationContext());
-        //LoginManager.getInstance().logOut();
         mCallBackManager = CallbackManager.Factory.create();
         mLoginButton.registerCallback(mCallBackManager,
                 new FacebookCallback<LoginResult>() {

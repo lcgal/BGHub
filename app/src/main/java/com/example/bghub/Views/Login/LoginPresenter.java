@@ -1,26 +1,23 @@
 package com.example.bghub.Views.Login;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
-import com.example.bghub.Models.Credentials;
+import com.example.bghub.Models.Session.Credentials;
 import com.example.bghub.Models.Games.Game;
-import com.example.bghub.Models.Profile;
-import com.example.bghub.Models.Session;
-import com.example.bghub.Models.User;
+import com.example.bghub.Models.Session.Profile;
+import com.example.bghub.Models.Session.Session;
+import com.example.bghub.Models.Session.User;
 import com.example.bghub.Repositories.Data.DataContract;
 import com.example.bghub.Repositories.Http.HttpContract;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,8 +25,6 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import static com.example.bghub.Commons.AppConstants.Logged_in;
 import static com.example.bghub.Commons.AppConstants.Logged_out;
@@ -40,8 +35,6 @@ public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.View mView;
     private DataContract.Repository mDataRepository;
     private HttpContract mHttpRepository;
-
-    private CompositeDisposable mSubscriptions;
 
     private Profile mProfile;
 
@@ -72,9 +65,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void dispose() {
-        if (mSubscriptions != null && !mSubscriptions.isDisposed()) {
-            mSubscriptions.dispose();
-        }
+
     }
 
 
@@ -132,6 +123,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                             List<Game> games = result.getData();
                             mDataRepository.saveGamesList(games, result.getVersion());
                         }
+                        //TOOD process login first, then have the gamelist be downloaded and processed on the background.
                         processLogin(mProfile);
                     }
 
@@ -148,12 +140,6 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     }
 
-    private void innitializeSubscription(){
-
-        mSubscriptions = new CompositeDisposable();
-
-    }
-
     private void processLogin(Profile profile){
         mHttpRepository.FbLogin(profile)
                 .subscribeOn(Schedulers.newThread())
@@ -161,6 +147,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 .subscribeWith(new DisposableObserver<ProfileResponse>() {
                     @Override
                     public void onNext(ProfileResponse result) {
+                        mDataRepository.saveProfile(result.getReturnData());
                         mDataRepository.changeSessionStatus(Logged_in);
                         mDataRepository.getSession().setProfile(result.getReturnData());
 

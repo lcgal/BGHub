@@ -1,6 +1,6 @@
 package com.example.bghub.Models.ApiResponse;
 
-import com.example.bghub.Models.Profile;
+import com.example.bghub.Models.Session.Profile;
 
 public class ProfileResponse {
 

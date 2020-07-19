@@ -8,18 +8,19 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.bghub.Models.ApiResponse.ApiResponse
+import com.example.bghub.Models.ApiResponse.BooleanResponse
 import com.example.bghub.Models.GameRooms.GameOffer
 import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
-import com.example.bghub.Repositories.Data.DataRepository
 import com.example.bghub.Repositories.Http.HttpContract
-import com.example.bghub.Repositories.Http.HttpRepository
 import com.example.bghub.ui.adapter.GameListAdapter
-import dagger.android.AndroidInjection
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_offer_game.*
-import javax.inject.Inject
 
 class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
@@ -28,6 +29,8 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
     lateinit var mHttpRepository: HttpContract
 
     lateinit var adapter: GameListAdapter
+
+    lateinit var disposableObserver: DisposableObserver<ApiResponse<String>>
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -67,14 +70,29 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
     override fun OnGameRowClick (game: Game) {
         var location = mDataRepository.getLocation()
+        if (location == null){
+            mDataRepository.updateLocation(this.context)
+            return
+        }
         var gameOffer = GameOffer(game.id,
                 location.latitude,
                 location.longitude,
                 mDataRepository.session.profile.userId)
-        mHttpRepository.postGameOffer(gameOffer)
-        //TODO subscribe to get the result.
+                mHttpRepository.postGameOffer(gameOffer)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(Schedulers.newThread())
+                        .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {
+                            override fun onNext(value: ApiResponse<String>?) {
 
+                            }
 
+                            override fun  onError(e: Throwable?) {
+
+                            }
+
+                            override fun  onComplete() {
+
+                            }})
     }
 
     companion object {
@@ -86,6 +104,8 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
             return fragment
         }
     }
+
+
 
     //inner class recycler
 }

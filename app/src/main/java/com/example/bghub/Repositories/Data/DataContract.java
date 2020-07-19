@@ -4,9 +4,9 @@ import android.content.Context;
 import android.location.Location;
 
 import com.example.bghub.Models.Games.Game;
-import com.example.bghub.Models.Session;
+import com.example.bghub.Models.Session.Profile;
+import com.example.bghub.Models.Session.Session;
 import com.facebook.AccessToken;
-import com.facebook.Profile;
 
 import java.util.List;
 
@@ -34,6 +34,7 @@ public interface DataContract {
 
         public Location getLocation();
 
+        public void saveProfile (Profile profile);
     }
 
 }

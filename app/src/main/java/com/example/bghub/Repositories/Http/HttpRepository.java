@@ -2,13 +2,12 @@ package com.example.bghub.Repositories.Http;
 
 import androidx.annotation.Nullable;
 
-import com.example.bghub.Models.ApiResponse.BooleanResponse;
+import com.example.bghub.Models.ApiResponse.ApiResponse;
 import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
-import com.example.bghub.Models.Credentials;
 import com.example.bghub.Models.GameRooms.GameOffer;
-import com.example.bghub.Models.Profile;
-import com.example.bghub.Models.User;
+import com.example.bghub.Models.Session.Credentials;
+import com.example.bghub.Models.Session.Profile;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +19,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
 
 public class HttpRepository implements HttpContract {
     private HttpContract mRetrofit;
@@ -42,7 +40,7 @@ public class HttpRepository implements HttpContract {
                 .build();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.187/PhoneApi/")
+                .baseUrl("http://192.168.0.187/phoneapi/")
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -66,7 +64,7 @@ public class HttpRepository implements HttpContract {
     }
 
     @Override
-    public Observable<BooleanResponse> postGameOffer(GameOffer gameOffer) {
+    public Observable<ApiResponse<String>> postGameOffer(GameOffer gameOffer) {
         return mRetrofit.postGameOffer(gameOffer);
     }
 }

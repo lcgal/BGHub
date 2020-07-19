@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 
 import androidx.core.app.ActivityCompat;
 
@@ -13,9 +12,9 @@ import com.example.bghub.Models.AppDatabase;
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Games.Versions;
 import com.example.bghub.Models.Games.Versions_Table;
-import com.example.bghub.Models.Session;
+import com.example.bghub.Models.Session.Profile;
+import com.example.bghub.Models.Session.Session;
 import com.facebook.AccessToken;
-import com.facebook.Profile;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,16 +22,14 @@ import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.Model;
+import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.FastStoreModelTransaction;
+import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class DataRepository implements DataContract.Repository {
 
@@ -62,6 +59,15 @@ public class DataRepository implements DataContract.Repository {
 
     @Override
     public Session getSession() {
+        if (session == null){
+            session = new Session();
+            session.setProfile(SQLite.select().from(Profile.class).querySingle());
+            if(session.getProfile() != null) {
+                session.setStatus(1);
+            } else {
+                session.setStatus(0);
+            }
+        }
         return session;
     }
 
@@ -137,6 +143,16 @@ public class DataRepository implements DataContract.Repository {
         return mLastLocation;
     }
 
+    @Override
+    public void saveProfile (Profile profile) {
+        FlowManager.getDatabase(AppDatabase.class).executeTransaction(new ITransaction() {
+            @Override
+            public void execute(DatabaseWrapper databaseWrapper) {
+                profile.save();
+            }
+        });
+    }
+
     private boolean insertGamesToDB(List<Game> gamesList){
         Delete.table(Game.class);
 
@@ -154,6 +170,8 @@ public class DataRepository implements DataContract.Repository {
 
     }
 
+
+
     private void updateDBVersion(String version){
         Versions dbVersion = SQLite.select().from(Versions.class).where(Versions_Table.Key.eq("GamesListVersion")).querySingle();
         //TODO Entender melhor como utilizar o DBFLOW.
@@ -168,7 +186,6 @@ public class DataRepository implements DataContract.Repository {
                     .values("GamesListVersion",version)
                     .execute(); // non-UI blocking
         }
-
     }
 
     private static void executeSaveTransaction(FastStoreModelTransaction fastModel) {

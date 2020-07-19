@@ -1,4 +1,7 @@
-package com.example.bghub.Models;
+package com.example.bghub.Models.Session;
+
+import com.example.bghub.Models.Session.Profile;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 
 public class Session {
 
@@ -6,11 +9,13 @@ public class Session {
 
     private Profile Profile;
 
+
     public int getStatus() {
         return Status;
     }
 
     public void setStatus(int status) {
+        //TODO create constants for SessionStatus
         this.Status = status;
     }
 
