@@ -3,16 +3,16 @@ package com.example.bghub.Models.ApiResponse;
 public class ApiResponse<T> {
     private Boolean Result;
 
-    private T ResultData;
+    private T ReturnData;
 
     private String Error;
 
-    public Boolean getData ()
+    public Boolean getResult ()
     {
         return Result;
     }
 
-    public void setData (Boolean Data)
+    public void setResult (Boolean Data)
     {
         this.Result = Data;
     }
@@ -27,7 +27,7 @@ public class ApiResponse<T> {
         this.Error = error;
     }
 
-    public T getResultData() { return ResultData; }
+    public T getReturnData() { return ReturnData; }
 
-    public void setResultData(T resultData) { ResultData = resultData; }
+    public void setReturnData(T returnData) { ReturnData = returnData; }
 }

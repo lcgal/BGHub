@@ -9,6 +9,7 @@ import android.location.Location;
 import androidx.core.app.ActivityCompat;
 
 import com.example.bghub.Models.AppDatabase;
+import com.example.bghub.Models.GameRooms.GameRoom;
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Games.Versions;
 import com.example.bghub.Models.Games.Versions_Table;
@@ -149,6 +150,16 @@ public class DataRepository implements DataContract.Repository {
             @Override
             public void execute(DatabaseWrapper databaseWrapper) {
                 profile.save();
+            }
+        });
+    }
+
+    @Override
+    public void insertGameRoom (GameRoom gameRoom) {
+        FlowManager.getDatabase(AppDatabase.class).executeTransaction(new ITransaction() {
+            @Override
+            public void execute(DatabaseWrapper databaseWrapper) {
+                gameRoom.save();
             }
         });
     }

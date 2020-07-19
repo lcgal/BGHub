@@ -3,6 +3,7 @@ package com.example.bghub.Repositories.Data;
 import android.content.Context;
 import android.location.Location;
 
+import com.example.bghub.Models.GameRooms.GameRoom;
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Session.Profile;
 import com.example.bghub.Models.Session.Session;
@@ -35,6 +36,8 @@ public interface DataContract {
         public Location getLocation();
 
         public void saveProfile (Profile profile);
+
+        public void insertGameRoom (GameRoom gameRoom);
     }
 
 }

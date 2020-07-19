@@ -9,15 +9,13 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bghub.Models.ApiResponse.ApiResponse
-import com.example.bghub.Models.ApiResponse.BooleanResponse
 import com.example.bghub.Models.GameRooms.GameOffer
+import com.example.bghub.Models.GameRooms.GameRoom
 import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
 import com.example.bghub.Repositories.Http.HttpContract
 import com.example.bghub.ui.adapter.GameListAdapter
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_offer_game.*
@@ -74,24 +72,33 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
             mDataRepository.updateLocation(this.context)
             return
         }
-        var gameOffer = GameOffer(game.id,
-                location.latitude,
-                location.longitude,
-                mDataRepository.session.profile.userId)
+
+        var gameid = game.id
+        var latitude = location.latitude
+        var longitude = location.longitude
+        var sessionid = mDataRepository.session.profile.userId
+        var gameOffer = GameOffer(gameid,
+                        latitude,
+                        longitude,
+                        sessionid)
+                //Sending game offer
+                //TODO send this to the background
                 mHttpRepository.postGameOffer(gameOffer)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(Schedulers.newThread())
                         .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {
-                            override fun onNext(value: ApiResponse<String>?) {
-
+                            override fun onNext(response: ApiResponse<String>?) {
+                                if (response != null && response.result == true) {
+                                    var gameRoom = GameRoom(response.returnData,latitude,longitude,sessionid,gameid,game)
+                                    mDataRepository.insertGameRoom(gameRoom)
+                                    getActivity()?.supportFragmentManager?.popBackStack();
+                                }
                             }
-
                             override fun  onError(e: Throwable?) {
-
+                                //TODO error treatment
                             }
 
                             override fun  onComplete() {
-
                             }})
     }
 
