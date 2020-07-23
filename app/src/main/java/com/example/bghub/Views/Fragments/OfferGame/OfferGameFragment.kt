@@ -20,6 +20,16 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_offer_game.*
 
+/**
+ * Fragment used to offer a game.
+ *
+ * In this fragment, the user should be able to easily search for a game it own, and offer it so that other users around his area can see it and get in touch.
+ * Decided to use kotlin, and so far have decided to keep all it's functionalities contained in this single class, with only more application scoped dependencies (no viewmodel for example)
+ *
+ * @author lcgal
+ * @version 1.0
+ * @since 1.0
+ */
 class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
     lateinit var mDataRepository: DataContract.Repository
@@ -36,6 +46,13 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
         return inflater.inflate(R.layout.fragment_offer_game, container, false)
     }
 
+    /**
+     * OnViewCreated sets up the adapter (GameListAdapter), a LinearLayoutManager, to which it passes a custom listener @see OnGameRowClick, and a listener for changes on the search bar that filters the games list.
+     *
+     * @author lcgal
+     * @version 1.0
+     * @since 1.0
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -66,6 +83,16 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
     }
 
+    /**
+     * Method that deals with the click on the Holder row.
+     *
+     * It's able to listen to the click because it implements the GameListAdapter.OnGameRowListener interface, and it passes it's own listener to the adapter @see onViewCreated.
+     *
+     * @author lcgal
+     * @param Models.Games.Game
+     * @version 1.0
+     * @since 1.0
+     */
     override fun OnGameRowClick (game: Game) {
         var location = mDataRepository.getLocation()
         if (location == null){
@@ -102,6 +129,14 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
                             }})
     }
 
+    /**
+     * Custom buider in order to get the necessary repositories from the activity.
+     *
+     * @author lcgal
+     * @param  DataContract.Repository, httpRepository
+     * @version 1.0
+     * @since 1.0
+     */
     companion object {
         @JvmStatic
         fun newInstance(dataRepository : DataContract.Repository, httpRepository: HttpContract): OfferGameFragment {
