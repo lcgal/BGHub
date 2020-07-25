@@ -24,6 +24,22 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/offer_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="@dimen/padding_half"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:text="Teste" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

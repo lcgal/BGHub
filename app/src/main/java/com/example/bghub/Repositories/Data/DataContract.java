@@ -1,8 +1,15 @@
 package com.example.bghub.Repositories.Data;
 
-import com.example.bghub.Models.Session;
+import android.content.Context;
+import android.location.Location;
+
+import com.example.bghub.Models.GameRooms.GameRoom;
+import com.example.bghub.Models.Games.Game;
+import com.example.bghub.Models.Session.Profile;
+import com.example.bghub.Models.Session.Session;
 import com.facebook.AccessToken;
-import com.facebook.Profile;
+
+import java.util.List;
 
 public interface DataContract {
     interface Repository {
@@ -16,6 +23,21 @@ public interface DataContract {
 
         void changeSessionStatus (int status);
 
+        List<Game> getGamesList();
+
+        void saveGamesList(List<Game> gamesList, String version);
+
+        String getGamesListVersion();
+
+        void setGamesList();
+
+        public void updateLocation(Context context);
+
+        public Location getLocation();
+
+        public void saveProfile (Profile profile);
+
+        public void insertGameRoom (GameRoom gameRoom);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.bghub.di;
 
 import com.example.bghub.Views.Login.LoginActivity;
+import com.example.bghub.Views.Main.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -18,5 +19,9 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = {LoginModule.class})
     abstract LoginActivity loginActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {MainModule.class})
+    abstract MainActivity mainActivity();
 
 }

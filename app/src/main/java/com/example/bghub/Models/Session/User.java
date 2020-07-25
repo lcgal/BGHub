@@ -1,5 +1,6 @@
-package com.example.bghub.Models;
+package com.example.bghub.Models.Session;
 
+import com.example.bghub.Models.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -11,90 +12,90 @@ import java.io.Serializable;
 public class User extends BaseModel implements Serializable {
     @Column
     @PrimaryKey
-    private String userId;
+    private String UserId;
 
     @Column
-    private String firstName;
+    private String FirstName;
 
     @Column
-    private String lastName;
+    private String LastName;
 
     @Column
-    private String email;
+    private String Email;
 
     @Column
-    private Long latitude;
+    private double Latitude;
 
     @Column
-    private Long longitude;
+    private double Longitude;
 
     @Column
-    private String description;
+    private String Description;
 
     @Column
-    private String photoUrl;
+    private String PhotoUrl;
 
     public String getUserId() {
-        return userId;
+        return UserId;
     }
 
     public void setUserId(String userId) {
-        userId = userId;
+        UserId = userId;
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
     public void setFirstName(String firstName) {
-        firstName = firstName;
+        FirstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return LastName;
     }
 
     public void setLastName(String lastName) {
-        lastName = lastName;
+        LastName = lastName;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String email) {
-        email = email;
+        Email = email;
     }
 
-    public Long getLatitude() {
-        return latitude;
+    public double getLatitude() {
+        return Latitude;
     }
 
-    public void setLatitude(Long latitude) {
-        latitude = latitude;
+    public void setLatitude(double latitude) {
+        Latitude = latitude;
     }
 
-    public Long getLongitude() {
-        return longitude;
+    public double getLongitude() {
+        return Longitude;
     }
 
-    public void setLongitude(Long longitude) {
-        longitude = longitude;
+    public void setLongitude(double longitude) {
+        Longitude = longitude;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
     public void setDescription(String description) {
-        description = description;
+        Description = description;
     }
 
     public String getPhotoUrl() {
-        return photoUrl;
+        return PhotoUrl;
     }
 
     public void setPhotoUrl(String image_Url) {
-        photoUrl = image_Url;
+        PhotoUrl = image_Url;
     }
 }

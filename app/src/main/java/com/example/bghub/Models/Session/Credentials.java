@@ -1,11 +1,14 @@
-package com.example.bghub.Models;
+package com.example.bghub.Models.Session;
 
+import com.example.bghub.Models.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.io.Serializable;
 
+@Table(database = AppDatabase.class)
 public class Credentials extends BaseModel implements Serializable {
     @Column
     @PrimaryKey

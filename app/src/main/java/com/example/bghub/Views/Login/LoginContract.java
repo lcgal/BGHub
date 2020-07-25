@@ -18,6 +18,8 @@ public interface LoginContract {
 
         void start();
 
+        void dispose();
+
 
     }
 }

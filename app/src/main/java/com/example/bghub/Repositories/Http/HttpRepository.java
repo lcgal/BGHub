@@ -2,10 +2,12 @@ package com.example.bghub.Repositories.Http;
 
 import androidx.annotation.Nullable;
 
+import com.example.bghub.Models.ApiResponse.ApiResponse;
+import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
-import com.example.bghub.Models.Credentials;
-import com.example.bghub.Models.Profile;
-import com.example.bghub.Models.User;
+import com.example.bghub.Models.GameRooms.GameOffer;
+import com.example.bghub.Models.Session.Credentials;
+import com.example.bghub.Models.Session.Profile;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +40,7 @@ public class HttpRepository implements HttpContract {
                 .build();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.24/PhoneApi/")
+                .baseUrl("http://192.168.0.187/phoneapi/")
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -54,6 +56,16 @@ public class HttpRepository implements HttpContract {
     @Override
     public Observable<Credentials> test(){
         return mRetrofit.test();
+    }
+
+    @Override
+    public Observable<GameListResponse>  getGamesList(String version){
+        return mRetrofit.getGamesList(version);
+    }
+
+    @Override
+    public Observable<ApiResponse<String>> postGameOffer(GameOffer gameOffer) {
+        return mRetrofit.postGameOffer(gameOffer);
     }
 }
 
