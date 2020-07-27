@@ -31,6 +31,12 @@ public class Game extends BaseModel {
     @Column
     String Thumbnail;
 
+    @Column
+    String Image;
+
+    @Column
+    String Description;
+
     List<Mechanic> Mechanics;
 
     @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "Mechanics")
@@ -99,4 +105,12 @@ public class Game extends BaseModel {
     }
 
     public String toLowerCase(Locale locale) {return this.Name.toLowerCase(locale);}
+
+    public String getImage() {return Image;}
+
+    public void setImage(String image) {Image = image;}
+
+    public String getDescription() {return Description;}
+
+    public void setDescription(String description) {Description = description;}
 }

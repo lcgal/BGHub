@@ -3,10 +3,7 @@ package com.example.bghub.Views.Main;
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Repositories.Data.DataContract;
 import com.example.bghub.Repositories.Http.HttpContract;
-import com.example.bghub.Repositories.Http.HttpRepository;
-import com.example.bghub.Views.Fragments.OfferGame.OfferGameFragment;
-import com.facebook.AccessToken;
-import com.facebook.Profile;
+import com.example.bghub.Views.Fragments.OfferGameFragment;
 
 import java.util.List;
 

@@ -40,6 +40,16 @@
             android:paddingRight="48dp"
             android:text="Teste" />
 
+        <Button
+            android:id="@+id/search_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="@dimen/padding_half"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:text="Teste" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

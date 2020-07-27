@@ -72,6 +72,16 @@ dependencies {
     // Core library
     androidTestImplementation 'androidx.test:core:1.0.0'
 
+    //WorkManager
+    def work_version = "2.4.0"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    // optional - RxJava2 support
+    implementation "androidx.work:work-rxjava2:$work_version"
+    // optional - GCMNetworkManager support
+    implementation "androidx.work:work-gcm:$work_version"
+    // optional - Test helpers
+    androidTestImplementation "androidx.work:work-testing:$work_version"
+
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.0'

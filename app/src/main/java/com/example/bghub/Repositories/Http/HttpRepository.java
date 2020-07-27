@@ -5,9 +5,11 @@ import androidx.annotation.Nullable;
 import com.example.bghub.Models.ApiResponse.ApiResponse;
 import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
+import com.example.bghub.Models.ApiResponse.RoomListResponse;
 import com.example.bghub.Models.GameRooms.GameOffer;
 import com.example.bghub.Models.Session.Credentials;
 import com.example.bghub.Models.Session.Profile;
+import com.example.bghub.Models.UserLocation;
 
 import java.util.concurrent.TimeUnit;
 
@@ -54,11 +56,6 @@ public class HttpRepository implements HttpContract {
     }
 
     @Override
-    public Observable<Credentials> test(){
-        return mRetrofit.test();
-    }
-
-    @Override
     public Observable<GameListResponse>  getGamesList(String version){
         return mRetrofit.getGamesList(version);
     }
@@ -66,6 +63,11 @@ public class HttpRepository implements HttpContract {
     @Override
     public Observable<ApiResponse<String>> postGameOffer(GameOffer gameOffer) {
         return mRetrofit.postGameOffer(gameOffer);
+    }
+
+    @Override
+    public Observable<RoomListResponse> getGameRooms(UserLocation userLocation) {
+        return mRetrofit.getGameRooms(userLocation);
     }
 }
 

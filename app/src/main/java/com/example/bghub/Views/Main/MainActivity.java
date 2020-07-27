@@ -11,21 +11,15 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.bghub.R;
 import com.example.bghub.Utils.OnSingleClickListener;
-import com.example.bghub.Views.Fragments.OfferGame.OfferGameFragment;
+import com.example.bghub.Views.Fragments.OfferGameFragment;
+import com.example.bghub.Views.Fragments.SearchGameFragment;
 import com.example.bghub.Views.Login.LoginActivity;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 
 import javax.inject.Inject;
 
@@ -36,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     Button mLogoutButton;
 
     Button mOfferGameButton;
+
+    Button mSearchGameButton;
 
     @Inject
     MainContract.Presenter mPresenter;
@@ -80,6 +76,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         });
 
+        mSearchGameButton = findViewById(R.id.search_game_button);
+        mSearchGameButton.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View view) {
+                openSearchGameFragment();
+            }
+        });
+
     }
 
     private void logout(){
@@ -98,11 +102,20 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         OfferGameFragment fragment = mPresenter.provideOfferGameFragment();
-        //OfferGameFragment fragment = new OfferGameFragment();
         transaction.replace(R.id.frameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    private void openSearchGameFragment(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        SearchGameFragment fragment = new SearchGameFragment();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
 
     @Override

@@ -72,7 +72,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void loadUserProfile(AccessToken newAccessToken){
-        if (mDataRepository.getSession().getStatus() != Processing_Login) {
+        if (1 == 1) {
+        //if (mDataRepository.getSession().getStatus() != Processing_Login) {
             mDataRepository.changeSessionStatus(Processing_Login);
 
             GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {

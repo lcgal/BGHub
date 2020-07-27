@@ -38,6 +38,7 @@ public class DataRepository implements DataContract.Repository {
 
     public static Session session;
 
+    private boolean isGameListReady;
     public static List<Game> gamesList;
 
     public static Location mLastLocation;

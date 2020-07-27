@@ -22,6 +22,9 @@ Thumbs.db
 .idea/*
 .gradle/*
 
+.app/gradle/*
+.app/idea
+
 build/*
 !build/outputs/
 build/outputs/*

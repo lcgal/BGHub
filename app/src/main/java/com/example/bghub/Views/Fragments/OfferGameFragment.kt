@@ -1,4 +1,4 @@
-package com.example.bghub.Views.Fragments.OfferGame
+package com.example.bghub.Views.Fragments
 
 
 import android.os.Bundle
@@ -114,19 +114,20 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(Schedulers.newThread())
                         .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {
-                            override fun onNext(response: ApiResponse<String>?) {
+                            override fun onNext(response: ApiResponse<String>) {
                                 if (response != null && response.result == true) {
                                     var gameRoom = GameRoom(response.returnData,latitude,longitude,sessionid,gameid,game)
                                     mDataRepository.insertGameRoom(gameRoom)
                                     getActivity()?.supportFragmentManager?.popBackStack();
                                 }
                             }
-                            override fun  onError(e: Throwable?) {
+
+                            override fun onError(e: Throwable) {
                                 //TODO error treatment
                             }
-
                             override fun  onComplete() {
-                            }})
+                            }
+                        })
     }
 
     /**
