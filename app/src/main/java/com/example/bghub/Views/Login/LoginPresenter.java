@@ -2,6 +2,12 @@ package com.example.bghub.Views.Login;
 
 import android.os.Bundle;
 
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+
+import com.example.bghub.BGHubApplication;
+import com.example.bghub.Background.DownloadGameListWorker;
 import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
 import com.example.bghub.Models.Session.Credentials;
@@ -100,7 +106,10 @@ public class LoginPresenter implements LoginContract.Presenter {
                     mProfile.setUser(user);
                     mProfile.setCredentials(credentials);
 
-                    downloadGameList();
+                    WorkRequest myWorkRequest = OneTimeWorkRequest.from(DownloadGameListWorker.class);
+                    WorkManager.getInstance(BGHubApplication.getAppContext()).enqueue(myWorkRequest);
+
+                    processLogin(mProfile);
                 }
             });
 
@@ -124,8 +133,6 @@ public class LoginPresenter implements LoginContract.Presenter {
                             List<Game> games = result.getData();
                             mDataRepository.saveGamesList(games, result.getVersion());
                         }
-                        //TOOD process login first, then have the gamelist be downloaded and processed on the background.
-                        processLogin(mProfile);
                     }
 
 

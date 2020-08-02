@@ -31,13 +31,13 @@ public interface DataContract {
 
         void setGamesList();
 
-        public void updateLocation(Context context);
+        void updateLocation(Context context);
 
-        public Location getLocation();
+        Location getLocation();
 
-        public void saveProfile (Profile profile);
+        void saveProfile (Profile profile);
 
-        public void insertGameRoom (GameRoom gameRoom);
+        void insertGameRoom (GameRoom gameRoom);
     }
 
 }
