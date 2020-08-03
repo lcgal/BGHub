@@ -73,6 +73,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         finish();
     }
 
+    /**
+     * Triggers when there's a change to the facebook token.
+     */
     AccessTokenTracker tokenTracker = new AccessTokenTracker() {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {

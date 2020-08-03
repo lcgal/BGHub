@@ -10,7 +10,7 @@ public class UserLocation {
 
     private double Longitude;
 
-    UserLocation (String userId,double latitude, double longitude) {
+    public UserLocation (String userId,double latitude, double longitude) {
         UserId  = userId;
         Latitude = latitude;
         Longitude = longitude;

@@ -7,7 +7,10 @@ import com.example.bghub.Models.GameRooms.GameRoom;
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Session.Profile;
 import com.example.bghub.Models.Session.Session;
+import com.example.bghub.Models.UserLocation;
 import com.facebook.AccessToken;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -17,11 +20,11 @@ public interface DataContract {
 
         void saveLoginToken(AccessToken loginToken);
 
+        void startSession();
+
         Session getSession();
 
-        void saveSession(Session session);
-
-        void changeSessionStatus (int status);
+        void endSession();
 
         List<Game> getGamesList();
 
@@ -34,6 +37,8 @@ public interface DataContract {
         void updateLocation(Context context);
 
         Location getLocation();
+
+        UserLocation getUserLocation();
 
         void saveProfile (Profile profile);
 

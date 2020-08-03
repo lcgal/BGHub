@@ -57,16 +57,13 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void start(){
 
-        if (mDataRepository.getSession() == null){
-            mDataRepository.saveSession(new Session());
-            mDataRepository.changeSessionStatus(Logged_out);
-        }
-
-        if (com.facebook.Profile.getCurrentProfile() != null){
-            mDataRepository.changeSessionStatus(Logged_in);
+        if (mDataRepository.getSession() != null){
             mView.goToMainActivity();
         }
-
+//        if (com.facebook.Profile.getCurrentProfile() != null){
+//            mDataRepository.changeSessionStatus(Logged_in);
+//
+//        }
     }
 
     @Override
@@ -78,9 +75,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void loadUserProfile(AccessToken newAccessToken){
-        if (1 == 1) {
-        //if (mDataRepository.getSession().getStatus() != Processing_Login) {
-            mDataRepository.changeSessionStatus(Processing_Login);
+        if (mDataRepository.getSession() == null) {
+            mDataRepository.startSession();
 
             GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
                 @Override
@@ -120,35 +116,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
     }
 
-    private void downloadGameList(){
-        String version = mDataRepository.getGamesListVersion();
-        mHttpRepository.getGamesList(version)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.newThread())
-                .subscribeWith(new DisposableObserver<GameListResponse>() {
-                    @Override
-                    public void onNext(GameListResponse result) {
-                        if (result.isUpdate()) {
-                            //TODO send this to the background and go on with the login.
-                            List<Game> games = result.getData();
-                            mDataRepository.saveGamesList(games, result.getVersion());
-                        }
-                    }
-
-
-                    @Override
-                    public void onError(Throwable e) {
-                        String test = e.getMessage();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
-    }
-
     private void processLogin(Profile profile){
+        //TODO send this to workmanager
         mHttpRepository.FbLogin(profile)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())
@@ -156,7 +125,6 @@ public class LoginPresenter implements LoginContract.Presenter {
                     @Override
                     public void onNext(ProfileResponse result) {
                         mDataRepository.saveProfile(result.getReturnData());
-                        mDataRepository.changeSessionStatus(Logged_in);
                         mDataRepository.getSession().setProfile(result.getReturnData());
 
                         mView.goToMainActivity();

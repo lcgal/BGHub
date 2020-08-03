@@ -48,8 +48,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void logout(){
-        mDataRepository.changeSessionStatus(Logged_out);
+    public void logout() {
+        mDataRepository.endSession();
     }
 
 }

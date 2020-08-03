@@ -8,13 +8,17 @@ import android.location.Location;
 
 import androidx.core.app.ActivityCompat;
 
+import com.example.bghub.BGHubApplication;
 import com.example.bghub.Models.AppDatabase;
 import com.example.bghub.Models.GameRooms.GameRoom;
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Games.Versions;
 import com.example.bghub.Models.Games.Versions_Table;
+import com.example.bghub.Models.Session.Credentials;
 import com.example.bghub.Models.Session.Profile;
 import com.example.bghub.Models.Session.Session;
+import com.example.bghub.Models.Session.User;
+import com.example.bghub.Models.UserLocation;
 import com.facebook.AccessToken;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -23,14 +27,20 @@ import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.FastStoreModelTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static com.example.bghub.Commons.AppConstants.Logged_in;
 
 public class DataRepository implements DataContract.Repository {
 
@@ -60,27 +70,31 @@ public class DataRepository implements DataContract.Repository {
     }
 
     @Override
+    public void startSession () {
+        session = new Session();
+        saveToDatabase(session);
+    }
+
+    @Override
     public Session getSession() {
-        if (session == null){
-            session = new Session();
-            session.setProfile(SQLite.select().from(Profile.class).querySingle());
-            if(session.getProfile() != null) {
-                session.setStatus(1);
-            } else {
-                session.setStatus(0);
-            }
+        if (session == null) {
+            session = SQLite.select().from(Session.class).querySingle();
         }
         return session;
     }
 
     @Override
-    public void saveSession(Session session) {
-        this.session = session;
+    public void endSession() {
+        session = null;
+        Delete.table(Session.class);
     }
 
     @Override
-    public void changeSessionStatus(int status) {
-        session.setStatus(status);
+    public void saveProfile(Profile profile) {
+
+        getSession().setProfile(profile);
+        session.setStatus(Logged_in);
+        updateDatabase(session);
     }
 
     @Override
@@ -140,19 +154,38 @@ public class DataRepository implements DataContract.Repository {
         return;
     }
 
+    /**
+     * Returns a UserLocation object
+     *
+     * Tries to fetch user information in order to provide a UserLocation. If the user hasn't set a location yet then use the device location.
+     *
+     * @author lcgal
+     */
     @Override
-    public Location getLocation(){
-        return mLastLocation;
+    public UserLocation getUserLocation()
+    {
+        if (getSession() != null && session.getProfile() != null && session.getProfile().getUser() != null)
+        {
+            User user = session.getProfile().getUser();
+
+            if (user.getLatitude() != 0 && user.getLatitude() != 0)
+            {
+                //TODO create a UserLocation atribute in User
+                return new UserLocation(user.getUserId(),user.getLatitude(),user.getLongitude());
+            } else {
+                updateLocation(BGHubApplication.getAppContext());
+                if (mLastLocation != null) {
+                    return new UserLocation(user.getUserId(),user.getLatitude(),user.getLongitude());
+                }
+            }
+        }
+        return null;
+
     }
 
     @Override
-    public void saveProfile (Profile profile) {
-        FlowManager.getDatabase(AppDatabase.class).executeTransaction(new ITransaction() {
-            @Override
-            public void execute(DatabaseWrapper databaseWrapper) {
-                profile.save();
-            }
-        });
+    public Location getLocation(){
+        return mLastLocation;
     }
 
     @Override
@@ -163,6 +196,26 @@ public class DataRepository implements DataContract.Repository {
                 gameRoom.save();
             }
         });
+    }
+
+    private void saveToDatabase (BaseModel model) {
+        FlowManager.getDatabase(AppDatabase.class).executeTransaction(new ITransaction() {
+            @Override
+            public void execute(DatabaseWrapper databaseWrapper) {
+                model.save();
+            }
+        });
+
+    }
+
+    private void updateDatabase (BaseModel model) {
+        FlowManager.getDatabase(AppDatabase.class).executeTransaction(new ITransaction() {
+            @Override
+            public void execute(DatabaseWrapper databaseWrapper) {
+                model.update();
+            }
+        });
+
     }
 
     private boolean insertGamesToDB(List<Game> gamesList){

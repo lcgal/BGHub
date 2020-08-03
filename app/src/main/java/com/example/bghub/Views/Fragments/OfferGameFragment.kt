@@ -38,8 +38,6 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
     lateinit var adapter: GameListAdapter
 
-    lateinit var disposableObserver: DisposableObserver<ApiResponse<String>>
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -90,24 +88,23 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
      *
      * @author lcgal
      * @param Models.Games.Game
-     * @version 1.0
-     * @since 1.0
      */
     override fun OnGameRowClick (game: Game) {
-        var location = mDataRepository.getLocation()
-        if (location == null){
-            mDataRepository.updateLocation(this.context)
+        var location = mDataRepository.userLocation
+
+        if (location == null) {
+            //TODO error message
             return
         }
 
         var gameid = game.id
         var latitude = location.latitude
         var longitude = location.longitude
-        var sessionid = mDataRepository.session.profile.userId
+        var userId = location.userId
         var gameOffer = GameOffer(gameid,
                         latitude,
                         longitude,
-                        sessionid)
+                        userId)
                 //Sending game offer
                 //TODO send this to the background
                 mHttpRepository.postGameOffer(gameOffer)
@@ -116,7 +113,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
                         .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {
                             override fun onNext(response: ApiResponse<String>) {
                                 if (response != null && response.result == true) {
-                                    var gameRoom = GameRoom(response.returnData,latitude,longitude,sessionid,gameid,game)
+                                    var gameRoom = GameRoom(response.returnData,latitude,longitude,userId,gameid,game)
                                     mDataRepository.insertGameRoom(gameRoom)
                                     getActivity()?.supportFragmentManager?.popBackStack();
                                 }
@@ -134,7 +131,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
      * Custom buider in order to get the necessary repositories from the activity.
      *
      * @author lcgal
-     * @param  DataContract.Repository, httpRepository
+     * @param  DataContract.Repository, HttpRepository
      * @version 1.0
      * @since 1.0
      */
