@@ -12,6 +12,7 @@ import com.facebook.AccessToken;
 
 import org.json.JSONObject;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface DataContract {
@@ -28,11 +29,19 @@ public interface DataContract {
 
         List<Game> getGamesList();
 
+        List<GameRoom> getGameRooms();
+
+        List<Game> getGamesByIds(Collection<Long> gameIds);
+
+        Game getGameById(long gameId);
+
         void saveGamesList(List<Game> gamesList, String version);
 
-        String getGamesListVersion();
+        void saveGameRooms(List<GameRoom> gameRooms);
 
-        void setGamesList();
+        void insertGameRoom (GameRoom gameRoom);
+
+        String getGamesListVersion();
 
         void updateLocation(Context context);
 
@@ -41,8 +50,6 @@ public interface DataContract {
         UserLocation getUserLocation();
 
         void saveProfile (Profile profile);
-
-        void insertGameRoom (GameRoom gameRoom);
     }
 
 }

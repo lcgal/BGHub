@@ -13,7 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import com.example.bghub.BGHubApplication;
+import com.example.bghub.Background.DownloadGameListWorker;
+import com.example.bghub.Background.UpdateGameRoomsWorker;
 import com.example.bghub.R;
 import com.example.bghub.Utils.OnSingleClickListener;
 import com.example.bghub.Views.Fragments.OfferGameFragment;
@@ -80,7 +86,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mSearchGameButton.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View view) {
-                openSearchGameFragment();
+                WorkRequest myWorkRequest = OneTimeWorkRequest.from(UpdateGameRoomsWorker.class);
+                WorkManager.getInstance(BGHubApplication.getAppContext()).enqueue(myWorkRequest);
+                //openSearchGameFragment();
             }
         });
 

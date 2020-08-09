@@ -1,6 +1,7 @@
 package com.example.bghub.Views.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.bghub.R;
 import com.example.bghub.Views.Main.MainActivity;
@@ -17,6 +18,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,6 +53,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         setupFacebookLoginCallBack();
 
         AndroidInjection.inject(this);
+
+        //TODO move this somewhere appropiate
+        //Check Location Permission and Phone State
+        ActivityCompat.requestPermissions(this,
+                new String[]{
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
     }
 
     @Override
@@ -95,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mLoginButton = findViewById(R.id.login_button);
         mLoginButton.setPermissions(facebookPermissions);
         mLoginButton.setLoginBehavior( LoginBehavior.WEB_ONLY );
+
 
         mCallBackManager = CallbackManager.Factory.create();
         mLoginButton.registerCallback(mCallBackManager,

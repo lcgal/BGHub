@@ -15,6 +15,17 @@ public class GameRoom extends BaseModel {
     @PrimaryKey
     String Id;
 
+    public com.example.bghub.Models.Games.Game getGame() {
+        return Game;
+    }
+
+    public void setGame(com.example.bghub.Models.Games.Game game) {
+        Game = game;
+    }
+
+    @Column
+    long GameId;
+
     @Column
     double Latitude;
 
@@ -22,13 +33,13 @@ public class GameRoom extends BaseModel {
     double Longitude;
 
     @Column
+    float Distance;
+
+    @Column
     String HostId;
 
     @Column
     int Status;
-
-    @Column
-    long GameId;
 
     @ForeignKey(saveForeignKeyModel = true)
     Game Game;
@@ -85,4 +96,21 @@ public class GameRoom extends BaseModel {
     public void setStatus(int status) {
         Status = status;
     }
+
+    public float getDistance() {
+        return Distance;
+    }
+
+    public void setDistance(float distance) {
+        Distance = distance;
+    }
+
+    public long getGameId() {
+        return GameId;
+    }
+
+    public void setGameId(long gameId) {
+        GameId = gameId;
+    }
+
 }
