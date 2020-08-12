@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     Button mOfferGameButton;
 
+    Button mTriggerUpdateButton;
+
     Button mSearchGameButton;
 
     @Inject
@@ -82,13 +84,21 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         });
 
-        mSearchGameButton = findViewById(R.id.search_game_button);
-        mSearchGameButton.setOnClickListener(new OnSingleClickListener() {
+        mTriggerUpdateButton = findViewById(R.id.search_game_button);
+        mTriggerUpdateButton.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View view) {
                 WorkRequest myWorkRequest = OneTimeWorkRequest.from(UpdateGameRoomsWorker.class);
                 WorkManager.getInstance(BGHubApplication.getAppContext()).enqueue(myWorkRequest);
                 //openSearchGameFragment();
+            }
+        });
+
+        mSearchGameButton = findViewById(R.id.search_game_button2);
+        mSearchGameButton.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View view) {
+                openSearchGameFragment();
             }
         });
 
@@ -118,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void openSearchGameFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        SearchGameFragment fragment = new SearchGameFragment();
+        SearchGameFragment fragment = mPresenter.provideSearchGameFragment();
         transaction.replace(R.id.frameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

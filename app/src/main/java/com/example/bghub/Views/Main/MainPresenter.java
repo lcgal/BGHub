@@ -4,6 +4,7 @@ import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Repositories.Data.DataContract;
 import com.example.bghub.Repositories.Http.HttpContract;
 import com.example.bghub.Views.Fragments.OfferGameFragment;
+import com.example.bghub.Views.Fragments.SearchGameFragment;
 
 import java.util.List;
 
@@ -41,6 +42,11 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public OfferGameFragment provideOfferGameFragment() {
         return OfferGameFragment.newInstance(mDataRepository, mHttpRepository);
+    }
+
+    @Override
+    public SearchGameFragment provideSearchGameFragment() {
+        return SearchGameFragment.newInstance(mDataRepository, mHttpRepository);
     }
 
     @Override
