@@ -23,6 +23,9 @@ public interface HttpContract {
     @GET("download/gamelist/{version}")
     Observable<GameListResponse> getGamesList(@Path("version") String version);
 
+    @GET("download/gamedescription/{gameid}")
+    Observable<ApiResponse<String>> getGameDescription(@Path("gameid") String gameId);
+
     @POST("gamerooms/offergame")
     Observable<ApiResponse<String>> postGameOffer(@Body GameOffer gameOffer);
 

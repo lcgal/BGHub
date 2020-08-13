@@ -2,8 +2,8 @@ package com.example.bghub.Background
 
 import android.content.Context
 import android.location.Location
-import androidx.work.RxWorker
-import androidx.work.WorkerParameters
+import androidx.work.*
+import com.example.bghub.BGHubApplication
 import com.example.bghub.Models.ApiResponse.RoomListResponse
 import com.example.bghub.Models.GameRooms.GameRoom
 import com.example.bghub.Repositories.Data.DataContract
@@ -73,6 +73,12 @@ class UpdateGameRoomsWorker (
                     if (gameRooms != null && !gameRooms.isEmpty()) {
                         var dbGameRoom = gameRooms.filter { o -> o.id == n.id }.first()
                         if (dbGameRoom != null) {
+                            if (dbGameRoom.game.description == null) {
+                                val input = Data.Builder()
+                                input.putString("GAME_ID",dbGameRoom.game.id.toString())
+                                val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(GetDescriptionWorker::class.java).setInputData(input.build()).build()
+                                WorkManager.getInstance(BGHubApplication.getAppContext()).enqueue(myWorkRequest)
+                            }
 
                             gamesInRange.add(dbGameRoom)
                             return@ForEach
@@ -81,6 +87,13 @@ class UpdateGameRoomsWorker (
                     n.distance = roomDistance / 1000
                     var game = dataRepository.getGameById(n.gameId)
                     n.game = game
+                    if (game.description == null) {
+                        val input = Data.Builder()
+                        input.putString("GAME_ID",game.id.toString())
+                        val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(GetDescriptionWorker::class.java).setInputData(input.build()).build()
+                        WorkManager.getInstance(BGHubApplication.getAppContext()).enqueue(myWorkRequest)
+                    }
+
                     gamesInRange.add(n)
 
                 }

@@ -29,6 +29,8 @@ public interface DataContract {
 
         List<Game> getGamesList();
 
+        void updateGameDescription (long gameid, String description);
+
         List<GameRoom> getGameRooms();
 
         List<Game> getGamesByIds(Collection<Long> gameIds);

@@ -41,7 +41,7 @@ public class GameRoom extends BaseModel {
     @Column
     int Status;
 
-    @ForeignKey(saveForeignKeyModel = true)
+    @ForeignKey(saveForeignKeyModel = false)
     Game Game;
 
     public GameRoom(){

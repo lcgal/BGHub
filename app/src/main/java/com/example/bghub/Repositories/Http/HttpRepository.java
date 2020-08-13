@@ -61,6 +61,11 @@ public class HttpRepository implements HttpContract {
     }
 
     @Override
+    public Observable<ApiResponse<String>> getGameDescription(String gameId) {
+        return mRetrofit.getGameDescription(gameId);
+    }
+
+    @Override
     public Observable<ApiResponse<String>> postGameOffer(GameOffer gameOffer) {
         return mRetrofit.postGameOffer(gameOffer);
     }

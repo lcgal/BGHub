@@ -150,6 +150,13 @@ public class DataRepository implements DataContract.Repository {
     }
 
     @Override
+    public void updateGameDescription (long gameid, String description) {
+        Game game = SQLite.select().from(Game.class).where(Game_Table.Id.eq(gameid)).querySingle();
+        game.setDescription(description);
+        game.save();
+    }
+
+    @Override
     public String getGamesListVersion() {
         Versions versionObj = SQLite.select().from(Versions.class).where(Versions_Table.Key.eq("GamesListVersion")).querySingle();
         if (versionObj != null) {
