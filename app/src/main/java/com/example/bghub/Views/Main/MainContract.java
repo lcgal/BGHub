@@ -9,6 +9,11 @@ import java.util.List;
 public interface MainContract {
     interface View {
 
+        void openOfferGameFragment();
+
+        void openSearchGameFragment();
+
+
 
     }
 
@@ -23,7 +28,6 @@ public interface MainContract {
         OfferGameFragment provideOfferGameFragment();
 
         SearchGameFragment provideSearchGameFragment();
-
 
     }
 }

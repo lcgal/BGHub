@@ -22,6 +22,7 @@ import com.example.bghub.Background.DownloadGameListWorker;
 import com.example.bghub.Background.UpdateGameRoomsWorker;
 import com.example.bghub.R;
 import com.example.bghub.Utils.OnSingleClickListener;
+import com.example.bghub.Views.Fragments.MainMenuFragment;
 import com.example.bghub.Views.Fragments.OfferGameFragment;
 import com.example.bghub.Views.Fragments.SearchGameFragment;
 import com.example.bghub.Views.Login.LoginActivity;
@@ -35,12 +36,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     Button mLogoutButton;
 
-    Button mOfferGameButton;
-
-    Button mTriggerUpdateButton;
-
-    Button mSearchGameButton;
-
     @Inject
     MainContract.Presenter mPresenter;
 
@@ -53,11 +48,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         mPresenter.start();
 
-        setUpButtons();
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+        openMainMenu();
     }
 
     @Override
@@ -74,36 +68,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
-    private void setUpButtons(){
-
-        mOfferGameButton = findViewById(R.id.offer_game_button);
-        mOfferGameButton.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View view) {
-                openOfferGameFragment();
-            }
-        });
-
-        mTriggerUpdateButton = findViewById(R.id.search_game_button);
-        mTriggerUpdateButton.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View view) {
-                WorkRequest myWorkRequest = OneTimeWorkRequest.from(UpdateGameRoomsWorker.class);
-                WorkManager.getInstance(BGHubApplication.getAppContext()).enqueue(myWorkRequest);
-                //openSearchGameFragment();
-            }
-        });
-
-        mSearchGameButton = findViewById(R.id.search_game_button2);
-        mSearchGameButton.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View view) {
-                openSearchGameFragment();
-            }
-        });
-
-    }
-
     private void logout(){
 
         mPresenter.logout();
@@ -116,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     }
 
-    private void openOfferGameFragment(){
+    public void openOfferGameFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         OfferGameFragment fragment = mPresenter.provideOfferGameFragment();
@@ -125,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         transaction.commit();
     }
 
-    private void openSearchGameFragment(){
+    public void openSearchGameFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         SearchGameFragment fragment = mPresenter.provideSearchGameFragment();
@@ -134,6 +98,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         transaction.commit();
     }
 
+    public void openMainMenu(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        MainMenuFragment fragment = new MainMenuFragment();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 
     @Override
