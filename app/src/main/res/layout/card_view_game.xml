@@ -4,68 +4,58 @@
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="600dp"
         android:layout_margin="6dp"
         android:elevation="0dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:orientation="vertical"
             android:padding="12dp"
-            android:id="@+id/card_contents">
+            android:id="@+id/card_top">
 
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/game_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:id="@+id/card_top">
+                android:adjustViewBounds="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/thumbnail_image_empty"/>
 
-                <ImageView
-                    android:id="@+id/game_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/thumbnail_image_empty"/>
+            <TextView
+                android:id="@+id/game_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/game_image"
+                android:textSize="24sp"
+                android:layout_centerHorizontal="true"
+                tools:text="Terra Mystica" />
 
-                <TextView
-                    android:id="@+id/game_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/game_image"
-                    android:textSize="24sp"
-                    android:layout_centerHorizontal="true"
-                    tools:text="Terra Mystica" />
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/game_name"
+                android:padding="24dp"
+                android:textSize="16sp"
+                android:layout_centerHorizontal="true"
+                tools:text="5 Miles Away" />
 
-                <TextView
-                    android:id="@+id/distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/game_name"
-                    android:textSize="16sp"
-                    android:layout_centerHorizontal="true"
-                    tools:text="5 Miles Away" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/info_button"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    app:fabCustomSize="32dp"
-                    android:layout_below="@id/distance"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="24dp"
-                    android:scaleType="center"
-                    app:elevation="1dp"
-                    app:srcCompat="@drawable/meeple"/>
-
-            </RelativeLayout>
-
-
+            <ImageButton
+                android:id="@+id/join_button"
+                android:layout_below="@id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:maxWidth="84dp"
+                android:maxHeight="84dp"
+                android:scaleType="fitXY"
+                android:padding="24dp"
+                android:src="@drawable/ic_join_round"
+                android:layout_alignParentRight="true"
+                />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>

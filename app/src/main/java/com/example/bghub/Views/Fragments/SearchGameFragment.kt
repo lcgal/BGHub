@@ -4,16 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.FragmentManager
+import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
 import com.example.bghub.Repositories.Http.HttpContract
-import com.example.bghub.ui.adapter.GameListAdapter
 import com.example.bghub.ui.adapter.GameRoomAdapter
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
-import kotlinx.android.synthetic.main.fragment_offer_game.*
 import kotlinx.android.synthetic.main.fragment_search_game.*
 
 /**
@@ -25,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_search_game.*
  * @version 1.0
  * @since 1.0
  */
-class SearchGameFragment : Fragment()
+class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
 {
     lateinit var mDataRepository: DataContract.Repository
 
@@ -42,7 +40,7 @@ class SearchGameFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = GameRoomAdapter( mDataRepository.gameRooms)
+        adapter = GameRoomAdapter( mDataRepository.gameRooms, this)
         stack_view.adapter = adapter
         stack_view.layoutManager =  CardStackLayoutManager(activity)
 
@@ -55,6 +53,25 @@ class SearchGameFragment : Fragment()
 
     fun setHttpRepository(httpRepository : HttpContract) {
         mHttpRepository = httpRepository;
+    }
+
+    /**
+     * Method that deals with the click on the Holder row.
+     *
+     * It's able to listen to the click because it implements the GameListAdapter.OnGameRowListener interface, and it passes it's own listener to the adapter @see onViewCreated.
+     *
+     * @author lcgal
+     * @param Models.Games.Game
+     */
+    override fun OnGameClick (game: Game) {
+        if (activity != null) {
+            val manager: FragmentManager = activity!!.supportFragmentManager
+            val transaction = manager.beginTransaction()
+            val fragment: GameDetailsFragment = GameDetailsFragment.newInstance(game)
+            transaction.replace(R.id.frameLayout, fragment)
+            transaction.addToBackStack(null);
+            transaction.commit()
+        }
     }
 
     companion object {

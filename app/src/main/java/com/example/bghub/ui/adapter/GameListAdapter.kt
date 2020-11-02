@@ -19,8 +19,8 @@ import kotlin.collections.ArrayList
 class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRowListener)
     : RecyclerView.Adapter<GameListHolder>(), Filterable {
 
-    lateinit var filteredList : List<Game>
-    lateinit var mOnGameRowListener: OnGameRowListener
+    var filteredList : List<Game>
+    var mOnGameRowListener: OnGameRowListener
 
     init {
         filteredList = list
@@ -72,11 +72,14 @@ class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRow
 
     override fun getItemCount(): Int = filteredList.size
 
+
+
+
     inner class GameListHolder(inflater: LayoutInflater, parent: ViewGroup, onGameRowListener: OnGameRowListener) :
             RecyclerView.ViewHolder(inflater.inflate(R.layout.game_row, parent, false)), View.OnClickListener {
         private var mThumbnailView: ImageView? = null
         private var mNameView: TextView? = null
-        private lateinit var mHolderOnGameRowListener: OnGameRowListener
+        private var mHolderOnGameRowListener: OnGameRowListener
 
         init {
             mThumbnailView = itemView.findViewById(R.id.thumbnail)
