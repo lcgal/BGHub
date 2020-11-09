@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        android:layout_margin="6dp"
         android:elevation="0dp"
+        android:padding="12dp"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/card_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"
             android:padding="12dp"
-            android:id="@+id/card_top">
+            >
 
             <ImageView
                 android:id="@+id/game_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/thumbnail_image_empty"/>
+                android:adjustViewBounds="true"
+                android:src="@drawable/thumbnail_image_empty" />
 
             <TextView
                 android:id="@+id/game_name"
@@ -38,24 +40,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/game_name"
-                android:padding="24dp"
                 android:textSize="16sp"
                 android:layout_centerHorizontal="true"
                 tools:text="5 Miles Away" />
 
-            <ImageButton
-                android:id="@+id/join_button"
-                android:layout_below="@id/distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:maxWidth="84dp"
-                android:maxHeight="84dp"
-                android:scaleType="fitXY"
-                android:padding="24dp"
-                android:src="@drawable/ic_join_round"
-                android:layout_alignParentRight="true"
-                />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>

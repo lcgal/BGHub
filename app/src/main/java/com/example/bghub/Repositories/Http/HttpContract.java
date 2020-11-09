@@ -5,6 +5,7 @@ import com.example.bghub.Models.ApiResponse.GameListResponse;
 import com.example.bghub.Models.ApiResponse.ProfileResponse;
 import com.example.bghub.Models.ApiResponse.RoomListResponse;
 import com.example.bghub.Models.GameRooms.GameOffer;
+import com.example.bghub.Models.GameRooms.JoinGameRoomPayload;
 import com.example.bghub.Models.Session.Credentials;
 import com.example.bghub.Models.Session.Profile;
 import com.example.bghub.Models.UserLocation;
@@ -31,4 +32,7 @@ public interface HttpContract {
 
     @POST("gamerooms/gamerooms")
     Observable<RoomListResponse> getGameRooms(@Body UserLocation userLocation);
+
+    @POST("gamerooms/joinroom")
+    Observable<ApiResponse<String>> postJoinGameRoom(@Body JoinGameRoomPayload joinroompayload);
 }

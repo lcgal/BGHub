@@ -106,7 +106,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
                         longitude,
                         userId)
                 //Sending game offer
-                //TODO send this to the background
+                //TODO create a class to manage api calls
                 mHttpRepository.postGameOffer(gameOffer)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(Schedulers.newThread())

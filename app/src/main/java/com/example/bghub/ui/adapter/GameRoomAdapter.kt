@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bghub.Commons.AppConstants.Show_Game_Details
 import com.example.bghub.Models.GameRooms.GameRoom
 import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
@@ -17,6 +18,9 @@ class GameRoomAdapter(private val gameRoomList: List<GameRoom>, onGameClickListe
     : RecyclerView.Adapter<GameRoomAdapter.GameRoomHolder>() {
 
     var mOnGameClickListener: OnGameClickListener
+
+    lateinit var mTopGameRoom: GameRoom
+    lateinit var mBotGameRoom: GameRoom
 
     init {
         mOnGameClickListener = onGameClickListener
@@ -33,22 +37,34 @@ class GameRoomAdapter(private val gameRoomList: List<GameRoom>, onGameClickListe
 
     override fun onBindViewHolder(holder: GameRoomHolder, position: Int) {
         val gameRoom: GameRoom = gameRoomList[position]
+        //A little weird logic here. What we want to do is access the gameroom currently being displayed on the top holder.
+        if(!this::mTopGameRoom.isInitialized){
+            mTopGameRoom = gameRoom
+        } else if (!this::mBotGameRoom.isInitialized) {
+            mBotGameRoom = gameRoom
+        } else {
+            mTopGameRoom = mBotGameRoom
+            mBotGameRoom = gameRoom
+        }
         holder.bind(gameRoom)
+    }
+
+    fun getCurrentRoom () :  GameRoom {
+        return mTopGameRoom
     }
 
     inner class GameRoomHolder(inflater: LayoutInflater, parent: ViewGroup, onGameClickListener: OnGameClickListener) :
             RecyclerView.ViewHolder(inflater.inflate(R.layout.card_view_game, parent, false))  {
+        //TODO WHY THE FUCK CAN'T CARDVIEW WRAP ALL OF THE CONTENT I'M FUCKING TIRED OF THIS SHIT.
         private var mImageView: ImageView? = null
         private var mNameView: TextView? = null
         private var mDistanceView: TextView? = null
-        private var mJoinButton: ImageButton? = null
         private var mOnGameClickListener : OnGameClickListener
 
         init {
             mImageView = itemView.findViewById(R.id.game_image)
             mNameView = itemView.findViewById(R.id.game_name)
             mDistanceView = itemView.findViewById(R.id.distance)
-            mJoinButton = itemView.findViewById(R.id.join_button)
             mOnGameClickListener = onGameClickListener
         }
 
@@ -59,9 +75,14 @@ class GameRoomAdapter(private val gameRoomList: List<GameRoom>, onGameClickListe
             mDistanceView?.text = gameRoom.distance.toString()
 
             itemView.setOnClickListener{
-                mOnGameClickListener.OnGameClick(gameRoomList.get(adapterPosition).game)
+                mOnGameClickListener.OnGameClick(gameRoomList.get(adapterPosition), Show_Game_Details)
+
             }
 
+        }
+
+        fun getCurrentItem() : GameRoom {
+            return gameRoomList.get(adapterPosition)
         }
 
         fun ImageView.loadThumbnailInList(imageUrl: String?, @DrawableRes errorResId: Int = R.drawable.thumbnail_image_empty) {
@@ -75,8 +96,10 @@ class GameRoomAdapter(private val gameRoomList: List<GameRoom>, onGameClickListe
         }
     }
 
+
+
     interface OnGameClickListener {
-        fun OnGameClick (game: Game) {
+        fun OnGameClick (gameRoom: GameRoom, action: String) {
         }
     }
 }

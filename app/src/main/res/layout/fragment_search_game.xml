@@ -12,4 +12,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp" />
 
+    <ImageButton
+        android:id="@+id/join_button"
+        android:layout_below="@id/stack_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxWidth="84dp"
+        android:maxHeight="84dp"
+        android:scaleType="fitXY"
+        android:padding="14dp"
+        android:background="@android:color/white"
+        android:src="@drawable/move"
+        android:layout_alignParentRight="true"
+        />
+
 </RelativeLayout>
