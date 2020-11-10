@@ -11,21 +11,22 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import com.example.bghub.BGHubApplication;
+import com.example.bghub.Background.DownloadGameListWorker;
+import com.example.bghub.Background.UpdateGameRoomsWorker;
 import com.example.bghub.R;
 import com.example.bghub.Utils.OnSingleClickListener;
-import com.example.bghub.Views.Fragments.OfferGame.OfferGameFragment;
+import com.example.bghub.Views.Fragments.MainMenuFragment;
+import com.example.bghub.Views.Fragments.OfferGameFragment;
+import com.example.bghub.Views.Fragments.SearchGameFragment;
 import com.example.bghub.Views.Login.LoginActivity;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 
 import javax.inject.Inject;
 
@@ -34,8 +35,6 @@ import dagger.android.AndroidInjection;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     Button mLogoutButton;
-
-    Button mOfferGameButton;
 
     @Inject
     MainContract.Presenter mPresenter;
@@ -49,11 +48,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         mPresenter.start();
 
-        setUpButtons();
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+        openMainMenu();
     }
 
     @Override
@@ -70,18 +68,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
-    private void setUpButtons(){
-
-        mOfferGameButton = findViewById(R.id.offer_game_button);
-        mOfferGameButton.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View view) {
-                openOfferGameFragment();
-            }
-        });
-
-    }
-
     private void logout(){
 
         mPresenter.logout();
@@ -94,11 +80,28 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     }
 
-    private void openOfferGameFragment(){
+    public void openOfferGameFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         OfferGameFragment fragment = mPresenter.provideOfferGameFragment();
-        //OfferGameFragment fragment = new OfferGameFragment();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void openSearchGameFragment(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        SearchGameFragment fragment = mPresenter.provideSearchGameFragment();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void openMainMenu(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        MainMenuFragment fragment = new MainMenuFragment();
         transaction.replace(R.id.frameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

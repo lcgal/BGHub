@@ -3,10 +3,8 @@ package com.example.bghub.Views.Main;
 import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Repositories.Data.DataContract;
 import com.example.bghub.Repositories.Http.HttpContract;
-import com.example.bghub.Repositories.Http.HttpRepository;
-import com.example.bghub.Views.Fragments.OfferGame.OfferGameFragment;
-import com.facebook.AccessToken;
-import com.facebook.Profile;
+import com.example.bghub.Views.Fragments.OfferGameFragment;
+import com.example.bghub.Views.Fragments.SearchGameFragment;
 
 import java.util.List;
 
@@ -34,10 +32,6 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void start(){
 
-        if (mDataRepository.getGamesList() == null){
-            mDataRepository.setGamesList();
-        }
-
     }
 
     @Override
@@ -51,8 +45,13 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void logout(){
-        mDataRepository.changeSessionStatus(Logged_out);
+    public SearchGameFragment provideSearchGameFragment() {
+        return SearchGameFragment.newInstance(mDataRepository, mHttpRepository);
+    }
+
+    @Override
+    public void logout() {
+        mDataRepository.endSession();
     }
 
 }

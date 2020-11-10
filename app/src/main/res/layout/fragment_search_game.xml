@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Views.Fragments.SearchGameFragment">
+
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/stack_view"
+        android:layout_width="380dp"
+        android:layout_height="404dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
+
+    <ImageButton
+        android:id="@+id/join_button"
+        android:layout_below="@id/stack_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:adjustViewBounds="true"
+        android:maxWidth="90dp"
+        android:maxHeight="90dp"
+        android:scaleType="fitXY"
+        android:padding="14dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/ic_join_round"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>

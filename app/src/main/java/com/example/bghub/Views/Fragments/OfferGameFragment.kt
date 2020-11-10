@@ -1,4 +1,4 @@
-package com.example.bghub.Views.Fragments.OfferGame
+package com.example.bghub.Views.Fragments
 
 
 import android.os.Bundle
@@ -37,8 +37,6 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
     lateinit var mHttpRepository: HttpContract
 
     lateinit var adapter: GameListAdapter
-
-    lateinit var disposableObserver: DisposableObserver<ApiResponse<String>>
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -90,50 +88,50 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
      *
      * @author lcgal
      * @param Models.Games.Game
-     * @version 1.0
-     * @since 1.0
      */
     override fun OnGameRowClick (game: Game) {
-        var location = mDataRepository.getLocation()
-        if (location == null){
-            mDataRepository.updateLocation(this.context)
+        var location = mDataRepository.userLocation
+
+        if (location == null) {
+            //TODO error message
             return
         }
 
         var gameid = game.id
         var latitude = location.latitude
         var longitude = location.longitude
-        var sessionid = mDataRepository.session.profile.userId
+        var userId = location.userId
         var gameOffer = GameOffer(gameid,
                         latitude,
                         longitude,
-                        sessionid)
+                        userId)
                 //Sending game offer
-                //TODO send this to the background
+                //TODO create a class to manage api calls
                 mHttpRepository.postGameOffer(gameOffer)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(Schedulers.newThread())
                         .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {
-                            override fun onNext(response: ApiResponse<String>?) {
+                            override fun onNext(response: ApiResponse<String>) {
                                 if (response != null && response.result == true) {
-                                    var gameRoom = GameRoom(response.returnData,latitude,longitude,sessionid,gameid,game)
+                                    var gameRoom = GameRoom(response.returnData,latitude,longitude,userId,gameid,game)
                                     mDataRepository.insertGameRoom(gameRoom)
                                     getActivity()?.supportFragmentManager?.popBackStack();
                                 }
                             }
-                            override fun  onError(e: Throwable?) {
+
+                            override fun onError(e: Throwable) {
                                 //TODO error treatment
                             }
-
                             override fun  onComplete() {
-                            }})
+                            }
+                        })
     }
 
     /**
      * Custom buider in order to get the necessary repositories from the activity.
      *
      * @author lcgal
-     * @param  DataContract.Repository, httpRepository
+     * @param  DataContract.Repository, HttpRepository
      * @version 1.0
      * @since 1.0
      */
