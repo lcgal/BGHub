@@ -24,6 +24,8 @@ class MainMenuFragment : Fragment()
 
     lateinit var mSearchGameButton: Button
 
+    lateinit var mTestChatButton: Button
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -59,6 +61,16 @@ class MainMenuFragment : Fragment()
         //Button to open search game fragment
         mSearchGameButton = search_game_button2
         mSearchGameButton.setOnClickListener(object : OnSingleClickListener() {
+            override fun onSingleClick(view: View) {
+                val mainActivity: MainActivity? = activity as MainActivity?
+                mainActivity?.openSearchGameFragment()
+            }
+        })
+
+
+        //Button to open chat
+        mTestChatButton = test_chat
+        mTestChatButton.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 val mainActivity: MainActivity? = activity as MainActivity?
                 mainActivity?.openSearchGameFragment()

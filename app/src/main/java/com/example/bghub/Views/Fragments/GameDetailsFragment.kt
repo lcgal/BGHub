@@ -41,7 +41,7 @@ class GameDetailsFragment : Fragment()
     }
 
     fun ImageView.loadThumbnailInList(imageUrl: String?, @DrawableRes errorResId: Int = R.drawable.thumbnail_image_empty) {
-        Picasso.with(context)
+        Picasso.get()
                 .load(imageUrl)
                 .placeholder(errorResId)
                 .error(errorResId)

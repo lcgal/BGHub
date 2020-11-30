@@ -20,6 +20,8 @@ import com.example.bghub.Repositories.Http.HttpContract;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,13 +58,16 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void start(){
+//        if (mDataRepository.getSession() != null) {
+//            mView.goToMainActivity();
+//        }
 
-        if (mDataRepository.getSession() != null){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             mView.goToMainActivity();
         }
-//        if (com.facebook.Profile.getCurrentProfile() != null){
+
+//        if (com.facebook.Profile.getCurrentProfile() != null) {
 //            mDataRepository.changeSessionStatus(Logged_in);
-//
 //        }
     }
 
@@ -74,7 +79,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
 
     @Override
-    public void loadUserProfile(AccessToken newAccessToken){
+    public void loadUserProfile(AccessToken newAccessToken, FirebaseUser firebaseUser){
         if (mDataRepository.getSession() == null) {
             mDataRepository.startSession();
 

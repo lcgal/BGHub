@@ -4,12 +4,13 @@ buildscript {
         mavenCentral()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap"}
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         classpath 'io.fabric.tools:gradle:1.31.2'
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:${version_dokka}"
+        classpath 'com.android.tools.build:gradle:4.0.1'
     }
 }
 
@@ -19,6 +20,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     dataBinding {
@@ -70,8 +72,29 @@ android {
 dependencies {
     //kapt "com.android.databinding:compiler:3.1.4"
 
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-config'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-inappmessaging-display'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-storage'
+
+    // Firebase UI
+    implementation 'com.firebaseui:firebase-ui-database:6.4.0'
+    implementation 'androidx.arch.core:core-runtime:2.1.0'
+    implementation 'androidx.arch.core:core-common:2.1.0'
+
     // Core library
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
     androidTestImplementation 'androidx.test:core:1.0.0'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //WorkManager
     def work_version = "2.4.0"
@@ -152,7 +175,6 @@ dependencies {
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
 
-
     // DbFlow dependencies
     def dbflow_version = "4.2.4"
     dependencies {
@@ -172,7 +194,7 @@ repositories {
 }
 
 // workaround: create DocsByDokka
-task DocsByDokka (type: org.jetbrains.dokka.gradle.DokkaTask) {
+task DocsByDokka(type: org.jetbrains.dokka.gradle.DokkaTask) {
     outputFormat = "html"
     outputDirectory = "$buildDir/dokka"
 }

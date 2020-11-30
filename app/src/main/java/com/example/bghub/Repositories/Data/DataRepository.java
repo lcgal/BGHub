@@ -24,6 +24,7 @@ import com.facebook.AccessToken;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.Delete;
@@ -50,6 +51,8 @@ public class DataRepository implements DataContract.Repository {
     public AccessToken loginToken;
 
     public static Session session;
+
+    public static FirebaseUser mFirebaseUser;
 
     private boolean isGameListReady;
     public static List<Game> gamesList;
@@ -86,6 +89,16 @@ public class DataRepository implements DataContract.Repository {
             session = SQLite.select().from(Session.class).querySingle();
         }
         return session;
+    }
+
+    @Override
+    public void saveFireBaseUser(FirebaseUser user) {
+        mFirebaseUser = user;
+    }
+
+    @Override
+    public FirebaseUser getFireBaseUser() {
+        return mFirebaseUser;
     }
 
     @Override

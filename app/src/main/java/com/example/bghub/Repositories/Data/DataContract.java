@@ -9,6 +9,7 @@ import com.example.bghub.Models.Session.Profile;
 import com.example.bghub.Models.Session.Session;
 import com.example.bghub.Models.UserLocation;
 import com.facebook.AccessToken;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONObject;
 
@@ -24,6 +25,10 @@ public interface DataContract {
         void startSession();
 
         Session getSession();
+
+        void saveFireBaseUser(FirebaseUser user);
+
+        FirebaseUser getFireBaseUser();
 
         void endSession();
 

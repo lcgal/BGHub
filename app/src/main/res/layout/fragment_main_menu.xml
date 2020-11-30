@@ -43,6 +43,16 @@
             android:paddingRight="48dp"
             android:text="Teste search game" />
 
+        <Button
+            android:id="@+id/test_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="@dimen/padding_half"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:text="Teste chat" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

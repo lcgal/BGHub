@@ -22,11 +22,13 @@ import com.example.bghub.Background.DownloadGameListWorker;
 import com.example.bghub.Background.UpdateGameRoomsWorker;
 import com.example.bghub.R;
 import com.example.bghub.Utils.OnSingleClickListener;
+import com.example.bghub.Views.Fragments.ChatFragment;
 import com.example.bghub.Views.Fragments.MainMenuFragment;
 import com.example.bghub.Views.Fragments.OfferGameFragment;
 import com.example.bghub.Views.Fragments.SearchGameFragment;
 import com.example.bghub.Views.Login.LoginActivity;
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mPresenter.logout();
 
         LoginManager.getInstance().logOut();
+        FirebaseAuth.getInstance().signOut();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -90,6 +93,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     public void openSearchGameFragment(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        ChatFragment fragment = new ChatFragment();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void openChatFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         SearchGameFragment fragment = mPresenter.provideSearchGameFragment();
