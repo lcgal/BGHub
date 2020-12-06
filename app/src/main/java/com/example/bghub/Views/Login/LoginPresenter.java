@@ -97,7 +97,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                         String id = object.getString("id");
                         credentials.setFbId(id);
                         mProfile.setUserId(id);
-                        String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
+                        String image_url = object.getJSONObject("picture").getJSONObject("data").getString("url");
                         user.setPhotoUrl(image_url);
 
                     } catch (JSONException e) {
@@ -115,7 +115,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             });
 
             Bundle parameters = new Bundle();
-            parameters.putString("fields", "email,first_name,last_name,id");
+            parameters.putString("fields", "email,first_name,last_name,id,picture");
             request.setParameters(parameters);
             request.executeAsync();
         }

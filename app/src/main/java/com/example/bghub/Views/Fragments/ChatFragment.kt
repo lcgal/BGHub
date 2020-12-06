@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_chat.*
 
@@ -174,33 +175,6 @@ class ChatFragment : Fragment()
                 if (friendlyMessage.text != null) {
                     viewHolder.messageTextView.text = friendlyMessage.text
                     viewHolder.messageTextView.visibility = TextView.VISIBLE
-                    viewHolder.messageImageView.visibility = ImageView.GONE
-                } else if (friendlyMessage.imageUrl != null) {
-                    val imageUrl = friendlyMessage.imageUrl
-                    if (imageUrl.startsWith("gs://")) {
-                        val storageReference: StorageReference = FirebaseStorage.getInstance()
-                                .getReferenceFromUrl(imageUrl)
-                        storageReference.getDownloadUrl().addOnCompleteListener(
-                                object : OnCompleteListener<Uri?> {
-                                    override fun onComplete(task: Task<Uri?>) {
-                                        if (task.isSuccessful()) {
-                                            val downloadUrl: String = task.getResult().toString()
-//                                            Glide.with(viewHolder.messageImageView.context)
-//                                                    .load(downloadUrl)
-//                                                    .into(viewHolder.messageImageView)
-                                        } else {
-                                            Log.w(TAG, "Getting download url was not successful.",
-                                                    task.getException())
-                                        }
-                                    }
-                                })
-                    } else {
-//                        Glide.with(viewHolder.messageImageView.context)
-//                                .load(friendlyMessage.imageUrl)
-//                                .into(viewHolder.messageImageView)
-                    }
-                    viewHolder.messageImageView.visibility = ImageView.VISIBLE
-                    viewHolder.messageTextView.visibility = TextView.GONE
                 }
                 viewHolder.messengerTextView.text = friendlyMessage.name
                 if (friendlyMessage.photoUrl == null) {
@@ -209,6 +183,13 @@ class ChatFragment : Fragment()
                                 R.drawable.ic_account_circle_black_36dp)
                     })
                 } else {
+                    Picasso.get()
+                            .load(friendlyMessage.photoUrl)
+                            .placeholder(R.drawable.ic_account_circle_black_36dp)
+                            .error(R.drawable.ic_account_circle_black_36dp)
+                            .fit()
+                            .centerCrop()
+                            .into(viewHolder.messengerImageView)
 //                    Glide.with(this@MainActivity)
 //                            .load(friendlyMessage.photoUrl)
 //                            .into(viewHolder.messengerImageView)
@@ -258,13 +239,11 @@ class ChatFragment : Fragment()
      */
     class MessageViewHolder(v: View?) : RecyclerView.ViewHolder(v!!) {
         var messageTextView: TextView
-        var messageImageView: ImageView
         var messengerTextView: TextView
         var messengerImageView: CircleImageView
 
         init {
             messageTextView = itemView.findViewById<View>(R.id.messageTextView) as TextView
-            messageImageView = itemView.findViewById<View>(R.id.messageImageView) as ImageView
             messengerTextView = itemView.findViewById<View>(R.id.messengerTextView) as TextView
             messengerImageView = itemView.findViewById<View>(R.id.messengerImageView) as CircleImageView
         }
