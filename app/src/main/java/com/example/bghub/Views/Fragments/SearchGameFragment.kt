@@ -136,6 +136,4 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
             return fragment
         }
     }
-
-
 }

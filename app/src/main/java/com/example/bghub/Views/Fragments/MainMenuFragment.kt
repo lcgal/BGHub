@@ -73,7 +73,7 @@ class MainMenuFragment : Fragment()
         mTestChatButton.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 val mainActivity: MainActivity? = activity as MainActivity?
-                mainActivity?.openSearchGameFragment()
+                mainActivity?.openChatFragment()
             }
         })
     }

@@ -36,17 +36,13 @@ import kotlinx.android.synthetic.main.fragment_chat.*
 class ChatFragment : Fragment()
 {
     private val TAG = "GameRoomChat"
-    val MESSAGES_CHILD = "messages"
-    private val REQUEST_INVITE = 1
-    private val REQUEST_IMAGE = 2
-    private val LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif"
-    val DEFAULT_MSG_LENGTH_LIMIT = 10
-    private val MESSAGE_SENT_EVENT = "message_sent"
+    lateinit var  Chat_Root: String
+    lateinit var  Chat_ID: String
     private var mUsername: String? = null
     private var mPhotoUrl: String? = null
+    private var mChatReference: DatabaseReference? = null
     private var mSharedPreferences: SharedPreferences? = null
     //private val mSignInClient: GoogleSignInClient? = null
-    private val MESSAGE_URL = "http://friendlychat.firebase.google.com/message/"
 
     private var mSendButton: Button? = null
     private var mMessageRecyclerView: RecyclerView? = null
@@ -60,7 +56,6 @@ class ChatFragment : Fragment()
     private var mFirebaseUser: FirebaseUser? = null
     private var mFirebaseDatabaseReference: DatabaseReference? = null
     private var mFirebaseAdapter: FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>? = null
-
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -102,9 +97,10 @@ class ChatFragment : Fragment()
 
         mSendButton = sendButton as Button
         mSendButton!!.setOnClickListener(View.OnClickListener {
-            // Send messages on click.
+            sendMessage()
         })
 
+        //TODO have some use for this button
         mAddMessageImageView = addMessageImageView as ImageView
         mAddMessageImageView!!.setOnClickListener(View.OnClickListener {
             // Select image for image message on click.
@@ -158,9 +154,11 @@ class ChatFragment : Fragment()
             }
         }
 
-        val messagesRef = mFirebaseDatabaseReference!!.child(MESSAGES_CHILD)
+        mChatReference = mFirebaseDatabaseReference!!
+                .child(Chat_Root)
+                .child(Chat_ID)
         val options = FirebaseRecyclerOptions.Builder<FriendlyMessage>()
-                .setQuery(messagesRef, parser)
+                .setQuery(mChatReference!!, parser)
                 .build()
 
         mFirebaseAdapter = object : FirebaseRecyclerAdapter<FriendlyMessage?, MessageViewHolder?>(options) {
@@ -240,6 +238,15 @@ class ChatFragment : Fragment()
 
     }
 
+    fun sendMessage() {
+        val friendlyMessage = FriendlyMessage(mMessageEditText!!.text.toString(),
+                mUsername,
+                mPhotoUrl,
+                null /* no image */)
+        mChatReference?.push()?.setValue(friendlyMessage)
+        mMessageEditText!!.setText("")
+    }
+
 
     /**
      * ViewHolder for the messages
@@ -263,6 +270,17 @@ class ChatFragment : Fragment()
         }
     }
 
+    fun initialize(chatId : String, chatRoot : String) {
+        Chat_ID = chatId
+        Chat_Root = chatRoot
+    }
 
-
+    companion object {
+        @JvmStatic
+        fun newInstance(chatId : String, chatRoot : String) : ChatFragment {
+            val fragment = ChatFragment()
+            fragment.initialize(chatId,chatRoot)
+            return fragment
+        }
+    }
 }

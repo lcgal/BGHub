@@ -92,16 +92,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         transaction.commit();
     }
 
-    public void openSearchGameFragment(){
+    public void openChatFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        ChatFragment fragment = new ChatFragment();
+        ChatFragment fragment = ChatFragment.newInstance("testchat","groupchats");
         transaction.replace(R.id.frameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    public void openChatFragment(){
+    public void openSearchGameFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         SearchGameFragment fragment = mPresenter.provideSearchGameFragment();
