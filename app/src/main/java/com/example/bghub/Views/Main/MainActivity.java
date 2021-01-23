@@ -34,6 +34,8 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
+import static com.example.bghub.Commons.AppConstants.Group_Chats;
+
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     Button mLogoutButton;
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     public void openChatFragment(){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        ChatFragment fragment = ChatFragment.newInstance("testchat","groupchats");
+        ChatFragment fragment = ChatFragment.newInstance(Group_Chats,"06046feb-5fff-4e14-96d5-342e2d6196ae");
         transaction.replace(R.id.frameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

@@ -1,11 +1,8 @@
 package com.example.bghub.Views.Fragments
 
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +12,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
-import com.example.bghub.Models.Chat.FriendlyMessage
+import com.example.bghub.Models.Chat.ChatMessage
 import com.example.bghub.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.database.SnapshotParser
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_chat.*
@@ -42,7 +35,6 @@ class ChatFragment : Fragment()
     private var mUsername: String? = null
     private var mPhotoUrl: String? = null
     private var mChatReference: DatabaseReference? = null
-    private var mSharedPreferences: SharedPreferences? = null
     //private val mSignInClient: GoogleSignInClient? = null
 
     private var mSendButton: Button? = null
@@ -56,7 +48,7 @@ class ChatFragment : Fragment()
     private var mFirebaseAuth: FirebaseAuth? = null
     private var mFirebaseUser: FirebaseUser? = null
     private var mFirebaseDatabaseReference: DatabaseReference? = null
-    private var mFirebaseAdapter: FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>? = null
+    private var mFirebaseAdapter: FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>? = null
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -67,6 +59,9 @@ class ChatFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mChatReference = FirebaseDatabase.getInstance().reference
+                .child(Chat_Root)
+                .child(Chat_ID)
         //TODO
         //mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -75,9 +70,6 @@ class ChatFragment : Fragment()
 
         // Initialize ProgressBar and RecyclerView.
         initViews()
-
-        // New child entries
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
 
         initAdapter()
 
@@ -144,25 +136,25 @@ class ChatFragment : Fragment()
 
 
     fun initAdapter() {
-        val parser: SnapshotParser<FriendlyMessage?> = object : SnapshotParser<FriendlyMessage?> {
-            override fun parseSnapshot(dataSnapshot: DataSnapshot): FriendlyMessage {
-                val friendlyMessage: FriendlyMessage? = dataSnapshot.getValue(FriendlyMessage::class.java)
+        val parser: SnapshotParser<ChatMessage?> = object : SnapshotParser<ChatMessage?> {
+            override fun parseSnapshot(dataSnapshot: DataSnapshot): ChatMessage {
+                val friendlyMessage: ChatMessage? = dataSnapshot.getValue(ChatMessage::class.java)
                 if (friendlyMessage != null) {
                     friendlyMessage.setId(dataSnapshot.key)
                     return friendlyMessage
                 }
-                return FriendlyMessage()
+                return ChatMessage()
             }
         }
 
-        mChatReference = mFirebaseDatabaseReference!!
+        mChatReference = FirebaseDatabase.getInstance().reference
                 .child(Chat_Root)
                 .child(Chat_ID)
-        val options = FirebaseRecyclerOptions.Builder<FriendlyMessage>()
+        val options = FirebaseRecyclerOptions.Builder<ChatMessage>()
                 .setQuery(mChatReference!!, parser)
                 .build()
 
-        mFirebaseAdapter = object : FirebaseRecyclerAdapter<FriendlyMessage?, MessageViewHolder?>(options) {
+        mFirebaseAdapter = object : FirebaseRecyclerAdapter<ChatMessage?, MessageViewHolder?>(options) {
             override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MessageViewHolder {
                 val inflater = LayoutInflater.from(viewGroup.context)
                 return MessageViewHolder(inflater.inflate(R.layout.item_message, viewGroup, false))
@@ -170,7 +162,7 @@ class ChatFragment : Fragment()
 
             override fun onBindViewHolder(viewHolder: MessageViewHolder,
                                           position: Int,
-                                          friendlyMessage: FriendlyMessage) {
+                                          friendlyMessage: ChatMessage) {
                 mProgressBar!!.visibility = ProgressBar.INVISIBLE
                 if (friendlyMessage.text != null) {
                     viewHolder.messageTextView.text = friendlyMessage.text
@@ -195,7 +187,7 @@ class ChatFragment : Fragment()
 //                            .into(viewHolder.messengerImageView)
                 }
             }
-        } as FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>?
+        } as FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>?
     }
 
     fun setupAdapter() {
@@ -220,7 +212,7 @@ class ChatFragment : Fragment()
     }
 
     fun sendMessage() {
-        val friendlyMessage = FriendlyMessage(mMessageEditText!!.text.toString(),
+        val friendlyMessage = ChatMessage(mMessageEditText!!.text.toString(),
                 mUsername,
                 mPhotoUrl,
                 null /* no image */)
@@ -256,7 +248,7 @@ class ChatFragment : Fragment()
 
     companion object {
         @JvmStatic
-        fun newInstance(chatId : String, chatRoot : String) : ChatFragment {
+        fun newInstance(chatRoot : String, chatId : String) : ChatFragment {
             val fragment = ChatFragment()
             fragment.initialize(chatId,chatRoot)
             return fragment

@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bghub.Commons.AppConstants.Group_Chats
 import com.example.bghub.Models.ApiResponse.ApiResponse
+import com.example.bghub.Models.Chat.ChatMessage
+import com.example.bghub.Models.Chat.ChatRoom
 import com.example.bghub.Models.GameRooms.GameOffer
 import com.example.bghub.Models.GameRooms.GameRoom
 import com.example.bghub.Models.Games.Game
@@ -16,6 +19,7 @@ import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
 import com.example.bghub.Repositories.Http.HttpContract
 import com.example.bghub.ui.adapter.GameListAdapter
+import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_offer_game.*
@@ -90,7 +94,8 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
      * @param Models.Games.Game
      */
     override fun OnGameRowClick (game: Game) {
-        var location = mDataRepository.userLocation
+        var location = mDataRepository.getUserLocation()
+        var user = mDataRepository.session.profile.user
 
         if (location == null) {
             //TODO error message
@@ -114,6 +119,13 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
                             override fun onNext(response: ApiResponse<String>) {
                                 if (response != null && response.result == true) {
                                     var gameRoom = GameRoom(response.returnData,latitude,longitude,userId,gameid,game)
+                                    var mChatReference = FirebaseDatabase.getInstance().reference
+                                            .child(Group_Chats)
+                                            .child(gameRoom.id)
+
+                                    val chatMessage = ChatMessage("Game: " + game.name,"BGHub",null,null)
+                                    mChatReference?.push().setValue(chatMessage)
+                                    
                                     mDataRepository.insertGameRoom(gameRoom)
                                     getActivity()?.supportFragmentManager?.popBackStack();
                                 }

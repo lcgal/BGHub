@@ -12,4 +12,5 @@
     <string name="label_search_game_name">Game name</string>
     <string name="label_search_game_mechanic">Game mechanics</string>
     <string name="label_search_number_players">Number of players</string>
+
 </resources>

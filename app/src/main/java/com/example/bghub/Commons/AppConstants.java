@@ -11,5 +11,8 @@ public class AppConstants {
     public static final String Show_Game_Details = "Details";
     public static final String Join_Game_Room = "Join";
 
+    //ChatRooms@z\
+    public static final String Group_Chats = "groupchats";
+
 
 }

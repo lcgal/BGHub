@@ -15,7 +15,7 @@
  */
 package com.example.bghub.Models.Chat;
 
-public class FriendlyMessage {
+public class ChatMessage {
 
     private String id;
     private String text;
@@ -23,10 +23,10 @@ public class FriendlyMessage {
     private String photoUrl;
     private String imageUrl;
 
-    public FriendlyMessage() {
+    public ChatMessage() {
     }
 
-    public FriendlyMessage(String text, String name, String photoUrl, String imageUrl) {
+    public ChatMessage(String text, String name, String photoUrl, String imageUrl) {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
