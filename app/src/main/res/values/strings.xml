@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">BGHub</string>
 
-    <string name="facebook_app_id">206883160548297</string>
+    <string name="facebook_application_id">206883160548297</string>
     <string name="facebook_app_secret">aca63622bd0d33669767d0a99500a759</string>
-    <string name="fb_login_protocol_scheme">fb206883160548297</string>
+    <string name="facebook_login_protocol_scheme">fb206883160548297</string>
 
     <string name="thumbnail">Thumbnail</string>
     <string name="menu_favorite">Favorite</string>
