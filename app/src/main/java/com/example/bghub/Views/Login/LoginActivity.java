@@ -46,7 +46,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build());
+                new AuthUI.IdpConfig.FacebookBuilder().build(),
+                new AuthUI.IdpConfig.PhoneBuilder().build());
 
 // Custom layout for login method picker
         AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
@@ -54,37 +55,17 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                 .setEmailButtonId(R.id.login_email)
                 .setFacebookButtonId(R.id.login_fb)
                 .setGoogleButtonId(R.id.login_ggl)
+                .setPhoneButtonId(R.id.login_phone)
                 .build();
 
 // Create and launch sign-in intent
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-//                        .setLogo(R.drawable.logo_transparent)
                         .setAvailableProviders(providers)
                         .setAuthMethodPickerLayout(customLayout)
                         .build(),
                 RC_SIGN_IN);
-
-
-//        setContentView(R.layout.activity_login);
-//
-//        AndroidInjection.inject(this);
-//
-//        mPresenter.start();
-//
-//        //Facebook Login
-//        setupFacebookLoginCallBack();
-//
-//        AndroidInjection.inject(this);
-//
-//        //TODO move this somewhere appropiate
-//        //Check Location Permission and Phone State
-//        ActivityCompat.requestPermissions(this,
-//                new String[]{
-//                        android.Manifest.permission.ACCESS_FINE_LOCATION,
-//                        Manifest.permission.ACCESS_COARSE_LOCATION,
-//                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
     }
 
     @Override
@@ -115,11 +96,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        mCallBackManager.onActivityResult(requestCode, resultCode, data);
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 
     public void goToMainActivity(){
 
@@ -127,44 +103,4 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         startActivity(intent);
         finish();
     }
-
-    /**
-     * Triggers when there's a change to the facebook token.
-     */
-//    AccessTokenTracker tokenTracker = new AccessTokenTracker() {
-//        @Override
-//        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-//            if(currentAccessToken == null){
-//
-//            } else{
-//                mPresenter.loadUserProfile(currentAccessToken);
-//            }
-//
-//        }
-//    };
-
-
-//    private void setupFacebookLoginCallBack()
-//    {
-//        List< String > facebookPermissions = Arrays.asList("user_photos", "email","public_profile");
-//        mLoginButton = findViewById(R.id.login_button);
-//        mLoginButton.setPermissions(facebookPermissions);
-//        mLoginButton.setLoginBehavior( LoginBehavior.WEB_ONLY );
-//
-//
-//        mCallBackManager = CallbackManager.Factory.create();
-//        mLoginButton.registerCallback(mCallBackManager,
-//                new FacebookCallback<LoginResult>() {
-//                    @Override
-//                    public void onSuccess(LoginResult loginResult) {
-//                    }
-//                    @Override
-//                    public void onCancel() {
-//                    }
-//                    @Override
-//                    public void onError(FacebookException exception) {
-//                    }
-//                });
-//    }
-
 }
