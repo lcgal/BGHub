@@ -27,6 +27,16 @@
 
         <com.firebase.ui.auth.util.ui.SupportVectorDrawablesButton
             xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/login_email"
+            android:layout_width="300dp"
+            android:layout_gravity="center_horizontal"
+            style="@style/FirebaseUI.Button.AccountChooser.EmailButton"
+            android:text="@string/fui_sign_in_with_email"
+            tools:ignore="UnusedIds" /> <!-- Used in tests -->
+
+        <com.firebase.ui.auth.util.ui.SupportVectorDrawablesButton
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/login_fb"
             android:layout_width="300dp"
             android:layout_gravity="center_horizontal"

@@ -44,14 +44,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
 
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                new AuthUI.IdpConfig.EmailBuilder().build(),
-//                new AuthUI.IdpConfig.PhoneBuilder().build(),
+                new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                 new AuthUI.IdpConfig.FacebookBuilder().build());
 
 // Custom layout for login method picker
         AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
                 .Builder(R.layout.activity_login)
+                .setEmailButtonId(R.id.login_email)
                 .setFacebookButtonId(R.id.login_fb)
                 .setGoogleButtonId(R.id.login_ggl)
                 .build();
