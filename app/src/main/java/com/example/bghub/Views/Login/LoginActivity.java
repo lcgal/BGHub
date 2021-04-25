@@ -43,6 +43,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            goToMainActivity();
+        }
+
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
@@ -64,13 +69,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setAuthMethodPickerLayout(customLayout)
+                        .setIsSmartLockEnabled(false)
                         .build(),
                 RC_SIGN_IN);
     }
 
     @Override
     protected void onDestroy() {
-        mPresenter.dispose();
         mProgressDialog = null;
         super.onDestroy();
     }
@@ -97,8 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
 
-    public void goToMainActivity(){
-
+    public void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
