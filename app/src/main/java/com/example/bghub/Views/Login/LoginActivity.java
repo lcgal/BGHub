@@ -16,6 +16,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,17 +44,25 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
 
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.PhoneBuilder().build(),
+//                new AuthUI.IdpConfig.EmailBuilder().build(),
+//                new AuthUI.IdpConfig.PhoneBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build(),
-                new AuthUI.IdpConfig.TwitterBuilder().build());
+                new AuthUI.IdpConfig.FacebookBuilder().build());
+
+// Custom layout for login method picker
+        AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
+                .Builder(R.layout.activity_login)
+                .setFacebookButtonId(R.id.login_fb)
+                .setGoogleButtonId(R.id.login_ggl)
+                .build();
 
 // Create and launch sign-in intent
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
+//                        .setLogo(R.drawable.logo_transparent)
                         .setAvailableProviders(providers)
+                        .setAuthMethodPickerLayout(customLayout)
                         .build(),
                 RC_SIGN_IN);
 
@@ -122,40 +131,40 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     /**
      * Triggers when there's a change to the facebook token.
      */
-    AccessTokenTracker tokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            if(currentAccessToken == null){
-
-            } else{
-                mPresenter.loadUserProfile(currentAccessToken);
-            }
-
-        }
-    };
-
-
-    private void setupFacebookLoginCallBack()
-    {
-        List< String > facebookPermissions = Arrays.asList("user_photos", "email","public_profile");
-        mLoginButton = findViewById(R.id.login_button);
-        mLoginButton.setPermissions(facebookPermissions);
-        mLoginButton.setLoginBehavior( LoginBehavior.WEB_ONLY );
+//    AccessTokenTracker tokenTracker = new AccessTokenTracker() {
+//        @Override
+//        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+//            if(currentAccessToken == null){
+//
+//            } else{
+//                mPresenter.loadUserProfile(currentAccessToken);
+//            }
+//
+//        }
+//    };
 
 
-        mCallBackManager = CallbackManager.Factory.create();
-        mLoginButton.registerCallback(mCallBackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                    }
-                    @Override
-                    public void onCancel() {
-                    }
-                    @Override
-                    public void onError(FacebookException exception) {
-                    }
-                });
-    }
+//    private void setupFacebookLoginCallBack()
+//    {
+//        List< String > facebookPermissions = Arrays.asList("user_photos", "email","public_profile");
+//        mLoginButton = findViewById(R.id.login_button);
+//        mLoginButton.setPermissions(facebookPermissions);
+//        mLoginButton.setLoginBehavior( LoginBehavior.WEB_ONLY );
+//
+//
+//        mCallBackManager = CallbackManager.Factory.create();
+//        mLoginButton.registerCallback(mCallBackManager,
+//                new FacebookCallback<LoginResult>() {
+//                    @Override
+//                    public void onSuccess(LoginResult loginResult) {
+//                    }
+//                    @Override
+//                    public void onCancel() {
+//                    }
+//                    @Override
+//                    public void onError(FacebookException exception) {
+//                    }
+//                });
+//    }
 
 }
