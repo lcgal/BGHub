@@ -27,10 +27,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class LoginActivity extends AppCompatActivity implements LoginContract.View {
-
-    @Inject
-    LoginContract.Presenter mPresenter;
+public class LoginActivity extends AppCompatActivity {
 
     CallbackManager mCallBackManager;
     LoginButton mLoginButton;
@@ -89,14 +86,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                // Successfully signed in
+                // TODO user settings etc
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 // ...
             } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
+
             }
         }
     }
