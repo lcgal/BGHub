@@ -5,27 +5,18 @@ import android.location.Location;
 
 import com.example.bghub.Models.GameRooms.GameRoom;
 import com.example.bghub.Models.Games.Game;
-import com.example.bghub.Models.Session.Profile;
-import com.example.bghub.Models.Session.Session;
+import com.example.bghub.Models.User;
 import com.example.bghub.Models.UserLocation;
-import com.facebook.AccessToken;
-
-import org.json.JSONObject;
-
 import java.util.Collection;
 import java.util.List;
 
 public interface DataContract {
     interface Repository {
-        public AccessToken getLoginToken();
+        void saveUserInfo(User user);
 
-        void saveLoginToken(AccessToken loginToken);
+        User getDbUserInfo(User user);
 
-        void startSession();
-
-        Session getSession();
-
-        void endSession();
+        void processLogin();
 
         List<Game> getGamesList();
 
@@ -50,8 +41,6 @@ public interface DataContract {
         Location getLocation();
 
         UserLocation getUserLocation();
-
-        void saveProfile (Profile profile);
     }
 
 }

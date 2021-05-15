@@ -49,10 +49,5 @@ public class MainPresenter implements MainContract.Presenter {
         return SearchGameFragment.newInstance(mDataRepository, mHttpRepository);
     }
 
-    @Override
-    public void logout() {
-        mDataRepository.endSession();
-    }
-
 }
 

@@ -21,8 +21,6 @@ public interface MainContract {
 
         void start();
 
-        void logout();
-
         List<Game> getGames();
 
         OfferGameFragment provideOfferGameFragment();

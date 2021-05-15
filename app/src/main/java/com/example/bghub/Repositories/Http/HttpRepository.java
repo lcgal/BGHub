@@ -4,19 +4,15 @@ import androidx.annotation.Nullable;
 
 import com.example.bghub.Models.ApiResponse.ApiResponse;
 import com.example.bghub.Models.ApiResponse.GameListResponse;
-import com.example.bghub.Models.ApiResponse.ProfileResponse;
 import com.example.bghub.Models.ApiResponse.RoomListResponse;
 import com.example.bghub.Models.GameRooms.GameOffer;
 import com.example.bghub.Models.GameRooms.JoinGameRoomPayload;
-import com.example.bghub.Models.Session.Credentials;
-import com.example.bghub.Models.Session.Profile;
 import com.example.bghub.Models.UserLocation;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -44,17 +40,12 @@ public class HttpRepository implements HttpContract {
                 .build();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.5/phoneapi/")
+                .baseUrl("http://192.168.0.25/phoneapi/")
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(HttpContract.class);
-    }
-
-    @Override
-    public Observable<ProfileResponse> FbLogin(Profile profile){
-        return mRetrofit.FbLogin(profile);
     }
 
     @Override

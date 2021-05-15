@@ -110,21 +110,21 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
 
     fun joinGameRoomn (gameRoom: GameRoom) {
         //TODO create a class to manage api calls
-        val payload  = JoinGameRoomPayload(gameRoom.id,mDataRepository.session.profile.userId)
-        mHttpRepository.postJoinGameRoom(payload)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.newThread())
-                .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {
-                    override fun onNext(response: ApiResponse<String>) {
-                        if (response != null && response.result == true) {
-                        }
-                    }
-                    override fun onError(e: Throwable) {
-                        //TODO error treatment
-                    }
-                    override fun  onComplete() {
-                    }
-                })
+//        val payload  = JoinGameRoomPayload(gameRoom.id,mDataRepository.session.profile.userId)
+//        mHttpRepository.postJoinGameRoom(payload)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(Schedulers.newThread())
+//                .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {
+//                    override fun onNext(response: ApiResponse<String>) {
+//                        if (response != null && response.result == true) {
+//                        }
+//                    }
+//                    override fun onError(e: Throwable) {
+//                        //TODO error treatment
+//                    }
+//                    override fun  onComplete() {
+//                    }
+//                })
     }
 
     companion object {

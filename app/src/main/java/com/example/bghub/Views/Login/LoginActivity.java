@@ -5,8 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
+import com.example.bghub.BGHubApplication;
+import com.example.bghub.Background.DownloadGameListWorker;
 import com.example.bghub.R;
+import com.example.bghub.Repositories.Data.DataContract;
 import com.example.bghub.Views.Main.MainActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -27,22 +33,30 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+
 public class LoginActivity extends AppCompatActivity {
 
-    CallbackManager mCallBackManager;
-    LoginButton mLoginButton;
     ProgressDialog mProgressDialog = null;
 
     private static final int RC_SIGN_IN = 123;
+
+    @Inject DataContract.Repository mDataRepository;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AndroidInjection.inject(this);
+
+        WorkRequest myWorkRequest = OneTimeWorkRequest.from(DownloadGameListWorker.class);
+        WorkManager.getInstance(BGHubApplication.getAppContext()).enqueue(myWorkRequest);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
+            mDataRepository.processLogin();
             goToMainActivity();
+            return;
         }
 
         List<AuthUI.IdpConfig> providers = Arrays.asList(

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
 
@@ -13,20 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 
-import com.example.bghub.BGHubApplication;
-import com.example.bghub.Background.DownloadGameListWorker;
-import com.example.bghub.Background.UpdateGameRoomsWorker;
 import com.example.bghub.R;
-import com.example.bghub.Utils.OnSingleClickListener;
 import com.example.bghub.Views.Fragments.MainMenuFragment;
 import com.example.bghub.Views.Fragments.OfferGameFragment;
 import com.example.bghub.Views.Fragments.SearchGameFragment;
 import com.example.bghub.Views.Login.LoginActivity;
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -70,9 +63,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void logout(){
 
-        mPresenter.logout();
-
-        LoginManager.getInstance().logOut();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signOut();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

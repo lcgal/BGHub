@@ -20,4 +20,7 @@ public abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = {MainModule.class})
     abstract MainActivity mainActivity();
 
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {LoginModule.class})
+    abstract LoginActivity loginActivity();
 }

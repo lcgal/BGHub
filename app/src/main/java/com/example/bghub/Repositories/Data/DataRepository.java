@@ -1,11 +1,11 @@
 package com.example.bghub.Repositories.Data;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.example.bghub.BGHubApplication;
@@ -15,15 +15,18 @@ import com.example.bghub.Models.Games.Game;
 import com.example.bghub.Models.Games.Game_Table;
 import com.example.bghub.Models.Games.Versions;
 import com.example.bghub.Models.Games.Versions_Table;
-import com.example.bghub.Models.Session.Credentials;
-import com.example.bghub.Models.Session.Profile;
-import com.example.bghub.Models.Session.Session;
-import com.example.bghub.Models.Session.User;
+import com.example.bghub.Models.User;
 import com.example.bghub.Models.UserLocation;
 import com.facebook.AccessToken;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.Delete;
@@ -34,22 +37,16 @@ import com.raizlabs.android.dbflow.structure.database.transaction.FastStoreModel
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import static com.example.bghub.Commons.AppConstants.Logged_in;
 
 public class DataRepository implements DataContract.Repository {
-
-    public AccessToken loginToken;
-
-    public static Session session;
 
     private boolean isGameListReady;
     public static List<Game> gamesList;
@@ -60,46 +57,74 @@ public class DataRepository implements DataContract.Repository {
 
     private static final int LOCATION_PERMISSION_CODE = 100;
 
+    private static FirebaseFirestore fbdatabase;
+
+    private static FirebaseAuth fbauth;
+
     @Inject
     public DataRepository() {
+
+        fbauth = FirebaseAuth.getInstance();
+        fbdatabase = FirebaseFirestore.getInstance();
     }
 
     @Override
-    public AccessToken getLoginToken() {
-        return loginToken;
+    public void saveUserInfo(User user) {
+        DocumentReference documentReference = fbdatabase.collection("Users").document(user.getId());
+
+        Map<String,Object> dbUser = new HashMap<>();
+        dbUser.put("firstName",user.getFirstName());
+        dbUser.put("lastName",user.getLastName());
+        dbUser.put("email",user.getEmail());
+        dbUser.put("latitude",user.getLatitude());
+        dbUser.put("longitude",user.getLongitude());
+        dbUser.put("description",user.getDescription());
+        dbUser.put("photoURL",user.getPhotoUrl());
+
+        documentReference.set(dbUser);
+
+        updateDatabase(user);
     }
 
     @Override
-    public void saveLoginToken(AccessToken loginToken) {
-        this.loginToken = loginToken;
+    public User getDbUserInfo(User user) {
+
+        DocumentReference documentReference = fbdatabase.collection("Users").document(user.getId());
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null) {
+                    if (value.getData() == null) {
+                        saveUserInfo(user);
+                        saveModel(user);
+                    }
+                    user.setFirstName(value.getData().get("firstName") != null ? value.getData().get("firstName").toString() : null);
+                    user.setLastName(value.getData().get("lastName") != null ? value.getData().get("lastName").toString() : null);
+                    user.setEmail(value.getData().get("email") != null ? value.getData().get("email").toString() : null);
+                    user.setLatitude(value.getData().get("latitude") != null ? Double.parseDouble(value.getData().get("latitude").toString()) : 0);
+                    user.setLongitude(value.getData().get("longitude") != null ? Double.parseDouble(value.getData().get("longitude").toString()) : 0);
+                    user.setDescription(value.getData().get("description") != null ? value.getData().get("description").toString() : null);
+                    user.setPhotoUrl(value.getData().get("photoUrl") != null ? value.getData().get("photoUrl").toString() : null);
+                    saveModel(user);
+                } else {
+                    //TODO error treatment
+                    String teste = "'1'";
+                }
+
+            }
+        });
+        return null;
     }
 
     @Override
-    public void startSession () {
-        session = new Session();
-        saveToDatabase(session);
-    }
+    public void processLogin() {
+        User user = new User();
+        user.setId(fbauth.getCurrentUser().getUid());
+        user.setFirstName(fbauth.getCurrentUser().getDisplayName());
+        user.setEmail(fbauth.getCurrentUser().getEmail());
 
-    @Override
-    public Session getSession() {
-        if (session == null) {
-            session = SQLite.select().from(Session.class).querySingle();
-        }
-        return session;
-    }
-
-    @Override
-    public void endSession() {
-        session = null;
-        Delete.table(Session.class);
-    }
-
-    @Override
-    public void saveProfile(Profile profile) {
-
-        getSession().setProfile(profile);
-        session.setStatus(Logged_in);
-        updateDatabase(session);
+        user.setFirstName("teste");
+        getDbUserInfo(user);
     }
 
     @Override
@@ -205,23 +230,7 @@ public class DataRepository implements DataContract.Repository {
     @Override
     public UserLocation getUserLocation()
     {
-        if (getSession() != null && session.getProfile() != null && session.getProfile().getUser() != null)
-        {
-            User user = session.getProfile().getUser();
-
-            if (user.getLatitude() != 0 && user.getLatitude() != 0)
-            {
-                //TODO create a UserLocation atribute in User
-                return new UserLocation(user.getUserId(),user.getLatitude(),user.getLongitude());
-            } else {
-                updateLocation(BGHubApplication.getAppContext());
-                if (mLastLocation != null) {
-                    return new UserLocation(user.getUserId(),mLastLocation.getLatitude(),mLastLocation.getLongitude());
-                }
-            }
-        }
         return null;
-
     }
 
     @Override
@@ -311,6 +320,20 @@ public class DataRepository implements DataContract.Repository {
         DatabaseDefinition database = FlowManager.getDatabase(AppDatabase.class);
         Transaction transaction = database.beginTransactionAsync(fastModel).build();
         transaction.execute();
+    }
+
+    private static <M extends BaseModel> void saveModel(M model) {
+        if (model != null) {
+            FlowManager.getDatabase(AppDatabase.class).executeTransaction(databaseWrapper -> model.save());
+        }
+    }
+
+    private static <M extends BaseModel> void saveModelsList(List<M> models) {
+        if (models != null) {
+            for (M model : models) {
+                FlowManager.getDatabase(AppDatabase.class).executeTransaction(databaseWrapper -> model.save());
+            }
+        }
     }
 
 }

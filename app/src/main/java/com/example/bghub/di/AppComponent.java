@@ -3,6 +3,8 @@ package com.example.bghub.di;
 import android.app.Application;
 
 import com.example.bghub.BGHubApplication;
+import com.example.bghub.Views.Login.LoginActivity;
+import com.example.bghub.Views.Main.MainActivity;
 
 import javax.inject.Singleton;
 
