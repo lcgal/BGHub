@@ -28,19 +28,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
+import dagger.hilt.android.AndroidEntryPoint;
 
+//@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
     ProgressDialog mProgressDialog = null;
 
-    @Inject DbContract mDataRepository;
+    //TODO
+//    @Inject
+//    DbContract mDataRepository;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AndroidInjection.inject(this);
 
         ActivityResultLauncher<Intent> facebookLoginResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -56,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            mDataRepository.processLogin();
+//            mDataRepository.processLogin();
             goToMainActivity();
             return;
         }

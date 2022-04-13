@@ -1,4 +1,4 @@
-package com.example.bghub.data.models;
+package com.example.bghub.data.models.users;
 
 
 

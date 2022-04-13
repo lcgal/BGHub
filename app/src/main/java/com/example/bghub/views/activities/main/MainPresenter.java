@@ -11,7 +11,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainPresenter implements MainContract.Presenter {
+public class MainPresenter implements MainContract.Presenter  {
+
+
 
     private MainContract.View _view;
     private final DbContract mDataRepository;

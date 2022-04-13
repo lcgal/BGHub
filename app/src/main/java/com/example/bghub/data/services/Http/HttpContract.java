@@ -5,7 +5,7 @@ import com.example.bghub.data.models.apiResponse.GameListResponse;
 import com.example.bghub.data.models.apiResponse.RoomListResponse;
 import com.example.bghub.data.models.GameRooms.GameOffer;
 import com.example.bghub.data.models.GameRooms.JoinGameRoomPayload;
-import com.example.bghub.data.models.UserLocation;
+import com.example.bghub.data.models.users.UserLocation;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

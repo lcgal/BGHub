@@ -7,11 +7,9 @@ import com.example.bghub.data.models.apiResponse.GameListResponse;
 import com.example.bghub.data.models.apiResponse.RoomListResponse;
 import com.example.bghub.data.models.GameRooms.GameOffer;
 import com.example.bghub.data.models.GameRooms.JoinGameRoomPayload;
-import com.example.bghub.data.models.UserLocation;
+import com.example.bghub.data.models.users.UserLocation;
 
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -27,7 +25,7 @@ public class HttpService implements HttpContract {
         mRetrofit = retrofit;
     }
 
-    @Inject
+//    @Inject
     HttpService(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

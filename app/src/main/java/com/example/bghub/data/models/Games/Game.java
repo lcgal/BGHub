@@ -1,68 +1,31 @@
 package com.example.bghub.data.models.Games;
 
-import com.example.bghub.data.models.AppDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.OneToMany;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.List;
 import java.util.Locale;
 
-@Table(database = AppDatabase.class)
-public class Game extends BaseModel {
-
-
-    @Column
+@Entity
+public class Game {
     @PrimaryKey
     long id;
 
-    @Column
     String name;
 
-    @Column
     String minPlayers;
 
-    @Column
     String maxPlayers;
 
-    @Column
     String thumbnail;
 
-    @Column
     String image;
 
-    @Column
     String description;
 
     List<Mechanic> mechanics;
 
-    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "mechanics")
-    public List<Mechanic> getMyMechanics() {
-        if (mechanics == null || mechanics.isEmpty()) {
-            mechanics = SQLite.select()
-                    .from(Mechanic.class)
-                    .where(Mechanic_Table.gameId.eq(getId()))
-                    .queryList();
-        }
-        return mechanics;
-    }
-
     List<Family> families;
-
-    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "families")
-    public List<Family> getMyFamilies() {
-        if (families == null || families.isEmpty()) {
-            families = SQLite.select()
-                    .from(Family.class)
-                    .where(Family_Table.gameId.eq(getId()))
-                    .queryList();
-        }
-        return families;
-    }
-
 
     public long getId() {
         return id;

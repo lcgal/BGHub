@@ -5,8 +5,8 @@ import android.location.Location;
 
 import com.example.bghub.data.models.GameRooms.GameRoom;
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.models.User;
-import com.example.bghub.data.models.UserLocation;
+import com.example.bghub.data.models.users.User;
+import com.example.bghub.data.models.users.UserLocation;
 import java.util.Collection;
 import java.util.List;
 

@@ -1,21 +1,16 @@
 package com.example.bghub.data.models.Games;
 
-import com.example.bghub.data.models.AppDatabase;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Table(database = AppDatabase.class)
-public class Family extends BaseModel {
+@Entity
+public class Family{
 
     @PrimaryKey
     String id;
 
-    @Column
     long gameId;
 
-    @Column
     String family;
 
     public String getId() {

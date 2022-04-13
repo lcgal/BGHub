@@ -10,15 +10,9 @@ import androidx.work.DelegatingWorkerFactory;
 import com.example.bghub.background.factory.WorkFactoryDelegator;
 import com.example.bghub.data.services.Http.HttpService;
 import com.example.bghub.data.services.data.DbContract;
-import com.example.bghub.di.DaggerAppComponent;
-import com.raizlabs.android.dbflow.config.FlowConfig;
-import com.raizlabs.android.dbflow.config.FlowManager;
 
 import javax.inject.Inject;
-
-import dagger.android.AndroidInjector;
-import dagger.android.support.DaggerApplication;
-
+import dagger.hilt.android.HiltAndroidApp;
 
 
 /**
@@ -31,25 +25,20 @@ import dagger.android.support.DaggerApplication;
  * @since 1.0
  * @see "https://github.com/lcgal"
  */
-public class BGHubApplication extends DaggerApplication implements Configuration.Provider {
-
+@HiltAndroidApp
+public class BGHubApplication extends Application  {
+//implements Configuration.Provider
     private static Application sApplication;
 
-    @Inject
-    DbContract mDataRepository;
-    @Inject
-    HttpService mHttpService;
+//    @Inject
+//    DbContract mDataRepository;
+//    @Inject
+//    HttpService mHttpService;
 
     @Override
     public void onCreate() {
         super.onCreate();
         sApplication = this;
-        FlowManager.init(new FlowConfig.Builder(this).build());
-    }
-
-    @Override
-    public AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return DaggerAppComponent.builder().application(this).build();
     }
 
     public static Application getApplication() {
@@ -66,14 +55,14 @@ public class BGHubApplication extends DaggerApplication implements Configuration
      * We can add several different WorkerFactories to DelegationWorkerFactory, and let it sort it out through reflection* which one to use
      * *not sure if that's how it does it.
      */
-    @NonNull
-    @Override
-    public Configuration getWorkManagerConfiguration() {
-        DelegatingWorkerFactory delegatingWorkerFactory = new WorkFactoryDelegator(mHttpService,mDataRepository);
-
-
-        return new Configuration.Builder().setWorkerFactory(delegatingWorkerFactory)
-                .build();
-    }
+//    @NonNull
+//    @Override
+//    public Configuration getWorkManagerConfiguration() {
+//        DelegatingWorkerFactory delegatingWorkerFactory = new WorkFactoryDelegator(mHttpService,mDataRepository);
+//
+//
+//        return new Configuration.Builder().setWorkerFactory(delegatingWorkerFactory)
+//                .build();
+//    }
 
 }

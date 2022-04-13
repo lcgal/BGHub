@@ -14,10 +14,16 @@ buildscript {
 }
 
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'org.jetbrains.dokka'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
+    id 'org.jetbrains.dokka'
+}
+
+
 
 android {
     dataBinding {
@@ -95,20 +101,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.0.0'
     androidTestImplementation 'androidx.test.ext:truth:1.0.0'
     androidTestImplementation 'com.google.truth:truth:0.42'
-
-    // Espresso dependencies
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-//    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
-//    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
-//    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.0'
-//    androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.0'
-//    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.0'
-//    testImplementation 'junit:junit:4.12'
-
-    // The following Espresso dependency can be either "implementation"
-    // or "androidTestImplementation", depending on whether you want the
-    // dependency to appear on your APK's compile classpath or the test APK
-    // classpath.
     androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.1.0'
 
 
@@ -125,19 +117,12 @@ dependencies {
     //CardSwipe behaviour
     implementation "com.yuyakaido.android:card-stack-view:2.3.4"
 
-    // Dagger dependencies
-    def dagger_version = "2.35.1"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
-
+    // Hilt - Dependency injection
+    def hilt_version = "2.41"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
     def dagger_assist_version = "0.3.3"
     compileOnly "com.squareup.inject:assisted-inject-annotations-dagger2:$dagger_assist_version"
-
-//    implementation "androidx.room:room-runtime:2.2.5"
-//    annotationProcessor "androidx.room:room-compiler:2.2.5"
 
     // Retrofit
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -159,17 +144,11 @@ dependencies {
 
 
 
-    // DbFlow dependencies
-    def dbflow_version = "4.2.4"
-    dependencies {
-        // annotationProcessor now supported in Android Gradle plugin 2.2
-        // See https://bitbucket.org/hvisser/android-apt/wiki/Migration
-        annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
-        implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
-        implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
-        // sql-cipher database encryption (optional)
-        // implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
-    }
+    // Room - ORM
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

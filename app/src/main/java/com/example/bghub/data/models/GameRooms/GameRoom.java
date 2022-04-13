@@ -1,17 +1,15 @@
 package com.example.bghub.data.models.GameRooms;
 
-import com.example.bghub.data.models.AppDatabase;
+import com.example.bghub.data.AppDatabase;
 import com.example.bghub.data.models.Games.Game;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Table(database = AppDatabase.class)
-public class GameRoom extends BaseModel {
+import java.io.Serializable;
 
-    @Column
+@Entity
+public class GameRoom {
+
     @PrimaryKey
     String Id;
 
@@ -23,25 +21,18 @@ public class GameRoom extends BaseModel {
         Game = game;
     }
 
-    @Column
     long GameId;
 
-    @Column
     double Latitude;
 
-    @Column
     double Longitude;
 
-    @Column
     float Distance;
 
-    @Column
     String HostId;
 
-    @Column
     int Status;
 
-    @ForeignKey(saveForeignKeyModel = false)
     Game Game;
 
     public GameRoom(){

@@ -26,8 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     Button mLogoutButton;
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = mainBinding.getRoot();
         setContentView(view);
-
-        AndroidInjection.inject(this);
 
         mPresenter.start();
 
