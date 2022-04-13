@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     ProgressDialog mProgressDialog = null;
 
-    @Inject DbContract.Repository mDataRepository;
+    @Inject DbContract mDataRepository;
 
 
     @Override

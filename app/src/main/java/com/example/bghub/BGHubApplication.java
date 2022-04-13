@@ -8,8 +8,8 @@ import androidx.work.Configuration;
 import androidx.work.DelegatingWorkerFactory;
 
 import com.example.bghub.background.factory.WorkFactoryDelegator;
+import com.example.bghub.data.services.Http.HttpService;
 import com.example.bghub.data.services.data.DbContract;
-import com.example.bghub.data.services.Http.HttpRepository;
 import com.example.bghub.di.DaggerAppComponent;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -36,9 +36,9 @@ public class BGHubApplication extends DaggerApplication implements Configuration
     private static Application sApplication;
 
     @Inject
-    DbContract.Repository mDataRepository;
+    DbContract mDataRepository;
     @Inject
-    HttpRepository mHttpRepository;
+    HttpService mHttpService;
 
     @Override
     public void onCreate() {
@@ -69,7 +69,7 @@ public class BGHubApplication extends DaggerApplication implements Configuration
     @NonNull
     @Override
     public Configuration getWorkManagerConfiguration() {
-        DelegatingWorkerFactory delegatingWorkerFactory = new WorkFactoryDelegator(mHttpRepository,mDataRepository);
+        DelegatingWorkerFactory delegatingWorkerFactory = new WorkFactoryDelegator(mHttpService,mDataRepository);
 
 
         return new Configuration.Builder().setWorkerFactory(delegatingWorkerFactory)

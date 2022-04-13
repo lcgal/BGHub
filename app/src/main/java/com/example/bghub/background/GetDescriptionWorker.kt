@@ -5,16 +5,16 @@ import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.example.bghub.data.models.apiResponse.ApiResponse
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpRepository
+import com.example.bghub.data.services.Http.HttpService
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 class GetDescriptionWorker (
-        appContext: Context,
-        workerParams: WorkerParameters,
-        private val httpRepository: HttpRepository,
-        private val dataRepository : DbContract.Repository
+    appContext: Context,
+    workerParams: WorkerParameters,
+    private val httpService: HttpService,
+    private val dataRepository : DbContract
     ) : RxWorker(appContext, workerParams) {
 
     val KEY_GAME_ID = "GAME_ID"
@@ -30,7 +30,7 @@ class GetDescriptionWorker (
     }
 
     fun getDescription(gameId : String?) : DisposableObserver<ApiResponse<String>> {
-        return httpRepository.getGameDescription(gameId)
+        return httpService.getGameDescription(gameId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())
                 .subscribeWith(object : DisposableObserver<ApiResponse<String>>() {

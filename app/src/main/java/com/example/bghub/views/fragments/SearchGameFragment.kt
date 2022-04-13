@@ -29,7 +29,7 @@ import com.yuyakaido.android.cardstackview.CardStackLayoutManager
  */
 class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
 {
-    private lateinit var mDataRepository: DbContract.Repository
+    private lateinit var mDataRepository: DbContract
 
     private lateinit var mHttpRepository: HttpContract
 
@@ -89,7 +89,7 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
         _binding = null
     }
 
-    fun setDataRepository(dataRepository : DbContract.Repository) {
+    fun setDataRepository(dataRepository : DbContract) {
         mDataRepository = dataRepository
 
     }
@@ -139,7 +139,7 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
 
     companion object {
         @JvmStatic
-        fun newInstance(dataRepository : DbContract.Repository, httpRepository: HttpContract): SearchGameFragment {
+        fun newInstance(dataRepository : DbContract, httpRepository: HttpContract): SearchGameFragment {
             val fragment = SearchGameFragment()
             fragment.setDataRepository(dataRepository)
             fragment.setHttpRepository(httpRepository)

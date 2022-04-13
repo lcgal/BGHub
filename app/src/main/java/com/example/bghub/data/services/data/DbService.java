@@ -42,7 +42,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-public class DbService implements DbContract.Repository {
+public class DbService implements DbContract {
 
     private boolean isGameListReady;
     public static List<Game> gamesList;

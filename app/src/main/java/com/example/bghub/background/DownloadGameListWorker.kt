@@ -6,16 +6,16 @@ import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.example.bghub.data.models.apiResponse.GameListResponse
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpRepository
+import com.example.bghub.data.services.Http.HttpService
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 class DownloadGameListWorker(
-        appContext: Context,
-        workerParams: WorkerParameters,
-        private val httpRepository: HttpRepository,
-        private val dataRepository : DbContract.Repository
+    appContext: Context,
+    workerParams: WorkerParameters,
+    private val httpService: HttpService,
+    private val dataService : DbContract
 ) : RxWorker(appContext, workerParams) {
 
     override fun createWork(): Single<Result> {
@@ -28,15 +28,15 @@ class DownloadGameListWorker(
 
 
     fun downloadGameList() : DisposableObserver<GameListResponse?> {
-        val version: String = dataRepository.getGamesListVersion()
-        return httpRepository.getGamesList(version)
+        val version: String = dataService.getGamesListVersion()
+        return httpService.getGamesList(version)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())
                 .subscribeWith(object : DisposableObserver<GameListResponse?>() {
                     override fun onNext(result: GameListResponse) {
                         if (result.isUpdate) {
                             val games = result.data
-                            dataRepository.saveGamesList(games, result.version)
+                            dataService.saveGamesList(games, result.version)
                             //return Single.just(Result.success())
                         }
                     }

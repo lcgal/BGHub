@@ -10,7 +10,7 @@ import com.example.bghub.data.services.data.DbContract
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var mDataRepository: DbContract.Repository
+    private lateinit var mDataRepository: DbContract
 
     //Runs after onCreate(), and binds views and returns the view Hierarchy of the fragment
     override fun onCreateView(inflater: LayoutInflater,
@@ -19,13 +19,13 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
-    fun setDataRepository(dataRepository : DbContract.Repository) {
+    fun setDataRepository(dataRepository : DbContract) {
         mDataRepository = dataRepository
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(dataRepository : DbContract.Repository): ProfileFragment {
+        fun newInstance(dataRepository : DbContract): ProfileFragment {
             val fragment = ProfileFragment()
             fragment.setDataRepository(dataRepository)
             return fragment

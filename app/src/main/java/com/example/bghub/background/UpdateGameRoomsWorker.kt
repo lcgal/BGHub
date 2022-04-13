@@ -7,16 +7,16 @@ import com.example.bghub.BGHubApplication
 import com.example.bghub.data.models.apiResponse.RoomListResponse
 import com.example.bghub.data.models.GameRooms.GameRoom
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpRepository
+import com.example.bghub.data.services.Http.HttpService
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 class UpdateGameRoomsWorker (
-        appContext: Context,
-        workerParams: WorkerParameters,
-        private val httpRepository: HttpRepository,
-        private val dataRepository : DbContract.Repository
+    appContext: Context,
+    workerParams: WorkerParameters,
+    private val httpService: HttpService,
+    private val dataRepository : DbContract
 ) : RxWorker(appContext, workerParams) {
     var userLocation = dataRepository.getUserLocation()
 
@@ -27,7 +27,7 @@ class UpdateGameRoomsWorker (
 
     fun fetchGamesRooms ()
     {
-        httpRepository.getGameRooms(userLocation)
+        httpService.getGameRooms(userLocation)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())
                 .subscribeWith(object : DisposableObserver<RoomListResponse?>() {

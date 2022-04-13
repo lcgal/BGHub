@@ -20,15 +20,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HttpRepository implements HttpContract {
+public class HttpService implements HttpContract {
     final private HttpContract mRetrofit;
 
-    public HttpRepository(@Nullable HttpContract retrofit){
+    public HttpService(@Nullable HttpContract retrofit){
         mRetrofit = retrofit;
     }
 
     @Inject
-    HttpRepository(){
+    HttpService(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 

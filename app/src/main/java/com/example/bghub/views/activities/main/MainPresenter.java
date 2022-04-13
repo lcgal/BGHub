@@ -14,13 +14,13 @@ import javax.inject.Inject;
 public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View _view;
-    private final DbContract.Repository mDataRepository;
+    private final DbContract mDataRepository;
     private final HttpContract mHttpRepository;
 
     @Inject
     public MainPresenter(
             MainContract.View view,
-            DbContract.Repository dataRepository,
+            DbContract dataRepository,
             HttpContract httpRepository){
 
         _view = view;

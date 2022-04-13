@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 public interface DbContract {
-    interface Repository {
         void saveUserInfo(User user);
 
         User getDbUserInfo(User user);
@@ -41,6 +40,4 @@ public interface DbContract {
         Location getLocation();
 
         UserLocation getUserLocation();
-    }
-
 }

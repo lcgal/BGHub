@@ -32,7 +32,7 @@ import io.reactivex.schedulers.Schedulers
  */
 class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
-    lateinit var mDataRepository: DbContract.Repository
+    lateinit var mDataRepository: DbContract
 
     private lateinit var mHttpRepository: HttpContract
 
@@ -82,7 +82,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
         _binding = null
     }
 
-    fun setDataRepository(dataRepository : DbContract.Repository) {
+    fun setDataRepository(dataRepository : DbContract) {
         mDataRepository = dataRepository
 
     }
@@ -143,7 +143,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
      */
     companion object {
         @JvmStatic
-        fun newInstance(dataRepository : DbContract.Repository, httpRepository: HttpContract): OfferGameFragment {
+        fun newInstance(dataRepository : DbContract, httpRepository: HttpContract): OfferGameFragment {
             val fragment = OfferGameFragment()
             fragment.setDataRepository(dataRepository)
             fragment.setHttpRepository(httpRepository)
