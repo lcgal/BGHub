@@ -1,8 +1,8 @@
 package com.example.bghub.di;
 
-import com.example.bghub.Views.Main.MainActivity;
-import com.example.bghub.Views.Main.MainContract;
-import com.example.bghub.Views.Main.MainPresenter;
+import com.example.bghub.views.main.MainActivity;
+import com.example.bghub.views.main.MainContract;
+import com.example.bghub.views.main.MainPresenter;
 
 import dagger.Binds;
 import dagger.Module;

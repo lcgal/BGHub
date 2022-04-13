@@ -1,16 +1,13 @@
 package com.example.bghub.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bghub.Commons.AppConstants.Show_Game_Details
-import com.example.bghub.Models.GameRooms.GameRoom
-import com.example.bghub.Models.Games.Game
+import com.example.bghub.commons.AppConstants.Show_Game_Details
+import com.example.bghub.models.GameRooms.GameRoom
 import com.example.bghub.R
 import com.squareup.picasso.Picasso
 

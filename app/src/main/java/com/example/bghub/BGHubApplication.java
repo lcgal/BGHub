@@ -7,10 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.work.Configuration;
 import androidx.work.DelegatingWorkerFactory;
 
-
-import com.example.bghub.Background.Factory.WorkFactoryDelegator;
-import com.example.bghub.Repositories.Data.DataContract;
-import com.example.bghub.Repositories.Http.HttpRepository;
+import com.example.bghub.background.factory.WorkFactoryDelegator;
+import com.example.bghub.repositories.data.DataContract;
+import com.example.bghub.repositories.Http.HttpRepository;
 import com.example.bghub.di.DaggerAppComponent;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;

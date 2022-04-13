@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bghub.Models.Games.Game
+import com.example.bghub.models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.ui.adapter.GameListAdapter.*
 import com.squareup.picasso.Picasso

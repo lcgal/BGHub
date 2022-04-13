@@ -1,9 +1,9 @@
 package com.example.bghub.di;
 
-import com.example.bghub.Repositories.Data.DataContract;
-import com.example.bghub.Repositories.Data.DataRepository;
-import com.example.bghub.Repositories.Http.HttpContract;
-import com.example.bghub.Repositories.Http.HttpRepository;
+import com.example.bghub.repositories.data.DataContract;
+import com.example.bghub.repositories.data.DataRepository;
+import com.example.bghub.repositories.Http.HttpContract;
+import com.example.bghub.repositories.Http.HttpRepository;
 
 import javax.inject.Singleton;
 
