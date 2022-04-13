@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bghub.models.ApiResponse.ApiResponse
-import com.example.bghub.models.GameRooms.GameOffer
-import com.example.bghub.models.GameRooms.GameRoom
-import com.example.bghub.models.Games.Game
-import com.example.bghub.repositories.data.DataContract
-import com.example.bghub.repositories.Http.HttpContract
+import com.example.bghub.data.models.apiResponse.ApiResponse
+import com.example.bghub.data.models.GameRooms.GameOffer
+import com.example.bghub.data.models.GameRooms.GameRoom
+import com.example.bghub.data.models.Games.Game
+import com.example.bghub.data.services.data.DbContract
+import com.example.bghub.data.services.Http.HttpContract
 import com.example.bghub.databinding.FragmentOfferGameBinding
-import com.example.bghub.ui.adapter.GameListAdapter
+import com.example.bghub.views.lists.adapter.GameListAdapter
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
@@ -32,7 +32,7 @@ import io.reactivex.schedulers.Schedulers
  */
 class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
-    lateinit var mDataRepository: DataContract.Repository
+    lateinit var mDataRepository: DbContract.Repository
 
     private lateinit var mHttpRepository: HttpContract
 
@@ -82,7 +82,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
         _binding = null
     }
 
-    fun setDataRepository(dataRepository : DataContract.Repository) {
+    fun setDataRepository(dataRepository : DbContract.Repository) {
         mDataRepository = dataRepository
 
     }
@@ -143,7 +143,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
      */
     companion object {
         @JvmStatic
-        fun newInstance(dataRepository : DataContract.Repository, httpRepository: HttpContract): OfferGameFragment {
+        fun newInstance(dataRepository : DbContract.Repository, httpRepository: HttpContract): OfferGameFragment {
             val fragment = OfferGameFragment()
             fragment.setDataRepository(dataRepository)
             fragment.setHttpRepository(httpRepository)

@@ -1,7 +1,7 @@
 package com.example.bghub.di;
 
-import com.example.bghub.views.login.LoginActivity;
-import com.example.bghub.views.main.MainActivity;
+import com.example.bghub.views.activities.login.LoginActivity;
+import com.example.bghub.views.activities.main.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

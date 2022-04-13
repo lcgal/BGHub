@@ -4,9 +4,9 @@ package com.example.bghub.background
 import android.content.Context
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
-import com.example.bghub.models.ApiResponse.GameListResponse
-import com.example.bghub.repositories.data.DataContract
-import com.example.bghub.repositories.Http.HttpRepository
+import com.example.bghub.data.models.apiResponse.GameListResponse
+import com.example.bghub.data.services.data.DbContract
+import com.example.bghub.data.services.Http.HttpRepository
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -15,7 +15,7 @@ class DownloadGameListWorker(
         appContext: Context,
         workerParams: WorkerParameters,
         private val httpRepository: HttpRepository,
-        private val dataRepository : DataContract.Repository
+        private val dataRepository : DbContract.Repository
 ) : RxWorker(appContext, workerParams) {
 
     override fun createWork(): Single<Result> {

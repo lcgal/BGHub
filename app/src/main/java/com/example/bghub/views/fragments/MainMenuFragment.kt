@@ -11,8 +11,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.bghub.BGHubApplication
 import com.example.bghub.background.UpdateGameRoomsWorker
-import com.example.bghub.Utils.OnSingleClickListener
-import com.example.bghub.views.main.MainActivity
+import com.example.bghub.commons.utils.OnSingleClickListener
+import com.example.bghub.views.activities.main.MainActivity
 import com.example.bghub.databinding.FragmentMainMenuBinding
 
 /**

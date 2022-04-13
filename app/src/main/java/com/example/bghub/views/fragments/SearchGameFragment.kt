@@ -8,13 +8,13 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.bghub.commons.AppConstants.Show_Game_Details
-import com.example.bghub.models.GameRooms.GameRoom
+import com.example.bghub.data.models.GameRooms.GameRoom
 import com.example.bghub.R
-import com.example.bghub.repositories.data.DataContract
-import com.example.bghub.repositories.Http.HttpContract
-import com.example.bghub.Utils.OnSingleClickListener
+import com.example.bghub.data.services.data.DbContract
+import com.example.bghub.data.services.Http.HttpContract
+import com.example.bghub.commons.utils.OnSingleClickListener
 import com.example.bghub.databinding.FragmentSearchGameBinding
-import com.example.bghub.ui.adapter.GameRoomAdapter
+import com.example.bghub.views.lists.adapter.GameRoomAdapter
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 
 
@@ -29,7 +29,7 @@ import com.yuyakaido.android.cardstackview.CardStackLayoutManager
  */
 class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
 {
-    private lateinit var mDataRepository: DataContract.Repository
+    private lateinit var mDataRepository: DbContract.Repository
 
     private lateinit var mHttpRepository: HttpContract
 
@@ -89,7 +89,7 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
         _binding = null
     }
 
-    fun setDataRepository(dataRepository : DataContract.Repository) {
+    fun setDataRepository(dataRepository : DbContract.Repository) {
         mDataRepository = dataRepository
 
     }
@@ -139,7 +139,7 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
 
     companion object {
         @JvmStatic
-        fun newInstance(dataRepository : DataContract.Repository, httpRepository: HttpContract): SearchGameFragment {
+        fun newInstance(dataRepository : DbContract.Repository, httpRepository: HttpContract): SearchGameFragment {
             val fragment = SearchGameFragment()
             fragment.setDataRepository(dataRepository)
             fragment.setHttpRepository(httpRepository)

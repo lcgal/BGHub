@@ -5,13 +5,13 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.example.bghub.background.*
-import com.example.bghub.repositories.data.DataContract
-import com.example.bghub.repositories.Http.HttpRepository
+import com.example.bghub.data.services.data.DbContract
+import com.example.bghub.data.services.Http.HttpRepository
 
 
 class RepositoryWorkerFactory(
         private val httpRepository: HttpRepository,
-        private val dataRepository: DataContract.Repository
+        private val dataRepository: DbContract.Repository
 ) : WorkerFactory() {
 
     override fun createWorker(

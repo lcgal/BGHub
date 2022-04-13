@@ -4,10 +4,10 @@ import android.content.Context
 import android.location.Location
 import androidx.work.*
 import com.example.bghub.BGHubApplication
-import com.example.bghub.models.ApiResponse.RoomListResponse
-import com.example.bghub.models.GameRooms.GameRoom
-import com.example.bghub.repositories.data.DataContract
-import com.example.bghub.repositories.Http.HttpRepository
+import com.example.bghub.data.models.apiResponse.RoomListResponse
+import com.example.bghub.data.models.GameRooms.GameRoom
+import com.example.bghub.data.services.data.DbContract
+import com.example.bghub.data.services.Http.HttpRepository
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -16,7 +16,7 @@ class UpdateGameRoomsWorker (
         appContext: Context,
         workerParams: WorkerParameters,
         private val httpRepository: HttpRepository,
-        private val dataRepository : DataContract.Repository
+        private val dataRepository : DbContract.Repository
 ) : RxWorker(appContext, workerParams) {
     var userLocation = dataRepository.getUserLocation()
 

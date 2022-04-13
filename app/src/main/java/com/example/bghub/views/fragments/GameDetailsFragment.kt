@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
-import com.example.bghub.models.Games.Game
+import com.example.bghub.data.models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.databinding.FragmentGameDetailsBinding
 import com.squareup.picasso.Picasso

@@ -1,9 +1,9 @@
 package com.example.bghub.di;
 
-import com.example.bghub.repositories.data.DataContract;
-import com.example.bghub.repositories.data.DataRepository;
-import com.example.bghub.repositories.Http.HttpContract;
-import com.example.bghub.repositories.Http.HttpRepository;
+import com.example.bghub.data.services.data.DbContract;
+import com.example.bghub.data.services.data.DbService;
+import com.example.bghub.data.services.Http.HttpContract;
+import com.example.bghub.data.services.Http.HttpRepository;
 
 import javax.inject.Singleton;
 
@@ -22,5 +22,5 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    DataContract.Repository providesDataRepository(DataRepository repository) { return repository; }
+    DbContract.Repository providesDataRepository(DbService repository) { return repository; }
 }
