@@ -18,15 +18,12 @@ import com.example.bghub.Repositories.Data.DataContract
 import com.example.bghub.Repositories.Http.HttpContract
 import com.example.bghub.Utils.OnSingleClickListener
 import com.example.bghub.Views.Main.MainActivity
+import com.example.bghub.databinding.FragmentOfferGameBinding
+import com.example.bghub.databinding.FragmentSearchGameBinding
 import com.example.bghub.ui.CardStack.CustomCardStackLayoutManager
 import com.example.bghub.ui.adapter.GameRoomAdapter
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
-import com.yuyakaido.android.cardstackview.CardStackListener
-import com.yuyakaido.android.cardstackview.CardStackView
-import com.yuyakaido.android.cardstackview.Direction
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_search_game.*
+
 
 /**
  * Fragment used to look game offers.
@@ -47,33 +44,43 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
 
     lateinit var mJoinButton: ImageButton
 
+    private var _binding: FragmentSearchGameBinding? = null
+
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search_game, container, false)
+
+
+//        return inflater.inflate(R.layout.fragment_search_game, container, false)
+        _binding = FragmentSearchGameBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = GameRoomAdapter( mDataRepository.gameRooms, this)
-        stack_view.adapter = adapter
+        binding.stackView.adapter = adapter
 
         var manager =  CardStackLayoutManager(activity)
         manager.setVisibleCount(2)
-        stack_view.layoutManager =  manager
+        binding.stackView.layoutManager =  manager
 
         setUpButtons()
     }
 
     private fun setUpButtons() {
-        mJoinButton = join_button
+        mJoinButton = binding.joinButton
         mJoinButton.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
 
                 var gameRoom = adapter.getCurrentRoom()
                 joinGameRoomn(gameRoom)
-                stack_view.swipe()
+                binding.stackView.swipe()
             }
         })
     }
@@ -98,7 +105,7 @@ class SearchGameFragment : Fragment(), GameRoomAdapter.OnGameClickListener
     override fun OnGameClick (gameRoom: GameRoom, action: String) {
         if (action == Show_Game_Details) {
             if (activity != null) {
-                val manager: FragmentManager = activity!!.supportFragmentManager
+                val manager: FragmentManager = requireActivity().supportFragmentManager
                 val transaction = manager.beginTransaction()
                 val fragment: GameDetailsFragment = GameDetailsFragment.newInstance(gameRoom.game)
                 transaction.replace(R.id.frameLayout, fragment)

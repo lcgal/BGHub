@@ -40,7 +40,7 @@ public class HttpRepository implements HttpContract {
                 .build();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.25/phoneapi/")
+                .baseUrl("https://bghub-api.azurewebsites.net/")
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -52,7 +52,7 @@ public class HttpRepository implements HttpContract {
     public Observable<GameListResponse>  getGamesList(String version){
         return mRetrofit.getGamesList(version);
     }
-
+    
     @Override
     public Observable<ApiResponse<String>> getGameDescription(String gameId) {
         return mRetrofit.getGameDescription(gameId);

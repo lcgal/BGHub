@@ -110,7 +110,6 @@ public class DataRepository implements DataContract.Repository {
                     //TODO error treatment
                     String teste = "'1'";
                 }
-
             }
         });
         return null;

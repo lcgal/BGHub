@@ -30,7 +30,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         RepositoryModule.class,
         ActivityBindingModule.class,
         AndroidSupportInjectionModule.class})
-public interface AppComponent extends AndroidInjector<BGHubApplication>  {
+    public interface AppComponent extends AndroidInjector<BGHubApplication>  {
     // Gives us syntactic sugar. we can then do DaggerAppComponent.builder().application(this).build().inject(this);
     // never having to instantiate any modules or say which module we are passing the application to.
     // Application will just be provided into our app graph now.

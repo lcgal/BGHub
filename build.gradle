@@ -3,7 +3,7 @@
 buildscript {
     ext {
         version_dokka = "0.10.0"
-        kotlin_version = '1.3.72'
+        kotlin_version = '1.6.0'
     }
 
     repositories {

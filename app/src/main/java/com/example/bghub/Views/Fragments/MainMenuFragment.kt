@@ -14,7 +14,8 @@ import com.example.bghub.Background.UpdateGameRoomsWorker
 import com.example.bghub.R
 import com.example.bghub.Utils.OnSingleClickListener
 import com.example.bghub.Views.Main.MainActivity
-import kotlinx.android.synthetic.main.fragment_main_menu.*
+import com.example.bghub.databinding.FragmentMainMenuBinding
+import com.example.bghub.databinding.FragmentOfferGameBinding
 
 class MainMenuFragment : Fragment()
 {
@@ -24,11 +25,18 @@ class MainMenuFragment : Fragment()
 
     lateinit var mSearchGameButton: Button
 
+    private var _binding: FragmentMainMenuBinding? = null
+
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_main_menu, container, false)
+        _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +47,7 @@ class MainMenuFragment : Fragment()
 
     private fun setUpButtons() {
         //Button to open offer game fragment
-        mOfferGameButton = offer_game_button
+        mOfferGameButton = binding.offerGameButton
         mOfferGameButton.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 val mainActivity: MainActivity? = activity as MainActivity?
@@ -48,7 +56,7 @@ class MainMenuFragment : Fragment()
         })
 
         //Button to open offer game fragment
-        mTriggerUpdateButton = search_game_button
+        mTriggerUpdateButton = binding.searchGameButton
         mTriggerUpdateButton.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 val myWorkRequest: WorkRequest = OneTimeWorkRequest.from(UpdateGameRoomsWorker::class.java)
@@ -57,7 +65,7 @@ class MainMenuFragment : Fragment()
         })
 
         //Button to open search game fragment
-        mSearchGameButton = search_game_button2
+        mSearchGameButton = binding.searchGameButton2
         mSearchGameButton.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 val mainActivity: MainActivity? = activity as MainActivity?

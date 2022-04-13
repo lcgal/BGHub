@@ -55,7 +55,6 @@ class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRow
                 val filterResults = FilterResults()
                 filterResults.values = filteredList
                 return filterResults
-
             }
 
             @Suppress("UNCHECKED_CAST")

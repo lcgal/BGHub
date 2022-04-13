@@ -15,10 +15,10 @@ import com.example.bghub.Models.Games.Game
 import com.example.bghub.R
 import com.example.bghub.Repositories.Data.DataContract
 import com.example.bghub.Repositories.Http.HttpContract
+import com.example.bghub.databinding.FragmentOfferGameBinding
 import com.example.bghub.ui.adapter.GameListAdapter
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_offer_game.*
 
 /**
  * Fragment used to offer a game.
@@ -38,10 +38,18 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
 
     lateinit var adapter: GameListAdapter
 
+    private var _binding: FragmentOfferGameBinding? = null
+
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_offer_game, container, false)
+
+        _binding = FragmentOfferGameBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        return view
     }
 
     /**
@@ -55,10 +63,10 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = GameListAdapter( mDataRepository.gamesList, this)
-        games_recycler_view.adapter = adapter
-        games_recycler_view.layoutManager =  LinearLayoutManager(activity)
+        binding.gamesRecyclerView.adapter = adapter
+        binding.gamesRecyclerView.layoutManager =  LinearLayoutManager(activity)
 
-        game_name_search.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        binding.gameNameSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -69,6 +77,11 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
             }
         })
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     fun setDataRepository(dataRepository : DataContract.Repository) {
