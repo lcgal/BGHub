@@ -11,7 +11,7 @@ import com.example.bghub.commons.AppConstants.Show_Game_Details
 import com.example.bghub.data.models.GameRooms.GameRoom
 import com.example.bghub.R
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpContract
+import com.example.bghub.data.services.http.HttpContract
 import com.example.bghub.commons.utils.OnSingleClickListener
 import com.example.bghub.databinding.FragmentSearchGameBinding
 import com.example.bghub.views.lists.adapter.GameRoomAdapter

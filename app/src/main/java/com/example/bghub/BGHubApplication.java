@@ -3,15 +3,6 @@ package com.example.bghub;
 import android.app.Application;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.work.Configuration;
-import androidx.work.DelegatingWorkerFactory;
-
-import com.example.bghub.background.factory.WorkFactoryDelegator;
-import com.example.bghub.data.services.Http.HttpService;
-import com.example.bghub.data.services.data.DbContract;
-
-import javax.inject.Inject;
 import dagger.hilt.android.HiltAndroidApp;
 
 

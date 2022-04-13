@@ -14,7 +14,7 @@ import com.example.bghub.data.models.GameRooms.GameOffer
 import com.example.bghub.data.models.GameRooms.GameRoom
 import com.example.bghub.data.models.Games.Game
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpContract
+import com.example.bghub.data.services.http.HttpContract
 import com.example.bghub.databinding.FragmentOfferGameBinding
 import com.example.bghub.views.lists.adapter.GameListAdapter
 import io.reactivex.observers.DisposableObserver

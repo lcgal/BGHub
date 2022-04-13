@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class DbService implements DbContract {
 
     private boolean isGameListReady;
@@ -47,7 +49,7 @@ public class DbService implements DbContract {
 
     private static FirebaseAuth fbauth;
 
-//    @Inject
+    @Inject
     public DbService() {
 
         fbauth = FirebaseAuth.getInstance();

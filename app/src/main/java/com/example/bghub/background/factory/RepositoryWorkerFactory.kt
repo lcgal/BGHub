@@ -6,7 +6,7 @@ import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.example.bghub.background.*
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpService
+import com.example.bghub.data.services.http.HttpService
 
 
 class RepositoryWorkerFactory(

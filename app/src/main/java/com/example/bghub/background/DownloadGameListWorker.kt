@@ -6,7 +6,7 @@ import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.example.bghub.data.models.apiResponse.GameListResponse
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpService
+import com.example.bghub.data.services.http.HttpService
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers

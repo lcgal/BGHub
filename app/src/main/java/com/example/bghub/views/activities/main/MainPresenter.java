@@ -2,7 +2,7 @@ package com.example.bghub.views.activities.main;
 
 import com.example.bghub.data.models.Games.Game;
 import com.example.bghub.data.services.data.DbContract;
-import com.example.bghub.data.services.Http.HttpContract;
+import com.example.bghub.data.services.http.HttpContract;
 import com.example.bghub.views.fragments.OfferGameFragment;
 import com.example.bghub.views.fragments.ProfileFragment;
 import com.example.bghub.views.fragments.SearchGameFragment;

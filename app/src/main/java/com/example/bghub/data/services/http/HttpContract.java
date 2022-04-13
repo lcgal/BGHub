@@ -1,4 +1,4 @@
-package com.example.bghub.data.services.Http;
+package com.example.bghub.data.services.http;
 
 import com.example.bghub.data.models.apiResponse.ApiResponse;
 import com.example.bghub.data.models.apiResponse.GameListResponse;

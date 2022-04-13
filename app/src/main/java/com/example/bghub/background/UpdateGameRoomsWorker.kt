@@ -7,7 +7,7 @@ import com.example.bghub.BGHubApplication
 import com.example.bghub.data.models.apiResponse.RoomListResponse
 import com.example.bghub.data.models.GameRooms.GameRoom
 import com.example.bghub.data.services.data.DbContract
-import com.example.bghub.data.services.Http.HttpService
+import com.example.bghub.data.services.http.HttpService
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
