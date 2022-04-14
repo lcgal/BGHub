@@ -1,5 +1,6 @@
 package com.example.bghub.data.models.users;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
 public class User  implements Serializable {
 
     @PrimaryKey
+    @NonNull
     private String id;
 
     private String firstName;

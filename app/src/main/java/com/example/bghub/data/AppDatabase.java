@@ -1,7 +1,9 @@
 package com.example.bghub.data;
 
 import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
+import com.example.bghub.data.daos.GameDao;
 import com.example.bghub.data.daos.UserDao;
 import com.example.bghub.data.models.Games.Family;
 import com.example.bghub.data.models.Games.Game;
@@ -15,7 +17,8 @@ import com.example.bghub.data.models.users.User;
         Version.class,
         User.class},
         version = 1)
-public abstract  class AppDatabase {
+public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
+    public abstract GameDao gameDao();
 }

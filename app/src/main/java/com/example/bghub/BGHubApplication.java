@@ -3,6 +3,16 @@ package com.example.bghub;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.work.Configuration;
+import androidx.work.DelegatingWorkerFactory;
+
+import com.example.bghub.background.factory.WorkFactoryDelegator;
+import com.example.bghub.data.services.data.DbContract;
+import com.example.bghub.data.services.http.HttpService;
+
+import javax.inject.Inject;
+
 import dagger.hilt.android.HiltAndroidApp;
 
 
@@ -17,14 +27,13 @@ import dagger.hilt.android.HiltAndroidApp;
  * @see "https://github.com/lcgal"
  */
 @HiltAndroidApp
-public class BGHubApplication extends Application  {
-//implements Configuration.Provider
+public class BGHubApplication extends Application implements Configuration.Provider  {
     private static Application sApplication;
 
-//    @Inject
-//    DbContract mDataRepository;
-//    @Inject
-//    HttpService mHttpService;
+    @Inject
+    DbContract mDataRepository;
+    @Inject
+    HttpService mHttpService;
 
     @Override
     public void onCreate() {
@@ -46,14 +55,14 @@ public class BGHubApplication extends Application  {
      * We can add several different WorkerFactories to DelegationWorkerFactory, and let it sort it out through reflection* which one to use
      * *not sure if that's how it does it.
      */
-//    @NonNull
-//    @Override
-//    public Configuration getWorkManagerConfiguration() {
-//        DelegatingWorkerFactory delegatingWorkerFactory = new WorkFactoryDelegator(mHttpService,mDataRepository);
-//
-//
-//        return new Configuration.Builder().setWorkerFactory(delegatingWorkerFactory)
-//                .build();
-//    }
+    @NonNull
+    @Override
+    public Configuration getWorkManagerConfiguration() {
+        DelegatingWorkerFactory delegatingWorkerFactory = new WorkFactoryDelegator(mHttpService,mDataRepository);
+
+
+        return new Configuration.Builder().setWorkerFactory(delegatingWorkerFactory)
+                .build();
+    }
 
 }

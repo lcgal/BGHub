@@ -2,18 +2,24 @@ package com.example.bghub.background
 
 
 import android.content.Context
+import androidx.hilt.work.HiltWorker
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.example.bghub.data.models.apiResponse.GameListResponse
 import com.example.bghub.data.services.data.DbContract
 import com.example.bghub.data.services.http.HttpService
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
-class DownloadGameListWorker(
-    appContext: Context,
-    workerParams: WorkerParameters,
+@HiltWorker
+class DownloadGameListWorker
+@AssistedInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParams: WorkerParameters,
     private val httpService: HttpService,
     private val dataService : DbContract
 ) : RxWorker(appContext, workerParams) {

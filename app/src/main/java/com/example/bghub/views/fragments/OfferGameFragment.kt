@@ -13,6 +13,7 @@ import com.example.bghub.data.models.apiResponse.ApiResponse
 import com.example.bghub.data.models.GameRooms.GameOffer
 import com.example.bghub.data.models.GameRooms.GameRoom
 import com.example.bghub.data.models.Games.Game
+import com.example.bghub.data.models.Games.GameWithChildren
 import com.example.bghub.data.services.data.DbContract
 import com.example.bghub.data.services.http.HttpContract
 import com.example.bghub.databinding.FragmentOfferGameBinding
@@ -97,7 +98,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
      * It's able to listen to the click because it implements the GameListAdapter.OnGameRowListener interface, and it passes it's own listener to the adapter @see onViewCreated.
      */
     @SuppressLint("CheckResult")
-    override fun OnGameRowClick (game: Game) {
+    override fun OnGameRowClick (game: GameWithChildren) {
         val location = mDataRepository.userLocation
 
         if (location == null) {
@@ -105,7 +106,7 @@ class OfferGameFragment : Fragment() , GameListAdapter.OnGameRowListener {
             return
         }
 
-        val gameid = game.id
+        val gameid = game.getId()
         val latitude = location.latitude
         val longitude = location.longitude
         val userId = location.userId

@@ -5,39 +5,28 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
-import com.example.bghub.data.AppDatabase;
 import com.example.bghub.data.models.GameRooms.GameRoom;
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.models.Games.Version;
+import com.example.bghub.data.models.Games.GameWithChildren;
 import com.example.bghub.data.models.users.User;
 import com.example.bghub.data.models.users.UserLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 public class DbService implements DbContract {
 
     private boolean isGameListReady;
-    public static List<Game> gamesList;
+    public static List<GameWithChildren> gamesList;
 
     public static List<GameRoom> gameRooms;
 
@@ -115,7 +104,7 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public List<Game> getGamesList() {
+    public List<GameWithChildren> getGamesList() {
 //        if (gamesList == null) {
 //            gamesList = SQLite.select().from(Game.class).queryList();
 //        }
@@ -141,8 +130,8 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public Game getGameById(long gameId) {
-        return new Game();
+    public GameWithChildren getGameById(long gameId) {
+        return new GameWithChildren(null,null,null);
 //        return SQLite.select()
 //                .from(Game.class)
 //                .where((Game_Table.id.eq(gameId)))
@@ -150,7 +139,7 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public void saveGamesList(List<Game> gamesList, String version) {
+    public void saveGamesList(List<GameWithChildren> gamesList, String version) {
         DbService.gamesList = gamesList;
 
         try {

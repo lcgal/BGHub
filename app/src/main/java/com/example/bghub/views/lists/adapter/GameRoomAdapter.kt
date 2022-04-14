@@ -67,8 +67,8 @@ class GameRoomAdapter(private val gameRoomList: List<GameRoom>, onGameClickListe
 
         fun bind(gameRoom: GameRoom) {
             var game = gameRoom.game
-            mImageView?.loadThumbnailInList(game.thumbnail)
-            mNameView?.text = game.name
+            mImageView?.loadThumbnailInList(game.getThumbnail())
+            mNameView?.text = game.getName()
             mDistanceView?.text = gameRoom.distance.toString()
 
             itemView.setOnClickListener{

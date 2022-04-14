@@ -11,15 +11,16 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bghub.data.models.Games.Game
 import com.example.bghub.R
+import com.example.bghub.data.models.Games.GameWithChildren
 import com.example.bghub.views.lists.adapter.GameListAdapter.*
 import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
 
-class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRowListener)
+class GameListAdapter(private val list: List<GameWithChildren>, onGameRowListener: OnGameRowListener)
     : RecyclerView.Adapter<GameListHolder>(), Filterable {
 
-    var filteredList : List<Game>
+    var filteredList : List<GameWithChildren>
     var mOnGameRowListener: OnGameRowListener
 
     init {
@@ -33,7 +34,7 @@ class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRow
 }
 
     override fun onBindViewHolder(holder: GameListHolder, position: Int) {
-        val game: Game = filteredList[position]
+        val game: GameWithChildren = filteredList[position]
         holder.bind(game)
     }
 
@@ -44,9 +45,9 @@ class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRow
                 if (charSearch.isEmpty()) {
                     filteredList = list
                 } else {
-                    val resultList = ArrayList<Game>()
+                    val resultList = ArrayList<GameWithChildren>()
                     for (row in list) {
-                        if (row.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
+                        if (row.getName().lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))) {
                             resultList.add(row)
                         }
                     }
@@ -59,7 +60,7 @@ class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRow
 
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as List<Game>
+                filteredList = results?.values as List<GameWithChildren>
                 notifyDataSetChanged()
             }
         }
@@ -87,9 +88,9 @@ class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRow
 
         }
 
-        fun bind(game: Game) {
-            mThumbnailView?.loadThumbnailInList(game.thumbnail)
-            mNameView?.text = game.name
+        fun bind(game: GameWithChildren) {
+            mThumbnailView?.loadThumbnailInList(game.getThumbnail())
+            mNameView?.text = game.getName()
 
             itemView.setOnClickListener{
                 mHolderOnGameRowListener.OnGameRowClick(filteredList.get(adapterPosition))
@@ -115,7 +116,7 @@ class GameListAdapter(private val list: List<Game>, onGameRowListener: OnGameRow
     }
 
     interface OnGameRowListener {
-        fun OnGameRowClick (game: Game) {
+        fun OnGameRowClick (game: GameWithChildren) {
         }
     }
 

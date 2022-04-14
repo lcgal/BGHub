@@ -9,6 +9,7 @@ import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import com.example.bghub.data.models.Games.Game
 import com.example.bghub.R
+import com.example.bghub.data.models.Games.GameWithChildren
 import com.example.bghub.databinding.FragmentGameDetailsBinding
 import com.squareup.picasso.Picasso
 /**
@@ -22,7 +23,7 @@ import com.squareup.picasso.Picasso
 class GameDetailsFragment : Fragment()
 {
 
-    lateinit var mGame : Game
+    lateinit var mGame : GameWithChildren
 
     private var _binding: FragmentGameDetailsBinding? = null
 
@@ -42,11 +43,11 @@ class GameDetailsFragment : Fragment()
     //Runs after onCreateView, and can be used to set functionality to view elements
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.gameImage.loadThumbnailInList(mGame.thumbnail)
-        binding.gameName.text = mGame.name
+        binding.gameImage.loadThumbnailInList(mGame.getThumbnail())
+        binding.gameName.text = mGame.getName()
         //TODO move this to the domain layer
         val lineSep = System.getProperty("line.separator")
-        val description = mGame.description.replace("<br/>",lineSep)
+        val description = mGame.getDescription().replace("<br/>",lineSep)
         binding.gameDescription.text = description
     }
 
@@ -69,7 +70,7 @@ class GameDetailsFragment : Fragment()
     //custom "constructor" to pass on depedencies
     companion object {
         @JvmStatic
-        fun newInstance(game: Game): GameDetailsFragment {
+        fun newInstance(game: GameWithChildren): GameDetailsFragment {
             val fragment = GameDetailsFragment()
             fragment.mGame = game
             return fragment

@@ -1,9 +1,9 @@
 package com.example.bghub.data.repositories.games
 
-import com.example.bghub.data.models.Games.Game
+import com.example.bghub.data.models.Games.GameWithChildren
 
 interface GamesContract {
 
-    fun saveGameList(games: List<Game?>, version : String)
+    fun saveGameList(games: List<GameWithChildren?>, version : String)
 
 }

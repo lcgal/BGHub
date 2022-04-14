@@ -1,18 +1,24 @@
 package com.example.bghub.background
 
 import android.content.Context
+import androidx.hilt.work.HiltWorker
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.example.bghub.data.models.apiResponse.ApiResponse
 import com.example.bghub.data.services.data.DbContract
 import com.example.bghub.data.services.http.HttpService
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.Single
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
-class GetDescriptionWorker (
-    appContext: Context,
-    workerParams: WorkerParameters,
+@HiltWorker
+class GetDescriptionWorker
+@AssistedInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParams: WorkerParameters,
     private val httpService: HttpService,
     private val dataRepository : DbContract
     ) : RxWorker(appContext, workerParams) {
@@ -29,7 +35,7 @@ class GetDescriptionWorker (
         return  Single.just(Result.success())
     }
 
-    fun getDescription(gameId : String?) : DisposableObserver<ApiResponse<String>> {
+    fun getDescription(gameId : String) : DisposableObserver<ApiResponse<String>> {
         return httpService.getGameDescription(gameId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())

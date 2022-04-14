@@ -1,5 +1,6 @@
 package com.example.bghub.data.models.Games;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 public class Version {
 
     @PrimaryKey
+    @NonNull
     String Key ;
 
     String Value;
