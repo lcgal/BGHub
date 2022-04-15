@@ -1,6 +1,6 @@
 package com.example.bghub.views.activities.main;
 
-import com.example.bghub.data.models.Games.GameWithChildren;
+import com.example.bghub.data.models.Games.Game;
 import com.example.bghub.data.services.data.DbContract;
 import com.example.bghub.data.services.http.HttpContract;
 import com.example.bghub.views.fragments.OfferGameFragment;
@@ -36,7 +36,7 @@ public class MainPresenter implements MainContract.Presenter  {
     }
 
     @Override
-    public List<GameWithChildren> getGames() {
+    public List<Game> getGames() {
         return mDataRepository.getGamesList();
     }
 

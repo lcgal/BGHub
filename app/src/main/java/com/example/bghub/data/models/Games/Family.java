@@ -10,12 +10,12 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "families",
         foreignKeys = @ForeignKey(
-                entity = Game.class,
+                entity = GameEntity.class,
                 parentColumns = "id",
                 childColumns = "gameId",
                 onDelete = CASCADE),
         indices = @Index("gameId"))
-public class Family{
+public class Family {
 
     @PrimaryKey
     @NonNull

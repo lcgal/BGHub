@@ -1,27 +1,28 @@
 package com.example.bghub.data.daos
 
+import com.example.bghub.data.models.Games.GameEntityWithChildren
 import androidx.room.*
 import com.example.bghub.data.models.Games.Family
-import com.example.bghub.data.models.Games.Game
-import com.example.bghub.data.models.Games.GameWithChildren
+import com.example.bghub.data.models.Games.GameEntity
 import com.example.bghub.data.models.Games.Mechanic
 
 @Dao
 interface GameDao {
     @Query(
-        "SELECT * FROM game " +
-        "JOIN mechanics on game.id = mechanics.gameId " +
-        "JOIN families on game.id = families.gameId ")
-    fun getGamesWithChildren(): List<GameWithChildren>
+        "SELECT * FROM games " +
+                "JOIN mechanics on games.id = mechanics.gameId " +
+                "JOIN families on games.id = families.gameId "
+    )
+    fun getGamesWithChildren(): List<GameEntityWithChildren>
 
     @Insert
-    fun insertGames(games: List<GameWithChildren>) {
+    fun insertGames(games: List<GameEntityWithChildren>) {
         games.forEach {insertGame(it)}
     }
 
     @Transaction
-    fun insertGame(games: GameWithChildren) {
-        insertGame(games.game)
+    fun insertGame(games: GameEntityWithChildren) {
+        insertGame(games.gameEntityEntity)
         if (games.mechanics != null) {
             insertMechanics(games.mechanics)
         }
@@ -31,7 +32,7 @@ interface GameDao {
     }
 
     @Insert
-    fun insertGame(game: Game)
+    fun insertGame(gameEntity: GameEntity)
 
     @Insert
     fun insertMechanics(mechanics: List<Mechanic>)
@@ -40,7 +41,7 @@ interface GameDao {
     fun insertFamilies(families: List<Family>)
 
     @Delete
-    fun deleteGame(game: Game)
+    fun deleteGame(gameEntity: GameEntity)
 
     @Insert
     fun insertMechanic(vararg mechanic: Mechanic)

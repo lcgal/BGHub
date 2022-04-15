@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
-import com.example.bghub.data.models.Games.Game
 import com.example.bghub.R
-import com.example.bghub.data.models.Games.GameWithChildren
+import com.example.bghub.data.models.Games.Game
 import com.example.bghub.databinding.FragmentGameDetailsBinding
 import com.squareup.picasso.Picasso
 /**
@@ -23,7 +22,7 @@ import com.squareup.picasso.Picasso
 class GameDetailsFragment : Fragment()
 {
 
-    lateinit var mGame : GameWithChildren
+    lateinit var mGame : Game
 
     private var _binding: FragmentGameDetailsBinding? = null
 
@@ -70,7 +69,7 @@ class GameDetailsFragment : Fragment()
     //custom "constructor" to pass on depedencies
     companion object {
         @JvmStatic
-        fun newInstance(game: GameWithChildren): GameDetailsFragment {
+        fun newInstance(game: Game): GameDetailsFragment {
             val fragment = GameDetailsFragment()
             fragment.mGame = game
             return fragment

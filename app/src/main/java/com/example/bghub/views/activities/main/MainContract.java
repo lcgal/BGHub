@@ -1,6 +1,6 @@
 package com.example.bghub.views.activities.main;
 
-import com.example.bghub.data.models.Games.GameWithChildren;
+import com.example.bghub.data.models.Games.Game;
 import com.example.bghub.views.fragments.OfferGameFragment;
 import com.example.bghub.views.fragments.ProfileFragment;
 import com.example.bghub.views.fragments.SearchGameFragment;
@@ -22,7 +22,7 @@ public interface MainContract {
 
         void start();
 
-        List<GameWithChildren> getGames();
+        List<Game> getGames();
 
         OfferGameFragment provideOfferGameFragment();
 

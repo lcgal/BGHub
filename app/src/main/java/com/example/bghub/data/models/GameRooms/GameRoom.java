@@ -1,24 +1,19 @@
 package com.example.bghub.data.models.GameRooms;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.models.Games.GameWithChildren;
 
-@Entity
+//@Entity
 public class GameRoom {
 
-    @PrimaryKey
-    @NonNull
+//    @PrimaryKey
+//    @NonNull
     String Id;
 
-    public GameWithChildren getGame() {
+    public Game getGame() {
         return Game;
     }
 
-    public void setGame(GameWithChildren game) {
+    public void setGame(Game game) {
         Game = game;
     }
 
@@ -34,12 +29,12 @@ public class GameRoom {
 
     int Status;
 
-    GameWithChildren Game;
+    com.example.bghub.data.models.Games.Game Game;
 
     public GameRoom(){
     }
 
-    public GameRoom(String id, double latitude, double longitude, String userId, Long gameId, GameWithChildren game){
+    public GameRoom(String id, double latitude, double longitude, String userId, Long gameId, Game game){
         Id = id;
         Latitude = latitude;
         Longitude = longitude;

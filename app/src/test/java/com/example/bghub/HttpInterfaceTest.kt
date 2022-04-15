@@ -1,17 +1,15 @@
 package com.example.bghub
 
-import com.example.bghub.data.models.Games.GameWithChildren
+import com.example.bghub.data.models.Games.Game
 import com.example.bghub.data.models.apiResponse.GameListResponse
 import com.example.bghub.data.services.http.HttpService
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
-import okhttp3.internal.notify
 import okhttp3.internal.notifyAll
 import okhttp3.internal.wait
 import org.junit.Assert
 import org.junit.Test
-import java.util.concurrent.CountDownLatch
 
 class HttpInterfaceTest {
     lateinit var httpService : HttpService
@@ -24,7 +22,7 @@ class HttpInterfaceTest {
         val mockInterceptor : Interceptor = MockInterceptor()
         httpService = HttpService(mockInterceptor)
 
-        lateinit var games : List<GameWithChildren>
+        lateinit var games : List<Game>
 
         httpService.getGamesList("0")
             .subscribeOn(Schedulers.newThread())
@@ -53,13 +51,13 @@ class HttpInterfaceTest {
         Assert.assertTrue(checkGamesList(games))
     }
 
-    fun checkGamesList(gamesWithChildren: List<GameWithChildren>) : Boolean {
+    fun checkGamesList(gamesWithChildren: List<Game>) : Boolean {
         gamesWithChildren.forEach {
 
-            if(it.game.id == null) {
+            if(it.id == null) {
                 return false
             }
-            if(it.game.name == null) {
+            if(it.name == null) {
                 return false
             }
         }

@@ -5,7 +5,7 @@ import android.location.Location;
 
 import com.example.bghub.data.models.GameRooms.GameRoom;
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.models.Games.GameWithChildren;
+import com.example.bghub.data.models.Games.GameEntity;
 import com.example.bghub.data.models.users.User;
 import com.example.bghub.data.models.users.UserLocation;
 import java.util.Collection;
@@ -18,17 +18,17 @@ public interface DbContract {
 
         void processLogin();
 
-        List<GameWithChildren> getGamesList();
+        List<Game> getGamesList();
 
         void updateGameDescription (long gameid, String description);
 
         List<GameRoom> getGameRooms();
 
-        List<Game> getGamesByIds(Collection<Long> gameIds);
+        List<GameEntity> getGamesByIds(Collection<Long> gameIds);
 
-        GameWithChildren getGameById(long gameId);
+        Game getGameById(long gameId);
 
-        void saveGamesList(List<GameWithChildren> gamesList, String version);
+        void saveGamesList(List<Game> gamesList, String version);
 
         void saveGameRooms(List<GameRoom> gameRooms);
 

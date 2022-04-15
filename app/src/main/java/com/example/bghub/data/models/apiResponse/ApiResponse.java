@@ -1,7 +1,5 @@
 package com.example.bghub.data.models.apiResponse;
 
-import com.example.bghub.data.models.Games.Game;
-
 public class ApiResponse<T> {
     private Boolean Result;
 

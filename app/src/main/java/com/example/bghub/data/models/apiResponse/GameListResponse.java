@@ -1,6 +1,6 @@
 package com.example.bghub.data.models.apiResponse;
 
-import com.example.bghub.data.models.Games.GameWithChildren;
+import com.example.bghub.data.models.Games.Game;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ public class GameListResponse {
 
     private String version;
 
-    private List<GameWithChildren> data;
+    private List<Game> data;
 
-    public List<GameWithChildren> getData() {
+    public List<Game> getData() {
         return data;
     }
 
-    public void setData(List<GameWithChildren> result) {
+    public void setData(List<Game> result) {
         this.data = result;
     }
 

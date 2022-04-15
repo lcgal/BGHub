@@ -9,7 +9,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.bghub.data.models.GameRooms.GameRoom;
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.models.Games.GameWithChildren;
+import com.example.bghub.data.models.Games.GameEntity;
 import com.example.bghub.data.models.users.User;
 import com.example.bghub.data.models.users.UserLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,7 +26,7 @@ import javax.inject.Inject;
 public class DbService implements DbContract {
 
     private boolean isGameListReady;
-    public static List<GameWithChildren> gamesList;
+    public static List<Game> gamesList;
 
     public static List<GameRoom> gameRooms;
 
@@ -104,7 +104,7 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public List<GameWithChildren> getGamesList() {
+    public List<Game> getGamesList() {
 //        if (gamesList == null) {
 //            gamesList = SQLite.select().from(Game.class).queryList();
 //        }
@@ -120,7 +120,7 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public List<Game> getGamesByIds(Collection<Long> gameIds) {
+    public List<GameEntity> getGamesByIds(Collection<Long> gameIds) {
         return new ArrayList<>();
 //        return SQLite.select()
 //                .from(Game.class)
@@ -130,8 +130,8 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public GameWithChildren getGameById(long gameId) {
-        return new GameWithChildren(null,null,null);
+    public Game getGameById(long gameId) {
+        return new Game();
 //        return SQLite.select()
 //                .from(Game.class)
 //                .where((Game_Table.id.eq(gameId)))
@@ -139,7 +139,7 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public void saveGamesList(List<GameWithChildren> gamesList, String version) {
+    public void saveGamesList(List<Game> gamesList, String version) {
         DbService.gamesList = gamesList;
 
         try {
