@@ -1,5 +1,6 @@
 package com.example.bghub.data.models
 
+
 inline fun <I, O> mapList(input: List<I>, mapListItem: (I) -> O): List<O> {
     return input.map { mapListItem(it) }
 }

@@ -17,9 +17,9 @@ data class GameEntityWithChildren (
 
     fun getId(): Long = gameEntityEntity.id
     fun getName(): String = gameEntityEntity.name
-    fun getMinPlayers(): String = gameEntityEntity.minPlayers
-    fun getMaxPlayers(): String = gameEntityEntity.maxPlayers
-    fun getThumbnail(): String = gameEntityEntity.thumbnail
-    fun getImage(): String = gameEntityEntity.image
-    fun getDescription(): String = gameEntityEntity.description
+    fun getMinPlayers(): String? = gameEntityEntity.minPlayers
+    fun getMaxPlayers(): String? = gameEntityEntity.maxPlayers
+    fun getThumbnail(): String? = gameEntityEntity.thumbnail
+    fun getImage(): String? = gameEntityEntity.image
+    fun getDescription(): String? = gameEntityEntity.description
 }

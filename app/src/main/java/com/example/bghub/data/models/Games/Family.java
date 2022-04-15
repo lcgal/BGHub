@@ -21,8 +21,10 @@ public class Family {
     @NonNull
     String id;
 
+    @NonNull
     long gameId;
 
+    @NonNull
     String family;
 
     public String getId() {
@@ -47,5 +49,19 @@ public class Family {
 
     public void setFamily(String family) {
         this.family = family;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Family family = (Family) o;
+        return id.equals(family.id) &&
+                gameId == family.gameId &&
+                family.equals(family.family);
     }
 }

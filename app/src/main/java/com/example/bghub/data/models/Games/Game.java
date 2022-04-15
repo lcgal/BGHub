@@ -1,5 +1,7 @@
 package com.example.bghub.data.models.Games;
 
+import androidx.annotation.Nullable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,13 +11,13 @@ public class Game extends GameEntity {
 
     public Game(long id,
                 String name,
-                String minPlayers,
-                String maxPlayers,
-                String thumbnail,
-                String image,
-                String description,
-                List<Mechanic> mechanics,
-                List<Family> families){
+                @Nullable String minPlayers,
+                @Nullable String maxPlayers,
+                @Nullable String thumbnail,
+                @Nullable String image,
+                @Nullable String description,
+                @Nullable List<Mechanic> mechanics,
+                @Nullable List<Family> families){
         this.id = id;
         this.name = name;
         this.minPlayers = minPlayers;
@@ -54,4 +56,24 @@ public class Game extends GameEntity {
     List<Mechanic> mechanics;
 
     List<Family> families;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Game game = (Game) o;
+        return id == game.id &&
+                name.equals(game.name) &&
+                minPlayers == null ? game.minPlayers == null : minPlayers.equals(game.minPlayers) &&
+                maxPlayers == null ? game.maxPlayers == null : maxPlayers.equals(game.maxPlayers) &&
+                thumbnail == null ? game.thumbnail == null : thumbnail.equals(game.thumbnail) &&
+                image == null ? game.image == null : image.equals(game.image) &&
+                description == null ? game.description == null : description.equals(game.description) &&
+                mechanics == null ? game.mechanics == null : mechanics.equals(game.mechanics) &&
+                families == null ? game.families == null : families.equals(game.families);
+    }
 }

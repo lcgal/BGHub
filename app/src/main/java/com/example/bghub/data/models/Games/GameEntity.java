@@ -1,6 +1,7 @@
 package com.example.bghub.data.models.Games;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

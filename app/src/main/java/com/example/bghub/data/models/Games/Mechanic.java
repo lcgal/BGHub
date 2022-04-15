@@ -21,8 +21,10 @@ public class Mechanic {
     @NonNull
     String id;
 
+    @NonNull
     long gameId;
 
+    @NonNull
     String mechanic;
 
     public String getId() {
@@ -47,5 +49,19 @@ public class Mechanic {
 
     public void setMechanic(String mechanic) {
         this.mechanic = mechanic;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Mechanic mechanic = (Mechanic) o;
+        return id.equals(mechanic.id) &&
+                gameId == mechanic.gameId &&
+                mechanic.equals(mechanic.mechanic);
     }
 }

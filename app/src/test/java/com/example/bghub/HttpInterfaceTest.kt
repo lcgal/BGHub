@@ -1,6 +1,6 @@
 package com.example.bghub
 
-import com.example.bghub.data.mapGameModelToEntity
+import com.example.bghub.data.map
 import com.example.bghub.data.models.Games.Game
 import com.example.bghub.data.models.Games.GameEntityWithChildren
 import com.example.bghub.data.models.apiResponse.GameListResponse
@@ -34,8 +34,6 @@ class HttpInterfaceTest {
                 override fun onNext(result: GameListResponse) {
                     if (result.isUpdate) {
                         games = result.data
-                        val b = mapGameModelToEntity(games)
-                        val a = 1
                     }
                 }
                 override fun onError(e: Throwable) {
@@ -54,10 +52,11 @@ class HttpInterfaceTest {
         }
         Assert.assertNotNull(games)
         Assert.assertTrue(checkGamesList(games))
+        Assert.assertTrue(checkGameMapping(games))
     }
 
-    fun checkGamesList(gamesWithChildren: List<Game>) : Boolean {
-        gamesWithChildren.forEach {
+    fun checkGamesList(networkGameList: List<Game>) : Boolean {
+        networkGameList.forEach {
 
             if(it.id == null) {
                 return false
@@ -68,5 +67,11 @@ class HttpInterfaceTest {
         }
 
         return true
+    }
+
+    fun checkGameMapping(networkGameList: List<Game>) : Boolean {
+        val entity = map(networkGameList)
+        val model = map(entity)
+        return networkGameList == model
     }
 }
