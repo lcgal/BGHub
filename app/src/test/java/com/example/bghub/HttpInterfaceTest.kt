@@ -1,7 +1,10 @@
 package com.example.bghub
 
+import com.example.bghub.data.mapGameModelToEntity
 import com.example.bghub.data.models.Games.Game
+import com.example.bghub.data.models.Games.GameEntityWithChildren
 import com.example.bghub.data.models.apiResponse.GameListResponse
+import com.example.bghub.data.models.mapList
 import com.example.bghub.data.services.http.HttpService
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
@@ -15,7 +18,7 @@ class HttpInterfaceTest {
     lateinit var httpService : HttpService
 
     @Test
-    fun getGamesList() {
+    fun getServerGamesList() {
 
         val syncObject = Any()
 
@@ -31,6 +34,8 @@ class HttpInterfaceTest {
                 override fun onNext(result: GameListResponse) {
                     if (result.isUpdate) {
                         games = result.data
+                        val b = mapGameModelToEntity(games)
+                        val a = 1
                     }
                 }
                 override fun onError(e: Throwable) {

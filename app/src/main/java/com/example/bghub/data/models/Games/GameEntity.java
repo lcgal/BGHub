@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "games")
 public class GameEntity {
+
     @PrimaryKey
     @NonNull
     long id;

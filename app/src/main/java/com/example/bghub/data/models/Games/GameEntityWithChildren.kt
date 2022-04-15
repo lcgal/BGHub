@@ -13,6 +13,7 @@ data class GameEntityWithChildren (
     @Relation(parentColumn = "id", entityColumn = "gameId")
     val families : List<Family>?
 ) {
+    constructor(model : Game) : this(model.gameEntity, model.mechanics, model.families)
 
     fun getId(): Long = gameEntityEntity.id
     fun getName(): String = gameEntityEntity.name
