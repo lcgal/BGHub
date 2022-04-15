@@ -14,7 +14,7 @@ import okhttp3.internal.wait
 import org.junit.Assert
 import org.junit.Test
 
-class HttpInterfaceTest {
+class DataTest {
     lateinit var httpService : HttpService
 
     @Test
