@@ -29,7 +29,7 @@ class GetDescriptionWorker (
         return  Single.just(Result.success())
     }
 
-    fun getDescription(gameId : String?) : DisposableObserver<ApiResponse<String>> {
+    fun getDescription(gameId : String) : DisposableObserver<ApiResponse<String>> {
         return httpService.getGameDescription(gameId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.newThread())

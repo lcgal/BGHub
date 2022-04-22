@@ -11,9 +11,7 @@ import androidx.core.app.ActivityCompat;
 import com.example.bghub.data.models.AppDatabase;
 import com.example.bghub.data.models.GameRooms.GameRoom;
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.models.Games.Game_Table;
 import com.example.bghub.data.models.Games.Version;
-import com.example.bghub.data.models.Games.Version_Table;
 import com.example.bghub.data.models.User;
 import com.example.bghub.data.models.UserLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -142,7 +140,7 @@ public class DbService implements DbContract {
     public List<Game> getGamesByIds(Collection<Long> gameIds) {
         return SQLite.select()
                 .from(Game.class)
-                .where((Game_Table.id.in(gameIds)))
+//                .where((Game_Table.id.in(gameIds)))
                 .queryResults()
                 .toListClose();
     }
@@ -151,7 +149,7 @@ public class DbService implements DbContract {
     public Game getGameById(long gameId) {
         return SQLite.select()
                 .from(Game.class)
-                .where((Game_Table.id.eq(gameId)))
+//                .where((Game_Table.id.eq(gameId)))
                 .querySingle();
     }
 
@@ -171,14 +169,18 @@ public class DbService implements DbContract {
 
     @Override
     public void updateGameDescription (long gameid, String description) {
-        Game game = SQLite.select().from(Game.class).where(Game_Table.id.eq(gameid)).querySingle();
+        Game game = SQLite.select().from(Game.class)
+//                .where(Game_Table.id.eq(gameid))
+                .querySingle();
         game.setDescription(description);
         game.save();
     }
 
     @Override
     public String getGamesListVersion() {
-        Version versionObj = SQLite.select().from(Version.class).where(Version_Table.Key.eq("GamesListVersion")).querySingle();
+        Version versionObj = SQLite.select().from(Version.class)
+//                .where(Version_Table.Key.eq("GamesListVersion"))
+                .querySingle();
         if (versionObj != null) {
             return versionObj.getValue();
         } else {
@@ -297,18 +299,20 @@ public class DbService implements DbContract {
 
 
     private void updateDBVersion(String version){
-        Version dbVersion = SQLite.select().from(Version.class).where(Version_Table.Key.eq("GamesListVersion")).querySingle();
+        Version dbVersion = SQLite.select().from(Version.class)
+//                .where(Version_Table.Key.eq("GamesListVersion"))
+                .querySingle();
         //TODO Entender melhor como utilizar o DBFLOW.
         if (dbVersion != null){
-            SQLite.update(Version.class)
-                    .set(Version_Table.Value.eq(version))
-                    .where(Version_Table.Key.is("GamesListVersion"))
-                    .execute(); // non-UI blocking
+//            SQLite.update(Version.class)
+//                    .set(Version_Table.Value.eq(version))
+//                    .where(Version_Table.Key.is("GamesListVersion"))
+//                    .execute(); // non-UI blocking
         } else {
-            SQLite.insert(Version.class)
-                    .columns(Version_Table.Key,Version_Table.Value)
-                    .values("GamesListVersion",version)
-                    .execute(); // non-UI blocking
+//            SQLite.insert(Version.class)
+//                    .columns(Version_Table.Key,Version_Table.Value)
+//                    .values("GamesListVersion",version)
+//                    .execute(); // non-UI blocking
         }
     }
 

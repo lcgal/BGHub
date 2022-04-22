@@ -7,6 +7,7 @@ import com.example.bghub.data.models.GameRooms.GameRoom;
 import com.example.bghub.data.models.Games.Game;
 import com.example.bghub.data.models.User;
 import com.example.bghub.data.models.UserLocation;
+
 import java.util.Collection;
 import java.util.List;
 

@@ -26,21 +26,19 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import dagger.android.AndroidInjection;
-
+//@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
     ProgressDialog mProgressDialog = null;
 
-    @Inject DbContract mDataRepository;
+    //TODO
+//    @Inject
+//    DbContract mDataRepository;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AndroidInjection.inject(this);
 
         ActivityResultLauncher<Intent> facebookLoginResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -56,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            mDataRepository.processLogin();
+//            mDataRepository.processLogin();
             goToMainActivity();
             return;
         }
@@ -78,11 +76,11 @@ public class LoginActivity extends AppCompatActivity {
 
 // Create and launch sign-in intent
         Intent facebookLoginIntent = AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setAuthMethodPickerLayout(customLayout)
-                        .setIsSmartLockEnabled(false)
-                        .build();
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setAuthMethodPickerLayout(customLayout)
+                .setIsSmartLockEnabled(false)
+                .build();
         facebookLoginResultLauncher.launch(facebookLoginIntent);
     }
 

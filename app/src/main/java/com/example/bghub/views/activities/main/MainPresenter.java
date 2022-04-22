@@ -1,8 +1,8 @@
 package com.example.bghub.views.activities.main;
 
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.services.data.DbContract;
 import com.example.bghub.data.services.Http.HttpContract;
+import com.example.bghub.data.services.data.DbContract;
 import com.example.bghub.views.fragments.OfferGameFragment;
 import com.example.bghub.views.fragments.ProfileFragment;
 import com.example.bghub.views.fragments.SearchGameFragment;
@@ -11,7 +11,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainPresenter implements MainContract.Presenter {
+public class MainPresenter implements MainContract.Presenter  {
+
+
 
     private MainContract.View _view;
     private final DbContract mDataRepository;
