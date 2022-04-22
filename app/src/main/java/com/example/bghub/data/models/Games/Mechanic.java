@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "mechanics",
         foreignKeys = @ForeignKey(
-                entity = GameEntity.class,
+                entity = Game.class,
                 parentColumns = "id",
                 childColumns = "gameId",
                 onDelete = CASCADE),

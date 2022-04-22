@@ -1,7 +1,5 @@
 package com.example.bghub.data.models.GameRooms;
 
-import com.example.bghub.data.models.Games.Game;
-
 //@Entity
 public class GameRoom {
 
@@ -9,11 +7,11 @@ public class GameRoom {
 //    @NonNull
     String Id;
 
-    public Game getGame() {
+    public com.example.bghub.data.models.Games.Game getGame() {
         return Game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(com.example.bghub.data.models.Games.Game game) {
         Game = game;
     }
 
@@ -34,7 +32,7 @@ public class GameRoom {
     public GameRoom(){
     }
 
-    public GameRoom(String id, double latitude, double longitude, String userId, Long gameId, Game game){
+    public GameRoom(String id, double latitude, double longitude, String userId, Long gameId, com.example.bghub.data.models.Games.Game game){
         Id = id;
         Latitude = latitude;
         Longitude = longitude;

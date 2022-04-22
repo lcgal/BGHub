@@ -1,9 +1,9 @@
 package com.example.bghub.data.daos
 
-import com.example.bghub.data.models.Games.GameEntityWithChildren
+import com.example.bghub.data.models.Games.GameWithChildren
 import androidx.room.*
 import com.example.bghub.data.models.Games.Family
-import com.example.bghub.data.models.Games.GameEntity
+import com.example.bghub.data.models.Games.Game
 import com.example.bghub.data.models.Games.Mechanic
 
 @Dao
@@ -13,26 +13,26 @@ interface GameDao {
                 "JOIN mechanics on games.id = mechanics.gameId " +
                 "JOIN families on games.id = families.gameId "
     )
-    fun getGamesWithChildren(): List<GameEntityWithChildren>
+    fun getGamesWithChildren(): List<GameWithChildren>
+
+//    @Insert
+//    fun insertGames(games: List<GameWithChildren>) {
+//        games.forEach {insertGame(it)}
+//    }
+//
+//    @Transaction
+//    fun insertGame(games: GameWithChildren) {
+//        insertGame(games.gameEntityEntity)
+//        if (games.mechanics != null) {
+//            insertMechanics(games.mechanics)
+//        }
+//        if (games.families != null) {
+//            insertFamilies(games.families)
+//        }
+//    }
 
     @Insert
-    fun insertGames(games: List<GameEntityWithChildren>) {
-        games.forEach {insertGame(it)}
-    }
-
-    @Transaction
-    fun insertGame(games: GameEntityWithChildren) {
-        insertGame(games.gameEntityEntity)
-        if (games.mechanics != null) {
-            insertMechanics(games.mechanics)
-        }
-        if (games.families != null) {
-            insertFamilies(games.families)
-        }
-    }
-
-    @Insert
-    fun insertGame(gameEntity: GameEntity)
+    fun insertGame(gameEntity: Game)
 
     @Insert
     fun insertMechanics(mechanics: List<Mechanic>)
@@ -41,7 +41,7 @@ interface GameDao {
     fun insertFamilies(families: List<Family>)
 
     @Delete
-    fun deleteGame(gameEntity: GameEntity)
+    fun deleteGame(gameEntity: Game)
 
     @Insert
     fun insertMechanic(vararg mechanic: Mechanic)

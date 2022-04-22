@@ -1,79 +1,108 @@
 package com.example.bghub.data.models.Games;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.util.List;
-import java.util.Map;
 
-public class Game extends GameEntity {
-    public Game(){
+@Entity(tableName = "games")
+public class Game {
+
+    @PrimaryKey
+    @NonNull
+    long id;
+
+    String name;
+
+    String minPlayers;
+
+    String maxPlayers;
+
+    String thumbnail;
+
+    String image;
+
+    String description;
+
+    @Ignore
+    List<Mechanic> mechanics;
+
+    @Ignore
+    List<Family> families;
+
+    public long getId() {
+        return id;
     }
 
-    public Game(long id,
-                String name,
-                @Nullable String minPlayers,
-                @Nullable String maxPlayers,
-                @Nullable String thumbnail,
-                @Nullable String image,
-                @Nullable String description,
-                @Nullable List<Mechanic> mechanics,
-                @Nullable List<Family> families){
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMinPlayers() {
+        return minPlayers;
+    }
+
+    public void setMinPlayers(String minPlayers) {
         this.minPlayers = minPlayers;
+    }
+
+    public String getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(String maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Mechanic> getMechanics() {
+        return mechanics;
+    }
+
+    public void setMechanics(List<Mechanic> mechanics) {
         this.mechanics = mechanics;
+    }
+
+    public List<Family> getFamilies() {
+        return families;
+    }
+
+    public void setFamilies(List<Family> families) {
         this.families = families;
     }
 
-    public Game(GameEntityWithChildren entity){
-        this.id = entity.getId();
-        this.name = entity.getName();
-        this.minPlayers = entity.getMinPlayers();
-        this.maxPlayers = entity.getMaxPlayers();
-        this.thumbnail = entity.getThumbnail();
-        this.image = entity.getImage();
-        this.description = entity.getDescription();
-        this.mechanics = entity.getMechanics();
-        this.families = entity.getFamilies();
-    }
-
-    public GameEntity getGameEntity() {
-        GameEntity entity = new GameEntity();
-        entity.id = id;
-        entity.name = name;
-        entity.minPlayers = minPlayers;
-        entity.maxPlayers = maxPlayers;
-        entity.thumbnail = thumbnail;
-        entity.image = image;
-        entity.description = description;
-        return entity;
-    }
-
-    List<Mechanic> mechanics;
-
-    List<Family> families;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Game game = (Game) o;
-        return id == game.id &&
-                name.equals(game.name) &&
-                minPlayers == null ? game.minPlayers == null : minPlayers.equals(game.minPlayers) &&
-                maxPlayers == null ? game.maxPlayers == null : maxPlayers.equals(game.maxPlayers) &&
-                thumbnail == null ? game.thumbnail == null : thumbnail.equals(game.thumbnail) &&
-                image == null ? game.image == null : image.equals(game.image) &&
-                description == null ? game.description == null : description.equals(game.description) &&
-                mechanics == null ? game.mechanics == null : mechanics.equals(game.mechanics) &&
-                families == null ? game.families == null : families.equals(game.families);
-    }
 }

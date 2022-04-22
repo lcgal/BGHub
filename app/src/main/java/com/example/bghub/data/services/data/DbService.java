@@ -9,7 +9,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.bghub.data.models.GameRooms.GameRoom;
 import com.example.bghub.data.models.Games.Game;
-import com.example.bghub.data.models.Games.GameEntity;
 import com.example.bghub.data.models.users.User;
 import com.example.bghub.data.models.users.UserLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -120,7 +119,7 @@ public class DbService implements DbContract {
     }
 
     @Override
-    public List<GameEntity> getGamesByIds(Collection<Long> gameIds) {
+    public List<Game> getGamesByIds(Collection<Long> gameIds) {
         return new ArrayList<>();
 //        return SQLite.select()
 //                .from(Game.class)
